@@ -1,5 +1,6 @@
 'use client';
 
+import { Star, Quote } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function Testimonials() {
@@ -36,15 +37,15 @@ export default function Testimonials() {
                                     </h4>
                                     <p className="text-gray-500 text-sm mb-2">Profession</p>
                                     <div className="flex gap-1 text-lime-500">
-                                        {'★★★★★'.split('').map((star, i) => (
-                                            <span key={i} className="text-xl">{star}</span>
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                            <Star key={star} size={20} fill="currentColor" />
                                         ))}
                                     </div>
                                 </div>
 
                                 {/* Large Quote Mark */}
-                                <div className="text-9xl font-bold opacity-20 absolute -right-4 -top-4 text-orange-400">
-                                    "
+                                <div className="absolute -right-4 -top-4 text-orange-400 opacity-20">
+                                    <Quote size={80} />
                                 </div>
                             </div>
                         </div>

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function Header() {
     const pathname = usePathname();
@@ -57,19 +58,16 @@ export default function Header() {
                 <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 md:gap-3 z-50 relative">
-                        {/* Replaced generic E with a placeholder for the gold logo from image if possible, 
-                            or just styled text to match better. 
-                            The image shows a gold logo. I'll use the existing structure but adjust colors. */}
-                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-amber-400 flex items-center justify-center bg-white">
-                            {/* Using a leaf icon or similar to mimic the image logo */}
-                            <span className="text-amber-400 text-xl">🌿</span>
+                        <div className="relative w-auto h-auto md:w-32 md:h-32">
+                            <Image
+                                src="/images/logo.jpg"
+                                alt="Enrich Logo"
+                                fill
+                                className="object-contain"
+                                priority
+                            />
                         </div>
-                        <div>
-                            <div className="text-2xl md:text-3xl font-bold text-amber-400 tracking-wide">
-                                ENRICH
-                            </div>
-                            <div className="text-[10px] md:text-[10px] text-amber-300 uppercase tracking-[0.2em] -mt-1">LIVE HEALTHY</div>
-                        </div>
+
                     </Link>
 
                     {/* Desktop Navigation */}

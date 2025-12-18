@@ -1,6 +1,7 @@
 'use client';
 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import Image from 'next/image';
 
 export default function AboutSection() {
     const { ref, isVisible } = useScrollAnimation();
@@ -31,18 +32,14 @@ export default function AboutSection() {
                     <div className={`flex justify-center items-center transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
                         <div className="relative">
                             {/* Circular Logo Background */}
-                            <div className="w-64 h-64 md:w-96 md:h-96 rounded-full border-4 flex items-center justify-center border-amber-400">
-                                <div className="text-center">
-                                    <div className="text-5xl md:text-8xl font-bold mb-2 text-amber-400">
-                                        ENRICH
-                                    </div>
-                                    <div className="text-lg md:text-2xl text-lime-500">
-                                        LIVE HEALTHY
-                                    </div>
-                                </div>
+                            <div className="w-64 h-64 md:w-96 md:h-96 rounded-full border-4 flex items-center justify-center border-amber-400 bg-white overflow-hidden relative">
+                                <Image
+                                    src="/images/logo.jpg"
+                                    alt="Enrich Logo"
+                                    fill
+                                    className="object-contain p-8"
+                                />
                             </div>
-                            {/* Decorative leaf */}
-                            <div className="absolute -top-4 -right-4 text-4xl md:text-6xl">🌿</div>
                         </div>
                     </div>
                 </div>

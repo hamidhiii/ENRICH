@@ -1,5 +1,6 @@
 'use client';
 
+import { Target, Eye } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function MissionVision() {
@@ -10,7 +11,9 @@ export default function MissionVision() {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className={`bg-white rounded-3xl p-12 shadow-lg transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                        <div className="text-6xl mb-6 transition-transform duration-500 hover:scale-110">🎯</div>
+                        <div className="mb-6 text-lime-500 transition-transform duration-500 hover:scale-110">
+                            <Target size={64} />
+                        </div>
                         <h3 className="text-3xl font-bold mb-6 text-slate-600">
                             Missiya
                         </h3>
@@ -20,7 +23,9 @@ export default function MissionVision() {
                         </p>
                     </div>
                     <div className={`bg-white rounded-3xl p-12 shadow-lg transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                        <div className="text-6xl mb-6 transition-transform duration-500 hover:scale-110">👁️</div>
+                        <div className="mb-6 text-lime-500 transition-transform duration-500 hover:scale-110">
+                            <Eye size={64} />
+                        </div>
                         <h3 className="text-3xl font-bold mb-6 text-slate-600">
                             Maqsad
                         </h3>

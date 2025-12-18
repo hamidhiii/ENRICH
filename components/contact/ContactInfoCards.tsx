@@ -1,6 +1,6 @@
 'use client';
 
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
+import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function ContactInfoCards() {
@@ -12,25 +12,25 @@ export default function ContactInfoCards() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
                     {[
                         {
-                            icon: <FaPhone size={48} />,
+                            icon: <Phone size={48} />,
                             title: 'Telefon',
                             content: '+998 98 305-25-35',
                             color: 'text-lime-500',
                         },
                         {
-                            icon: <FaEnvelope size={48} />,
+                            icon: <Mail size={48} />,
                             title: 'Email',
                             content: 'enrich@mail.com',
                             color: 'text-orange-400',
                         },
                         {
-                            icon: <FaMapMarkerAlt size={48} />,
+                            icon: <MapPin size={48} />,
                             title: 'Manzil',
                             content: 'Toshkent, Olmazor tumani',
                             color: 'text-lime-500',
                         },
                         {
-                            icon: <FaClock size={48} />,
+                            icon: <Clock size={48} />,
                             title: 'Ish vaqti',
                             content: 'Dush-Juma: 9:00-18:00',
                             color: 'text-orange-400',

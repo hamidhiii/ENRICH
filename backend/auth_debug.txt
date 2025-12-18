@@ -1,0 +1,11 @@
+DEBUG: Token payload: None
+DEBUG: Token payload: None
+DEBUG: Token payload: None
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892634}
+DEBUG: Token payload: None
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}
+DEBUG: Token payload: {'sub': '1', 'username': 'admin', 'role': 'admin', 'exp': 1765892867}

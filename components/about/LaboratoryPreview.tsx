@@ -1,5 +1,6 @@
 'use client';
 
+import { Microscope } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function LaboratoryPreview() {
@@ -10,8 +11,10 @@ export default function LaboratoryPreview() {
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className={`bg-gradient-to-br from-lime-500 to-lime-700 rounded-3xl h-96 flex items-center justify-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                        <div className="text-white text-center">
-                            <div className="text-8xl mb-4 transition-transform duration-500 hover:scale-110">🔬</div>
+                        <div className="text-white text-center flex flex-col items-center">
+                            <div className="mb-4 transition-transform duration-500 hover:scale-110">
+                                <Microscope size={96} />
+                            </div>
                             <p className="text-3xl font-bold">Zamonaviy laboratoriya</p>
                         </div>
                     </div>

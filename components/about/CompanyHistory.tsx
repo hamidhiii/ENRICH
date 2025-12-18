@@ -1,5 +1,6 @@
 'use client';
 
+import { Factory } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function CompanyHistory() {
@@ -24,8 +25,10 @@ export default function CompanyHistory() {
                         </p>
                     </div>
                     <div className={`bg-gradient-to-br from-lime-300 to-lime-500 rounded-3xl h-96 flex items-center justify-center transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-                        <div className="text-white text-center">
-                            <div className="text-8xl mb-4 transition-transform duration-500 hover:scale-110">🏭</div>
+                        <div className="text-white text-center flex flex-col items-center">
+                            <div className="mb-4 transition-transform duration-500 hover:scale-110">
+                                <Factory size={96} />
+                            </div>
                             <p className="text-2xl font-bold">2017</p>
                             <p className="text-lg">Tashkil etilgan yil</p>
                         </div>

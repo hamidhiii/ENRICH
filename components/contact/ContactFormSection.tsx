@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { contactAPI } from '@/lib/api';
 
 export default function ContactFormSection() {
     const { ref, isVisible } = useScrollAnimation();
@@ -21,26 +22,16 @@ export default function ContactFormSection() {
         setIsSubmitting(true);
 
         try {
-            const response = await fetch('http://localhost:8000/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+            await contactAPI.submit(formData);
 
-            if (response.ok) {
-                setSubmitStatus('success');
-                setFormData({
-                    full_name: '',
-                    email: '',
-                    phone: '',
-                    subject: '',
-                    message: '',
-                });
-            } else {
-                setSubmitStatus('error');
-            }
+            setSubmitStatus('success');
+            setFormData({
+                full_name: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: '',
+            });
         } catch (error) {
             setSubmitStatus('error');
         } finally {

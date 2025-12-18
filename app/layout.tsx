@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import ScrollToTop from "@/components/ScrollToTop";
+import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
   title: "ENRICH - Farmatsevtika kompaniyasi",
@@ -17,10 +15,7 @@ export default function RootLayout({
   return (
     <html lang="uz">
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <ScrollToTop />
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );

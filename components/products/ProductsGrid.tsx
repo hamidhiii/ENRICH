@@ -1,17 +1,22 @@
 'use client';
 
+import { Leaf, Pill, FlaskConical, Droplets, Package } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 interface Product {
     id: number;
-    name: string;
-    category: string;
-    description: string;
-    image: string;
+    name_uz: string;
+    category: {
+        name_uz: string;
+    };
+    description_uz?: string;
+    image?: string;
+    // Fallback for static data if needed, but we aim to replace it
+    icon?: React.ReactNode;
 }
 
 interface ProductsGridProps {
-    products: Product[];
+    products: any[]; // Using any[] temporarily to allow mixed types during transition, or strict Product[]
 }
 
 export default function ProductsGrid({ products }: ProductsGridProps) {
@@ -28,17 +33,27 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >
                             {/* Product Image */}
-                            <div className="h-64 bg-white flex items-center justify-center p-6 border-b-2 border-gray-100">
-                                <div className="text-9xl transition-transform duration-500 hover:scale-110">{product.image}</div>
+                            <div className="h-64 bg-white flex items-center justify-center p-6 border-b-2 border-gray-100 text-lime-500 overflow-hidden">
+                                <div className="transition-transform duration-500 hover:scale-110 w-full h-full flex items-center justify-center">
+                                    {product.image ? (
+                                        <img
+                                            src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
+                                            alt={product.name_uz || product.name}
+                                            className="w-full h-full object-contain"
+                                        />
+                                    ) : (
+                                        product.icon || <Package size={64} />
+                                    )}
+                                </div>
                             </div>
 
                             {/* Product Info */}
                             <div className="p-6 text-center">
                                 <h3 className="text-2xl font-bold mb-3 text-slate-600">
-                                    {product.name}
+                                    {product.name_uz || product.name}
                                 </h3>
-                                <p className="text-gray-600 text-base leading-relaxed mb-4">
-                                    {product.description}
+                                <p className="text-gray-600 text-base leading-relaxed mb-4 line-clamp-3">
+                                    {product.description_uz || product.description || product.instructions_uz}
                                 </p>
                                 <button
                                     className="w-full py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90 bg-lime-500"
@@ -53,7 +68,9 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                 {/* No Results */}
                 {products.length === 0 && (
                     <div className={`text-center py-20 transition-all duration-1000 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-                        <div className="text-8xl mb-6">📦</div>
+                        <div className="text-8xl mb-6 flex justify-center text-gray-400">
+                            <Package size={96} />
+                        </div>
                         <h3 className="text-3xl font-bold mb-4 text-slate-600">
                             Mahsulotlar topilmadi
                         </h3>

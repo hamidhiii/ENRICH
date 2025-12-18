@@ -1,6 +1,7 @@
 'use client';
 
-import { FaTwitter, FaFacebook, FaYoutube, FaLinkedin } from 'react-icons/fa';
+import { Twitter, Facebook, Youtube, Linkedin } from 'lucide-react';
+import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function Footer() {
@@ -13,8 +14,13 @@ export default function Footer() {
                     {/* Company Info */}
                     <div>
                         <div className="flex items-center gap-3 mb-6">
-                            <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                                <span className="text-white text-2xl font-bold">E</span>
+                            <div className="relative w-16 h-16 rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                <Image
+                                    src="/images/logo.jpg"
+                                    alt="Enrich Logo"
+                                    fill
+                                    className="object-contain p-1"
+                                />
                             </div>
                             <div>
                                 <div className="text-2xl font-bold text-amber-400">
@@ -85,25 +91,25 @@ export default function Footer() {
                                     href="#"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <FaTwitter size={18} />
+                                    <Twitter size={18} />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <FaFacebook size={18} />
+                                    <Facebook size={18} />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <FaYoutube size={18} />
+                                    <Youtube size={18} />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <FaLinkedin size={18} />
+                                    <Linkedin size={18} />
                                 </a>
                             </div>
 
@@ -136,3 +142,4 @@ export default function Footer() {
         </footer>
     );
 }
+

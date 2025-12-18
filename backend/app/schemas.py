@@ -355,22 +355,6 @@ class ContactMessageCreate(ContactMessageBase):
     pass
 
 
-class ContactMessageUpdate(BaseModel):
-    status: Optional[str] = None
-    notes: Optional[str] = None
-
-
-class ContactMessageResponse(ContactMessageBase):
-    id: int
-    status: str
-    notes: Optional[str]
-    created_at: datetime
-
-    class Config:
-        from_attributes = True
-
-
-# ============= Site Settings Schemas =============
 class SiteSettingsBase(BaseModel):
     site_name_ru: Optional[str] = None
     site_name_uz: Optional[str] = None
@@ -395,6 +379,21 @@ class SiteSettingsBase(BaseModel):
     meta_description_en: Optional[str] = None
     google_maps_embed: Optional[str] = None
     google_analytics_id: Optional[str] = None
+
+
+class ContactMessageUpdate(BaseModel):
+    status: Optional[str] = None
+    notes: Optional[str] = None
+
+
+class ContactMessageResponse(ContactMessageBase):
+    id: int
+    status: str
+    notes: Optional[str]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 
 class SiteSettingsUpdate(SiteSettingsBase):

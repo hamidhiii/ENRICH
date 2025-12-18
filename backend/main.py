@@ -2,11 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.database import engine, Base, get_settings
-from app.routers import auth, products, categories, news, upload, contact
+from app.routers import auth, products, categories, news, upload, contact, certificates, partners
 import os
 
 # Create database tables
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -18,7 +18,15 @@ app = FastAPI(
 settings = get_settings()
 
 # Configure CORS
-origins = settings.allowed_origins.split(",")
+origins = [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
+]
+print(f"DEBUG: Hardcoded CORS origins: {origins}")
+
+from fastapi import Request
 
 app.add_middleware(
     CORSMiddleware,
@@ -27,6 +35,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    print(f"DEBUG: Request: {request.method} {request.url}")
+    print(f"DEBUG: Origin: {request.headers.get('origin')}")
+    try:
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        print(f"DEBUG: Request failed: {e}")
+        raise e
 
 # Create uploads directory
 os.makedirs(settings.upload_dir, exist_ok=True)
@@ -41,6 +60,8 @@ app.include_router(categories.router)
 app.include_router(news.router)
 app.include_router(upload.router)
 app.include_router(contact.router)
+app.include_router(certificates.router)
+app.include_router(partners.router)
 
 
 @app.get("/")

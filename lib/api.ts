@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
 // Create axios instance
 const api = axios.create({
@@ -50,32 +50,32 @@ export const authAPI = {
 };
 
 export const productsAPI = {
-  getAll: (params?: any) => api.get('/api/products', { params }),
+  getAll: (params?: any) => api.get('/api/products/', { params }),
   getById: (id: number) => api.get(`/api/products/${id}`),
-  create: (data: any) => api.post('/api/products', data),
+  create: (data: any) => api.post('/api/products/', data),
   update: (id: number, data: any) => api.put(`/api/products/${id}`, data),
   delete: (id: number) => api.delete(`/api/products/${id}`),
 };
 
 export const categoriesAPI = {
-  getAll: (params?: any) => api.get('/api/categories', { params }),
+  getAll: (params?: any) => api.get('/api/categories/', { params }),
   getById: (id: number) => api.get(`/api/categories/${id}`),
-  create: (data: any) => api.post('/api/categories', data),
+  create: (data: any) => api.post('/api/categories/', data),
   update: (id: number, data: any) => api.put(`/api/categories/${id}`, data),
   delete: (id: number) => api.delete(`/api/categories/${id}`),
 };
 
 export const newsAPI = {
-  getAll: (params?: any) => api.get('/api/news', { params }),
+  getAll: (params?: any) => api.get('/api/news/', { params }),
   getById: (id: number) => api.get(`/api/news/${id}`),
-  create: (data: any) => api.post('/api/news', data),
+  create: (data: any) => api.post('/api/news/', data),
   update: (id: number, data: any) => api.put(`/api/news/${id}`, data),
   delete: (id: number) => api.delete(`/api/news/${id}`),
 };
 
 export const contactAPI = {
-  submit: (data: any) => api.post('/api/contact', data),
-  getAll: (params?: any) => api.get('/api/contact', { params }),
+  submit: (data: any) => api.post('/api/contact/', data),
+  getAll: (params?: any) => api.get('/api/contact/', { params }),
   update: (id: number, data: any) => api.put(`/api/contact/${id}`, data),
 };
 
@@ -94,4 +94,20 @@ export const uploadAPI = {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
   },
+};
+
+export const certificatesAPI = {
+  getAll: (params?: any) => api.get('/api/certificates/', { params }),
+  getById: (id: number) => api.get(`/api/certificates/${id}`),
+  create: (data: any) => api.post('/api/certificates/', data),
+  update: (id: number, data: any) => api.put(`/api/certificates/${id}`, data),
+  delete: (id: number) => api.delete(`/api/certificates/${id}`),
+};
+
+export const partnersAPI = {
+  getAll: (params?: any) => api.get('/api/partners/', { params }),
+  getById: (id: number) => api.get(`/api/partners/${id}`),
+  create: (data: any) => api.post('/api/partners/', data),
+  update: (id: number, data: any) => api.put(`/api/partners/${id}`, data),
+  delete: (id: number) => api.delete(`/api/partners/${id}`),
 };

@@ -52,8 +52,6 @@ export default function Hero() {
         <section ref={ref} className="relative bg-gradient-to-br from-gray-50 to-white min-h-[calc(100px)] flex items-center overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    {/* Left Side - Text */}
-                    {/* Left Side - Text */}
                     <div className={`z-10 transition-all duration-1000 transform pl-6 md:pl-24 text-center md:text-left order-2 md:order-1 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         <h2 className={`text-xl md:text-2xl font-bold mb-2 ${slides[currentSlide].color}`}>
                             {slides[currentSlide].subtitle}

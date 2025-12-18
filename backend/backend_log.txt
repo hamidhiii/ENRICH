@@ -1,0 +1,409 @@
+INFO:     Started server process [16060]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+DEBUG: Hardcoded CORS origins: ['http://localhost:3000', 'http://localhost:3001', 'http://127.0.0.1:3000', 'http://127.0.0.1:3001']
+DEBUG: Request: POST http://localhost:8001/api/auth/login
+DEBUG: Origin: None
+INFO:     127.0.0.1:55582 - "POST /api/auth/login HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: None
+INFO:     127.0.0.1:49394 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/products/
+DEBUG: Origin: None
+INFO:     127.0.0.1:63966 - "POST /api/products/ HTTP/1.1" 201 Created
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:52264 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65243 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65243 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:52264 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65357 - "OPTIONS /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: JWT Decode Error: Subject must be a string.
+INFO:     127.0.0.1:65357 - "POST /api/products/ HTTP/1.1" 401 Unauthorized
+DEBUG: Request: OPTIONS http://localhost:8001/api/auth/login
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56466 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/auth/login
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56466 - "POST /api/auth/login HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54258 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54258 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57633 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57633 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:49299 - "POST /api/products/ HTTP/1.1" 201 Created
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:52307 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:52307 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51708 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51708 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:49669 - "OPTIONS /api/products/1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53779 - "OPTIONS /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57482 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57482 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53779 - "GET /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57482 - "GET /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/upload/image
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56232 - "OPTIONS /api/upload/image HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/upload/image
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56232 - "POST /api/upload/image HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56232 - "OPTIONS /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: PUT http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56232 - "PUT /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56232 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:58223 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57336 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62235 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62235 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65509 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63417 - "GET /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65509 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63417 - "GET /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: PUT http://localhost:8001/api/products/1
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54039 - "PUT /api/products/1 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54039 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:64909 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50228 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51244 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54916 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54916 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51244 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/upload/image
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:58293 - "OPTIONS /api/upload/image HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/upload/image
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:58293 - "POST /api/upload/image HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50936 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: POST http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50936 - "POST /api/categories/ HTTP/1.1" 201 Created
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50603 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50603 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "OPTIONS /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "OPTIONS /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50095 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51250 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63741 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63741 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:51250 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_183310_01.jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:60976 - "GET /uploads/images/20251216_183310_01.jpg HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:54907 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56852 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56852 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56852 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56852 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65437 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65437 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_183310_01.jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:51623 - "GET /uploads/images/20251216_183310_01.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63290 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63290 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:51623 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:58251 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:55356 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:55356 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:55947 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59739 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:55947 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59739 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:60676 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: OPTIONS http://localhost:8001/api/partners/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63638 - "OPTIONS /api/partners/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/partners/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63638 - "GET /api/partners/ HTTP/1.1" 404 Not Found
+DEBUG: Request: OPTIONS http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:61643 - "OPTIONS /api/certificates/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64392 - "OPTIONS /api/certificates/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:61643 - "GET /api/certificates/ HTTP/1.1" 404 Not Found
+DEBUG: Request: GET http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:53475 - "GET /api/certificates/ HTTP/1.1" 404 Not Found
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62079 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65023 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65023 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62079 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:53536 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: OPTIONS http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:57282 - "OPTIONS /api/products/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60130 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "OPTIONS /api/products/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58348 - "OPTIONS /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62854 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58348 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:60130 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62854 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:53515 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57595 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62766 - "GET /api/products/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54126 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65036 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58718 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65036 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58718 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56601 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:56601 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65355 - "GET /api/certificates/ HTTP/1.1" 404 Not Found
+DEBUG: Request: GET http://localhost:8001/api/certificates/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:65355 - "GET /api/certificates/ HTTP/1.1" 404 Not Found
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:61137 - "GET /api/products/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56799 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:61137 - "GET /api/products/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56799 - "GET /api/categories/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/categories/
+DEBUG: Origin: http://localhost:3000
+DEBUG: Request: GET http://localhost:8001/api/products/
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:49999 - "GET /api/categories/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63339 - "GET /api/products/ HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:57378 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63290 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:63290 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50332 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:50332 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:58545 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:59307 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:59307 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:56211 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: OPTIONS http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62308 - "OPTIONS /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:62308 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+DEBUG: Request: GET http://localhost:8001/uploads/images/20251216_182305_630 (23).jpg
+DEBUG: Origin: None
+INFO:     127.0.0.1:52563 - "GET /uploads/images/20251216_182305_630%20%2823%29.jpg HTTP/1.1" 304 Not Modified
+DEBUG: Request: GET http://localhost:8001/api/products/?limit=4
+DEBUG: Origin: http://localhost:3000
+INFO:     127.0.0.1:53431 - "GET /api/products/?limit=4 HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16060]

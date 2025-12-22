@@ -5,6 +5,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollToTop from "@/components/ScrollToTop";
 
+import { LanguageProvider } from '@/context/LanguageContext';
+
 export default function ClientLayout({
     children,
 }: {
@@ -13,16 +15,18 @@ export default function ClientLayout({
     const pathname = usePathname();
     const isAdmin = pathname?.startsWith('/admin');
 
-    if (isAdmin) {
-        return <>{children}</>;
-    }
-
     return (
-        <>
-            <Header />
-            <main>{children}</main>
-            <Footer />
-            <ScrollToTop />
-        </>
+        <LanguageProvider>
+            {isAdmin ? (
+                children
+            ) : (
+                <>
+                    <Header />
+                    <main>{children}</main>
+                    <Footer />
+                    <ScrollToTop />
+                </>
+            )}
+        </LanguageProvider>
     );
 }

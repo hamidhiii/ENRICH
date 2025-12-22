@@ -6,12 +6,14 @@ import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsCTA from '@/components/products/ProductsCTA';
 import { productsAPI, categoriesAPI } from '@/lib/api';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Products() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [products, setProducts] = useState([]);
+    const { t, language } = useLanguage();
     const [categories, setCategories] = useState<any[]>([
-        { id: 'all', name_uz: 'Barcha mahsulotlar', slug: 'all' }
+        { id: 'all', name: t.products.all_products, slug: 'all' }
     ]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,12 +30,12 @@ export default function Products() {
                 // Format categories for the filter component
                 const apiCategories = categoriesRes.data.map((cat: any) => ({
                     id: cat.id,
-                    name: cat.name_uz, // Map name_uz to name for the component
+                    name: language === 'uz' ? cat.name_uz : (cat.name_ru || cat.name_uz),
                     slug: cat.slug
                 }));
 
                 setCategories([
-                    { id: 'all', name: 'Barcha mahsulotlar', slug: 'all' },
+                    { id: 'all', name: t.products.all_products, slug: 'all' },
                     ...apiCategories
                 ]);
             } catch (error) {
@@ -44,7 +46,7 @@ export default function Products() {
         };
 
         fetchData();
-    }, []);
+    }, [language, t.products.all_products]);
 
     const filteredProducts = selectedCategory === 'all'
         ? products

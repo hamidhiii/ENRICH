@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactAPI } from '@/lib/api';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ContactFormSection() {
     const { ref, isVisible } = useScrollAnimation();
+    const { t } = useLanguage();
     const [formData, setFormData] = useState({
         full_name: '',
         email: '',
@@ -46,25 +48,25 @@ export default function ContactFormSection() {
                     {/* Contact Form */}
                     <div className={`bg-white rounded-3xl p-12 shadow-lg transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
                         <h2 className="text-4xl font-bold mb-8 text-slate-600">
-                            Xabar yuboring
+                            {t.contact.form_title}
                         </h2>
 
                         {submitStatus === 'success' && (
                             <div className="mb-6 p-4 rounded-lg bg-green-100 text-green-800">
-                                ✓ Xabaringiz muvaffaqiyatli yuborildi!
+                                {t.contact.success}
                             </div>
                         )}
 
                         {submitStatus === 'error' && (
                             <div className="mb-6 p-4 rounded-lg bg-red-100 text-red-800">
-                                ✗ Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.
+                                {t.contact.error}
                             </div>
                         )}
 
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
-                                    To'liq ismingiz *
+                                    {t.contact.name}
                                 </label>
                                 <input
                                     type="text"
@@ -72,13 +74,13 @@ export default function ContactFormSection() {
                                     value={formData.full_name}
                                     onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
-                                    placeholder="Ismingizni kiriting"
+                                    placeholder={t.contact.name_placeholder}
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
-                                    Email *
+                                    {t.contact.email_label}
                                 </label>
                                 <input
                                     type="email"
@@ -86,39 +88,39 @@ export default function ContactFormSection() {
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
-                                    placeholder="email@example.com"
+                                    placeholder={t.contact.email_placeholder}
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
-                                    Telefon
+                                    {t.contact.phone_label}
                                 </label>
                                 <input
                                     type="tel"
                                     value={formData.phone}
                                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
-                                    placeholder="+998 XX XXX-XX-XX"
+                                    placeholder={t.contact.phone_placeholder}
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
-                                    Mavzu
+                                    {t.contact.subject}
                                 </label>
                                 <input
                                     type="text"
                                     value={formData.subject}
                                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
-                                    placeholder="Xabar mavzusi"
+                                    placeholder={t.contact.subject_placeholder}
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
-                                    Xabar *
+                                    {t.contact.message}
                                 </label>
                                 <textarea
                                     required
@@ -126,7 +128,7 @@ export default function ContactFormSection() {
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                     rows={6}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg resize-none"
-                                    placeholder="Xabaringizni yozing..."
+                                    placeholder={t.contact.message_placeholder}
                                 />
                             </div>
 
@@ -135,7 +137,7 @@ export default function ContactFormSection() {
                                 disabled={isSubmitting}
                                 className="w-full py-5 rounded-lg font-bold text-xl text-white transition-all hover:opacity-90 disabled:opacity-50 bg-lime-500"
                             >
-                                {isSubmitting ? 'Yuborilmoqda...' : 'Xabar yuborish'}
+                                {isSubmitting ? t.contact.submitting : t.contact.submit}
                             </button>
                         </form>
                     </div>
@@ -157,24 +159,22 @@ export default function ContactFormSection() {
                         {/* Address Details */}
                         <div className="bg-white rounded-3xl p-12 shadow-lg">
                             <h3 className="text-3xl font-bold mb-6 text-slate-600">
-                                Bizning manzil
+                                {t.contact.our_address}
                             </h3>
                             <div className="space-y-4">
                                 <p className="text-gray-600 text-lg leading-relaxed">
-                                    <strong>Manzil:</strong><br />
-                                    Toshkent, Olmazor tumani,<br />
-                                    Noraztepa 5-tor ko'cha, 5 uy
+                                    <strong>{t.contact.address}:</strong><br />
+                                    {t.contact.full_address}
                                 </p>
                                 <p className="text-gray-600 text-lg">
-                                    <strong>Telefon:</strong> +998 98 305-25-35
+                                    <strong>{t.contact.phone_label}:</strong> +998 98 305-25-35
                                 </p>
                                 <p className="text-gray-600 text-lg">
-                                    <strong>Email:</strong> enrich@mail.com
+                                    <strong>{t.contact.email_label}:</strong> enrich@mail.com
                                 </p>
                                 <p className="text-gray-600 text-lg">
-                                    <strong>Ish vaqti:</strong><br />
-                                    Dushanba - Juma: 9:00 - 18:00<br />
-                                    Shanba - Yakshanba: Dam olish
+                                    <strong>{t.contact.hours}:</strong><br />
+                                    <span className="whitespace-pre-line">{t.contact.full_hours}</span>
                                 </p>
                             </div>
                         </div>

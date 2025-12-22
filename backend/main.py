@@ -2,7 +2,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.database import engine, Base, get_settings
-from app.routers import auth, products, categories, news, upload, contact, certificates, partners
+from app.routers.auth import router as auth_router
+from app.routers.products import router as products_router
+from app.routers.categories import router as categories_router
+from app.routers.news import router as news_router
+from app.routers.upload import router as upload_router
+from app.routers.contact import router as contact_router
+from app.routers.certificates import router as certificates_router
+from app.routers.partners import router as partners_router
+from app.routers.content import router as content_router
 import os
 
 # Create database tables
@@ -54,14 +62,15 @@ os.makedirs(settings.upload_dir, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
 # Include routers
-app.include_router(auth.router)
-app.include_router(products.router)
-app.include_router(categories.router)
-app.include_router(news.router)
-app.include_router(upload.router)
-app.include_router(contact.router)
-app.include_router(certificates.router)
-app.include_router(partners.router)
+app.include_router(auth_router)
+app.include_router(products_router)
+app.include_router(categories_router)
+app.include_router(news_router)
+app.include_router(upload_router)
+app.include_router(contact_router)
+app.include_router(certificates_router)
+app.include_router(partners_router)
+app.include_router(content_router)
 
 
 @app.get("/")

@@ -1,15 +1,19 @@
 'use client';
 
-import { Leaf, Pill, FlaskConical, Droplets, Package } from 'lucide-react';
+import Link from 'next/link';
+import { Leaf, Pill, FlaskConical, Droplets, Package, ArrowRight } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Product {
     id: number;
     name_uz: string;
+    name_ru?: string;
     category: {
         name_uz: string;
     };
     description_uz?: string;
+    description_ru?: string;
     image?: string;
     // Fallback for static data if needed, but we aim to replace it
     icon?: React.ReactNode;
@@ -21,14 +25,16 @@ interface ProductsGridProps {
 
 export default function ProductsGrid({ products }: ProductsGridProps) {
     const { ref, isVisible } = useScrollAnimation();
+    const { t, language } = useLanguage();
 
     return (
         <section ref={ref} className="py-20 bg-gray-100 min-h-screen flex items-center">
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {products.map((product, index) => (
-                        <div
+                        <Link
                             key={product.id}
+                            href={`/products/${product.id}`}
                             className={`bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-700 hover:-translate-y-2 border-2 cursor-pointer ${index === 2 ? 'border-lime-500' : 'border-gray-300'} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >
@@ -38,7 +44,7 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                                     {product.image ? (
                                         <img
                                             src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
-                                            alt={product.name_uz || product.name}
+                                            alt={language === 'uz' ? product.name_uz : (product.name_ru || product.name_uz)}
                                             className="w-full h-full object-contain"
                                         />
                                     ) : (
@@ -50,18 +56,18 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                             {/* Product Info */}
                             <div className="p-6 text-center">
                                 <h3 className="text-2xl font-bold mb-3 text-slate-600">
-                                    {product.name_uz || product.name}
+                                    {language === 'uz' ? product.name_uz : (product.name_ru || product.name_uz)}
                                 </h3>
-                                <p className="text-gray-600 text-base leading-relaxed mb-4 line-clamp-3">
-                                    {product.description_uz || product.description || product.instructions_uz}
+                                <p className="text-gray-600 text-base leading-relaxed mb-6 line-clamp-3">
+                                    {language === 'uz' ? product.description_uz : (product.description_ru || product.description_uz)}
                                 </p>
-                                <button
-                                    className="w-full py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90 bg-lime-500"
-                                >
-                                    Batafsil
-                                </button>
+
+                                <div className="inline-flex items-center gap-2 text-lime-600 font-bold hover:text-lime-700 transition-colors group">
+                                    {t.products.details}
+                                    <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
@@ -72,10 +78,10 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                             <Package size={96} />
                         </div>
                         <h3 className="text-3xl font-bold mb-4 text-slate-600">
-                            Mahsulotlar topilmadi
+                            {t.products.no_products}
                         </h3>
                         <p className="text-gray-600 text-lg">
-                            Ushbu kategoriyada hozircha mahsulotlar mavjud emas
+                            {t.products.no_products_desc}
                         </p>
                     </div>
                 )}

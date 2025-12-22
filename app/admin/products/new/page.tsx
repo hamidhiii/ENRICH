@@ -17,9 +17,18 @@ export default function NewProductPage() {
         name_en: '',
         category_id: '',
         form: 'tablet',
-        description_ru: '', // Mapping to instructions/description based on model
+        description_ru: '',
         description_uz: '',
         description_en: '',
+        composition_ru: '',
+        composition_uz: '',
+        composition_en: '',
+        storage_ru: '',
+        storage_uz: '',
+        storage_en: '',
+        side_effects_ru: '',
+        side_effects_uz: '',
+        side_effects_en: '',
         image: '',
         is_active: true
     });
@@ -59,6 +68,15 @@ export default function NewProductPage() {
                 instructions_uz: formData.description_uz || null,
                 instructions_ru: formData.description_ru || null,
                 instructions_en: formData.description_en || null,
+                composition_uz: formData.composition_uz || null,
+                composition_ru: formData.composition_ru || null,
+                composition_en: formData.composition_en || null,
+                storage_conditions_uz: formData.storage_uz || null,
+                storage_conditions_ru: formData.storage_ru || null,
+                storage_conditions_en: formData.storage_en || null,
+                side_effects_uz: formData.side_effects_uz || null,
+                side_effects_ru: formData.side_effects_ru || null,
+                side_effects_en: formData.side_effects_en || null,
                 image: formData.image || null,
                 is_active: formData.is_active
             };
@@ -66,18 +84,17 @@ export default function NewProductPage() {
             await productsAPI.create(productData);
             router.push('/admin/products');
         } catch (error: any) {
+            // Ignore 401 errors as they are handled by the interceptor
+            if (error.response?.status === 401) return;
+
             console.error('Error creating product:', error);
             let errorMessage = 'Failed to create product';
 
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
             } else if (error.request) {
-                // The request was made but no response was received
                 errorMessage = 'No response received from server (Network/CORS error)';
             } else {
-                // Something happened in setting up the request that triggered an Error
                 errorMessage = error.message;
             }
 
@@ -202,27 +219,117 @@ export default function NewProductPage() {
 
                 {/* Descriptions */}
                 <div className="space-y-6">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Description / Instructions (UZ)</label>
-                        <textarea
-                            name="description_uz"
-                            rows={4}
-                            value={formData.description_uz}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
-                            placeholder="Product details in Uzbek..."
-                        />
+                    <h3 className="text-xl font-bold text-gray-800 border-b pb-2">Description / Instructions</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Instructions (UZ)</label>
+                            <textarea
+                                name="description_uz"
+                                rows={4}
+                                value={formData.description_uz}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Product details in Uzbek..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Instructions (RU)</label>
+                            <textarea
+                                name="description_ru"
+                                rows={4}
+                                value={formData.description_ru}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Product details in Russian..."
+                            />
+                        </div>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Description / Instructions (RU)</label>
-                        <textarea
-                            name="description_ru"
-                            rows={4}
-                            value={formData.description_ru}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
-                            placeholder="Product details in Russian..."
-                        />
+                </div>
+
+                {/* Composition */}
+                <div className="space-y-6">
+                    <h3 className="text-xl font-bold text-gray-800 border-b pb-2">Composition</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Composition (UZ)</label>
+                            <textarea
+                                name="composition_uz"
+                                rows={3}
+                                value={formData.composition_uz}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Composition in Uzbek..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Composition (RU)</label>
+                            <textarea
+                                name="composition_ru"
+                                rows={3}
+                                value={formData.composition_ru}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Composition in Russian..."
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Storage Conditions */}
+                <div className="space-y-6">
+                    <h3 className="text-xl font-bold text-gray-800 border-b pb-2">Storage Conditions</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Storage (UZ)</label>
+                            <textarea
+                                name="storage_uz"
+                                rows={3}
+                                value={formData.storage_uz}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Storage conditions in Uzbek..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Storage (RU)</label>
+                            <textarea
+                                name="storage_ru"
+                                rows={3}
+                                value={formData.storage_ru}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Storage conditions in Russian..."
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Side Effects */}
+                <div className="space-y-6">
+                    <h3 className="text-xl font-bold text-gray-800 border-b pb-2">Side Effects</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Side Effects (UZ)</label>
+                            <textarea
+                                name="side_effects_uz"
+                                rows={3}
+                                value={formData.side_effects_uz}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Side effects in Uzbek..."
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Side Effects (RU)</label>
+                            <textarea
+                                name="side_effects_ru"
+                                rows={3}
+                                value={formData.side_effects_ru}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
+                                placeholder="Side effects in Russian..."
+                            />
+                        </div>
                     </div>
                 </div>
 

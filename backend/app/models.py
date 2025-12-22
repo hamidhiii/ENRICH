@@ -308,3 +308,37 @@ class AuditLog(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     user = relationship("User", back_populates="audit_logs")
+
+
+class PageSection(Base):
+    __tablename__ = "page_sections"
+
+    id = Column(Integer, primary_key=True, index=True)
+    page_path = Column(String(255), nullable=False)  # e.g., "home", "about"
+    section_key = Column(String(255), nullable=False)  # e.g., "hero", "mission"
+
+    # Multilingual fields
+    title_uz = Column(String(500))
+    title_ru = Column(String(500))
+    title_en = Column(String(500))
+
+    subtitle_uz = Column(String(500))
+    subtitle_ru = Column(String(500))
+    subtitle_en = Column(String(500))
+
+    content_uz = Column(Text)
+    content_ru = Column(Text)
+    content_en = Column(Text)
+
+    image = Column(String(500))
+    background_image = Column(String(500))
+    video_url = Column(String(500))
+
+    button_text_uz = Column(String(255))
+    button_text_ru = Column(String(255))
+    button_text_en = Column(String(255))
+    button_link = Column(String(500))
+
+    order = Column(Integer, default=0)
+    is_active = Column(Boolean, default=True)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())

@@ -4,7 +4,7 @@ import Hero from '@/components/home/Hero';
 import AboutSection from '@/components/home/AboutSection';
 import ProductsPreview from '@/components/home/ProductsPreview';
 import Statistics from '@/components/home/Statistics';
-import Testimonials from '@/components/home/Testimonials';
+import NewsSection from '@/components/home/NewsSection';
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       <AboutSection />
       <ProductsPreview />
       <Statistics />
-      <Testimonials />
+      <NewsSection />
     </div>
   );
 }

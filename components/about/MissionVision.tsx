@@ -1,10 +1,35 @@
-'use client';
-
+import { useState, useEffect } from 'react';
 import { Target, Eye } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useLanguage } from '@/context/LanguageContext';
+import { contentAPI } from '@/lib/api';
 
 export default function MissionVision() {
     const { ref, isVisible } = useScrollAnimation();
+    const { t, language } = useLanguage();
+    const [missionData, setMissionData] = useState<any>(null);
+    const [visionData, setVisionData] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const response = await contentAPI.getSections({ page_path: 'about' });
+                const mission = response.data.find((s: any) => s.section_key === 'mission');
+                const vision = response.data.find((s: any) => s.section_key === 'vision');
+                if (mission) setMissionData(mission);
+                if (vision) setVisionData(vision);
+            } catch (error) {
+                console.error('Error fetching mission/vision data:', error);
+            }
+        };
+        fetchContent();
+    }, []);
+
+    const getField = (data: any, field: string, fallback: string) => {
+        if (!data) return fallback;
+        const key = `${field}_${language}`;
+        return data[key] || data[`${field}_uz`] || '';
+    };
 
     return (
         <section ref={ref} className="py-20 bg-gray-100 min-h-screen flex items-center">
@@ -15,11 +40,10 @@ export default function MissionVision() {
                             <Target size={64} />
                         </div>
                         <h3 className="text-3xl font-bold mb-6 text-slate-600">
-                            Missiya
+                            {getField(missionData, 'title', t.about_page.mission_title)}
                         </h3>
                         <p className="text-gray-600 leading-relaxed text-lg">
-                            Yuqori sifatli, xavfsiz va samarali farmatsevtika mahsulotlarini ishlab chiqarish orqali
-                            odamlarning sog'lig'ini yaxshilash va hayot sifatini oshirish.
+                            {getField(missionData, 'content', t.about_page.mission_desc)}
                         </p>
                     </div>
                     <div className={`bg-white rounded-3xl p-12 shadow-lg transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
@@ -27,11 +51,10 @@ export default function MissionVision() {
                             <Eye size={64} />
                         </div>
                         <h3 className="text-3xl font-bold mb-6 text-slate-600">
-                            Maqsad
+                            {getField(visionData, 'title', t.about_page.vision_title)}
                         </h3>
                         <p className="text-gray-600 leading-relaxed text-lg">
-                            O'zbekiston va mintaqa bo'ylab eng ishonchli va innovatsion farmatsevtika kompaniyasi
-                            bo'lish, sog'liqni saqlash sohasida yetakchi o'rinni egallash.
+                            {getField(visionData, 'content', t.about_page.vision_desc)}
                         </p>
                     </div>
                 </div>

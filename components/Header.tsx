@@ -5,19 +5,21 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { t } = useLanguage();
 
     const isActive = (path: string) => pathname === path;
 
     const navLinks = [
-        { href: '/', label: 'Bosh sahifa' },
-        { href: '/about', label: 'Biz haqimizda' },
-        { href: '/products', label: 'Mahsulotlar' },
-        { href: '/partners', label: 'Hamkorlar' },
-        { href: '/contact', label: 'Aloqa' },
+        { href: '/', label: t.header.home },
+        { href: '/about', label: t.header.about },
+        { href: '/products', label: t.header.products },
+        { href: '/partners', label: t.header.partners },
+        { href: '/contact', label: t.header.contact },
     ];
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -26,11 +28,11 @@ export default function Header() {
         <>
             {/* Top Bar - Green with Rounded Corners */}
             <div className="bg-white py-2 hidden md:block relative z-50">
-                <div className="container mx-auto px-4 md:px-6">
+                <div className="container mx-auto px-4 md:px-6 max-w-7xl">
                     <div className="bg-lime-500 text-white py-2 px-6 rounded-full flex justify-between items-center shadow-sm">
                         <div className="flex items-center gap-2 text-sm">
                             <span>📍</span>
-                            <span>Toshkent, Olmazor tumani, Noraztepa 5-tor ko'cha, 5 uy</span>
+                            <span>{t.header.address}</span>
                         </div>
                         <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2 text-sm">
@@ -55,14 +57,15 @@ export default function Header() {
 
             {/* Main Navigation - Sticky */}
             <nav className="sticky top-0 bg-white shadow-md py-4 md:py-6 border-b z-50">
-                <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
+                <div className="container mx-auto px-4 md:px-6 max-w-7xl flex justify-between items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 md:gap-3 z-50 relative">
-                        <div className="relative w-auto h-auto md:w-32 md:h-32">
+                        <div className="relative w-auto h-auto md:w-40 md:h-16">
                             <Image
                                 src="/images/logo.jpg"
                                 alt="Enrich Logo"
-                                fill
+                                width={160}
+                                height={64}
                                 className="object-contain"
                                 priority
                             />
@@ -71,7 +74,7 @@ export default function Header() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <ul className="hidden md:flex gap-8 items-center">
+                    <ul className="hidden md:flex md:gap-4 lg:gap-8 items-center">
                         {navLinks.map((link) => (
                             <li key={link.href}>
                                 <Link

@@ -111,3 +111,12 @@ export const partnersAPI = {
   update: (id: number, data: any) => api.put(`/api/partners/${id}`, data),
   delete: (id: number) => api.delete(`/api/partners/${id}`),
 };
+
+export const contentAPI = {
+  getSections: (params?: { page_path?: string; is_active?: boolean }) =>
+    api.get('/api/content/sections', { params }),
+  getSectionById: (id: number) => api.get(`/api/content/sections/${id}`),
+  createSection: (data: any) => api.post('/api/content/sections', data),
+  updateSection: (id: number, data: any) => api.put(`/api/content/sections/${id}`, data),
+  deleteSection: (id: number) => api.delete(`/api/content/sections/${id}`),
+};

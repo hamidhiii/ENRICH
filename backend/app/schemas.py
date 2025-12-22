@@ -405,3 +405,62 @@ class SiteSettingsResponse(SiteSettingsBase):
 
     class Config:
         from_attributes = True
+
+
+# ============= Page Section Schemas =============
+class PageSectionBase(BaseModel):
+    page_path: str
+    section_key: str
+    title_uz: Optional[str] = None
+    title_ru: Optional[str] = None
+    title_en: Optional[str] = None
+    subtitle_uz: Optional[str] = None
+    subtitle_ru: Optional[str] = None
+    subtitle_en: Optional[str] = None
+    content_uz: Optional[str] = None
+    content_ru: Optional[str] = None
+    content_en: Optional[str] = None
+    image: Optional[str] = None
+    background_image: Optional[str] = None
+    video_url: Optional[str] = None
+    button_text_uz: Optional[str] = None
+    button_text_ru: Optional[str] = None
+    button_text_en: Optional[str] = None
+    button_link: Optional[str] = None
+    order: int = 0
+    is_active: bool = True
+
+
+class PageSectionCreate(PageSectionBase):
+    pass
+
+
+class PageSectionUpdate(BaseModel):
+    page_path: Optional[str] = None
+    section_key: Optional[str] = None
+    title_uz: Optional[str] = None
+    title_ru: Optional[str] = None
+    title_en: Optional[str] = None
+    subtitle_uz: Optional[str] = None
+    subtitle_ru: Optional[str] = None
+    subtitle_en: Optional[str] = None
+    content_uz: Optional[str] = None
+    content_ru: Optional[str] = None
+    content_en: Optional[str] = None
+    image: Optional[str] = None
+    background_image: Optional[str] = None
+    video_url: Optional[str] = None
+    button_text_uz: Optional[str] = None
+    button_text_ru: Optional[str] = None
+    button_text_en: Optional[str] = None
+    button_link: Optional[str] = None
+    order: Optional[int] = None
+    is_active: Optional[bool] = None
+
+
+class PageSectionResponse(PageSectionBase):
+    id: int
+    updated_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

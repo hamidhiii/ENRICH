@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Sidebar from '@/components/admin/Sidebar';
+import { Menu } from 'lucide-react';
 
 export default function AdminLayout({
     children,
@@ -12,6 +13,7 @@ export default function AdminLayout({
     const router = useRouter();
     const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -39,11 +41,32 @@ export default function AdminLayout({
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <Sidebar />
-            <main className="ml-64 p-8">
-                {children}
-            </main>
+        <div className="min-h-screen bg-gray-50 flex">
+            <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+
+            <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
+                {/* Mobile Header */}
+                <header className="lg:hidden bg-white border-b px-4 py-3 flex items-center justify-between sticky top-0 z-30">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-lime-500 flex items-center justify-center text-white font-bold">
+                            E
+                        </div>
+                        <span className="font-bold text-slate-800">ENRICH Admin</span>
+                    </div>
+                    <button
+                        onClick={() => setIsSidebarOpen(true)}
+                        className="p-2 text-slate-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <Menu size={24} />
+                    </button>
+                </header>
+
+                <main className="flex-1 p-4 md:p-8 overflow-x-hidden">
+                    <div className="max-w-7xl mx-auto">
+                        {children}
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

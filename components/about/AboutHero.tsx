@@ -1,18 +1,57 @@
-'use client';
-
+import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useLanguage } from '@/context/LanguageContext';
+import { contentAPI } from '@/lib/api';
 
 export default function AboutHero() {
     const { ref, isVisible } = useScrollAnimation();
+    const { t, language } = useLanguage();
+    const [heroData, setHeroData] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchHero = async () => {
+            try {
+                const response = await contentAPI.getSections({ page_path: 'about' });
+                const hero = response.data.find((s: any) => s.section_key === 'about_hero');
+                if (hero) setHeroData(hero);
+            } catch (error) {
+                console.error('Error fetching about hero data:', error);
+            }
+        };
+        fetchHero();
+    }, []);
+
+    const getField = (field: string) => {
+        if (!heroData) return t.about_page[`hero_${field}` as keyof typeof t.about_page] || '';
+        const key = `${field}_${language}`;
+        return heroData[key] || heroData[`${field}_uz`] || '';
+    };
+
+    const bgImage = heroData?.background_image
+        ? (heroData.background_image.startsWith('http') ? heroData.background_image : `http://localhost:8001${heroData.background_image}`)
+        : null;
 
     return (
-        <section ref={ref} className="py-20 bg-gradient-to-br from-gray-50 to-white min-h-[50vh] flex items-center">
-            <div className="container mx-auto px-6">
+        <section
+            ref={ref}
+            className="relative py-20 bg-gradient-to-br from-gray-50 to-white min-h-[50vh] flex items-center overflow-hidden"
+        >
+            {bgImage && (
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src={bgImage}
+                        alt="Background"
+                        className="w-full h-full object-cover opacity-20"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-white/80" />
+                </div>
+            )}
+            <div className="container mx-auto px-6 relative z-10">
                 <h1 className={`text-6xl font-bold text-center mb-8 text-slate-600 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <span className="text-lime-500">ENRICH</span> haqida
+                    {getField('title')}
                 </h1>
                 <p className={`text-xl text-gray-600 text-center max-w-3xl mx-auto transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    Farmatsevtika sohasida innovatsion yechimlar taqdim etuvchi kompaniya
+                    {getField('content')}
                 </p>
             </div>
         </section>

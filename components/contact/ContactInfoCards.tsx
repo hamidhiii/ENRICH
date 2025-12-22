@@ -2,9 +2,11 @@
 
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ContactInfoCards() {
     const { ref, isVisible } = useScrollAnimation();
+    const { t } = useLanguage();
 
     return (
         <section ref={ref} className="py-20 bg-white min-h-screen flex items-center">
@@ -13,26 +15,26 @@ export default function ContactInfoCards() {
                     {[
                         {
                             icon: <Phone size={48} />,
-                            title: 'Telefon',
+                            title: t.contact.phone,
                             content: '+998 98 305-25-35',
                             color: 'text-lime-500',
                         },
                         {
                             icon: <Mail size={48} />,
-                            title: 'Email',
+                            title: t.contact.email,
                             content: 'enrich@mail.com',
                             color: 'text-orange-400',
                         },
                         {
                             icon: <MapPin size={48} />,
-                            title: 'Manzil',
-                            content: 'Toshkent, Olmazor tumani',
+                            title: t.contact.address,
+                            content: t.contact.address_short,
                             color: 'text-lime-500',
                         },
                         {
                             icon: <Clock size={48} />,
-                            title: 'Ish vaqti',
-                            content: 'Dush-Juma: 9:00-18:00',
+                            title: t.contact.hours,
+                            content: t.contact.hours_short,
                             color: 'text-orange-400',
                         },
                     ].map((item, index) => (

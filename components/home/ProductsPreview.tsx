@@ -6,11 +6,13 @@ import { ArrowRight } from 'lucide-react';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { productsAPI } from '@/lib/api';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function ProductsPreview() {
     const { ref, isVisible } = useScrollAnimation();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const { t } = useLanguage();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -30,10 +32,10 @@ export default function ProductsPreview() {
 
     return (
         <section className="py-20 bg-gray-50">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-6 max-w-7xl">
                 <div ref={ref} className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <h2 className="text-4xl font-bold mb-4 text-slate-800">
-                        Bizning Mahsulotlar
+                        {t.products.title}
                     </h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                         Yuqori sifatli va samarali dori vositalari

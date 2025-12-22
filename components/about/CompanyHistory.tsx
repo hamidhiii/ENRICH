@@ -1,10 +1,42 @@
-'use client';
-
+import { useState, useEffect } from 'react';
 import { Factory } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { useLanguage } from '@/context/LanguageContext';
+import { contentAPI } from '@/lib/api';
 
 export default function CompanyHistory() {
     const { ref, isVisible } = useScrollAnimation();
+    const { t, language } = useLanguage();
+    const [historyData, setHistoryData] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchHistory = async () => {
+            try {
+                const response = await contentAPI.getSections({ page_path: 'about' });
+                const history = response.data.find((s: any) => s.section_key === 'history');
+                if (history) setHistoryData(history);
+            } catch (error) {
+                console.error('Error fetching company history data:', error);
+            }
+        };
+        fetchHistory();
+    }, []);
+
+    const getField = (field: string) => {
+        if (!historyData) {
+            if (field === 'title') return t.about_page.history_title;
+            if (field === 'content') return `${t.about_page.history_desc1}\n\n${t.about_page.history_desc2}`;
+            if (field === 'subtitle') return '2017';
+            if (field === 'button_text') return t.about_page.founded;
+            return '';
+        }
+        const key = `${field}_${language}`;
+        return historyData[key] || historyData[`${field}_uz`] || '';
+    };
+
+    const historyImage = historyData?.image
+        ? (historyData.image.startsWith('http') ? historyData.image : `http://localhost:8001${historyData.image}`)
+        : null;
 
     return (
         <section ref={ref} className="py-20 bg-white min-h-screen flex items-center">
@@ -12,26 +44,32 @@ export default function CompanyHistory() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
                         <h2 className="text-4xl font-bold mb-8 text-slate-600">
-                            Kompaniya tarixi
+                            {getField('title')}
                         </h2>
-                        <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                            «ENRICH» kompaniyasi 2017-yilda tashkil etilgan bo'lib, O'zbekiston farmatsevtika
-                            bozorida eng tez rivojlanayotgan kompaniyalardan biri hisoblanadi.
-                        </p>
-                        <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                            Kompaniyamiz yuqori sifatli tabiiy va sintetik dori vositalar ishlab chiqarish bilan
-                            shug'ullanadi. Bizning maqsadimiz - har bir oilaga sog'lom hayot kechirish imkoniyatini
-                            yaratish.
-                        </p>
-                    </div>
-                    <div className={`bg-gradient-to-br from-lime-300 to-lime-500 rounded-3xl h-96 flex items-center justify-center transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-                        <div className="text-white text-center flex flex-col items-center">
-                            <div className="mb-4 transition-transform duration-500 hover:scale-110">
-                                <Factory size={96} />
-                            </div>
-                            <p className="text-2xl font-bold">2017</p>
-                            <p className="text-lg">Tashkil etilgan yil</p>
+                        <div className="text-gray-600 leading-relaxed mb-6 text-lg whitespace-pre-line">
+                            {getField('content')}
                         </div>
+                    </div>
+                    <div className={`relative rounded-3xl h-96 overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+                        {historyImage ? (
+                            <img
+                                src={historyImage}
+                                alt="Company History"
+                                className="w-full h-full object-cover"
+                            />
+                        ) : (
+                            <div className="bg-gradient-to-br from-lime-300 to-lime-500 w-full h-full flex items-center justify-center">
+                                <div className="text-white text-center flex flex-col items-center">
+                                    <div className="mb-4 transition-transform duration-500 hover:scale-110">
+                                        <div className="p-6 bg-white/20 rounded-full backdrop-blur-sm">
+                                            <Factory size={64} />
+                                        </div>
+                                    </div>
+                                    <p className="text-4xl font-bold mb-2">{getField('subtitle')}</p>
+                                    <p className="text-xl opacity-90">{getField('button_text')}</p>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

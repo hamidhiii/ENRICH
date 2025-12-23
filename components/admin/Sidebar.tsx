@@ -15,23 +15,11 @@ import {
     MessageSquare,
     Image,
     Globe,
-    X
+    X,
+    History,
+    Database
 } from 'lucide-react';
-
-const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
-    { icon: Package, label: 'Mahsulotlar', href: '/admin/products' },
-    { icon: Layers, label: 'Kategoriyalar', href: '/admin/categories' },
-    { icon: FileText, label: 'Yangiliklar', href: '/admin/news' },
-    { icon: Award, label: 'Sertifikatlar', href: '/admin/certificates' },
-    { icon: Briefcase, label: 'Vakansiyalar', href: '/admin/careers' },
-    { icon: Globe, label: 'Hamkorlar', href: '/admin/partners' },
-    { icon: LayoutDashboard, label: 'Sahifalar', href: '/admin/content' },
-    { icon: MessageSquare, label: 'Xabarlar', href: '/admin/messages' },
-    { icon: Image, label: 'Media', href: '/admin/media' },
-    { icon: Users, label: 'Foydalanuvchilar', href: '/admin/users' },
-    { icon: Settings, label: 'Sozlamalar', href: '/admin/settings' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -40,6 +28,21 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     const pathname = usePathname();
+    const { t } = useLanguage();
+
+    const menuItems = [
+        { icon: LayoutDashboard, label: t.admin.sidebar.dashboard, href: '/admin' },
+        { icon: Package, label: t.admin.sidebar.products, href: '/admin/products' },
+        { icon: Layers, label: t.admin.sidebar.categories, href: '/admin/categories' },
+        { icon: FileText, label: t.admin.sidebar.news, href: '/admin/news' },
+        { icon: Award, label: t.admin.sidebar.certificates, href: '/admin/certificates' },
+        { icon: Globe, label: t.admin.sidebar.partners, href: '/admin/partners' },
+        { icon: LayoutDashboard, label: t.admin.sidebar.content, href: '/admin/content' },
+        { icon: MessageSquare, label: t.admin.sidebar.messages, href: '/admin/messages' },
+        { icon: History, label: t.admin.sidebar.auditLog, href: '/admin/audit-logs' },
+        { icon: Database, label: t.admin.sidebar.backup, href: '/admin/backup' },
+        { icon: Settings, label: t.admin.sidebar.settings, href: '/admin/settings' },
+    ];
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -100,7 +103,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                         className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
                     >
                         <LogOut size={20} />
-                        <span className="font-medium">Chiqish</span>
+                        <span className="font-medium">{t.admin.sidebar.logout}</span>
                     </button>
                 </div>
             </aside>

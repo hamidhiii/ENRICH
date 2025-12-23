@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { newsAPI } from '@/lib/api';
+import { newsAPI, News } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 export default function NewNewsPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<News>>({
         title_ru: '',
         title_uz: '',
         title_en: '',
@@ -59,15 +60,15 @@ export default function NewNewsPage() {
         try {
             await newsAPI.create(formData);
             router.push('/admin/news');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error creating news:', error);
             let errorMessage = 'Failed to create news';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 

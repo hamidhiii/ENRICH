@@ -8,7 +8,7 @@ import NewsSection from '@/components/home/NewsSection';
 
 export default function Home() {
   return (
-    <div className="pt-32">
+    <div className="">
       <Hero />
       <AboutSection />
       <ProductsPreview />

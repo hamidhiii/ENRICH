@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function AboutHero() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [heroData, setHeroData] = useState<any>(null);
+    const [heroData, setHeroData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchHero = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'about' });
-                const hero = response.data.find((s: any) => s.section_key === 'about_hero');
+                const sections = response.data as PageSection[];
+                const hero = sections.find((s: PageSection) => s.section_key === 'about_hero');
                 if (hero) setHeroData(hero);
             } catch (error) {
                 console.error('Error fetching about hero data:', error);
@@ -23,8 +24,8 @@ export default function AboutHero() {
 
     const getField = (field: string) => {
         if (!heroData) return t.about_page[`hero_${field}` as keyof typeof t.about_page] || '';
-        const key = `${field}_${language}`;
-        return heroData[key] || heroData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (heroData[key] as string) || (heroData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const bgImage = heroData?.background_image

@@ -11,6 +11,10 @@ from app.routers.contact import router as contact_router
 from app.routers.certificates import router as certificates_router
 from app.routers.partners import router as partners_router
 from app.routers.content import router as content_router
+from app.routers.settings import router as settings_router
+from app.routers.stats import router as stats_router
+from app.routers.audit_logs import router as audit_logs_router
+from app.routers.backup import router as backup_router
 import os
 
 # Create database tables
@@ -71,6 +75,10 @@ app.include_router(contact_router)
 app.include_router(certificates_router)
 app.include_router(partners_router)
 app.include_router(content_router)
+app.include_router(settings_router)
+app.include_router(stats_router)
+app.include_router(audit_logs_router)
+app.include_router(backup_router)
 
 
 @app.get("/")

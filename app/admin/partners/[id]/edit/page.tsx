@@ -4,7 +4,8 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { partnersAPI } from '@/lib/api';
+import { partnersAPI, Partner } from '@/lib/api';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
@@ -13,7 +14,7 @@ export default function EditPartnerPage({ params }: { params: Params }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Partner>>({
         company_name: '',
         contact_person: '',
         email: '',
@@ -30,7 +31,7 @@ export default function EditPartnerPage({ params }: { params: Params }) {
         const fetchPartner = async () => {
             try {
                 const response = await partnersAPI.getById(parseInt(id));
-                const partner = response.data;
+                const partner = response.data as Partner;
 
                 setFormData({
                     company_name: partner.company_name,
@@ -70,15 +71,15 @@ export default function EditPartnerPage({ params }: { params: Params }) {
         try {
             await partnersAPI.update(parseInt(id), formData);
             router.push('/admin/partners');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error updating partner:', error);
             let errorMessage = 'Failed to update partner';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 

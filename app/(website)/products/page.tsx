@@ -5,14 +5,20 @@ import ProductsHero from '@/components/products/ProductsHero';
 import CategoryFilter from '@/components/products/CategoryFilter';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ProductsCTA from '@/components/products/ProductsCTA';
-import { productsAPI, categoriesAPI } from '@/lib/api';
+import { productsAPI, categoriesAPI, Product, Category } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
+
+interface FilterCategory {
+    id: string | number;
+    name: string;
+    slug: string;
+}
 
 export default function Products() {
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const { t, language } = useLanguage();
-    const [categories, setCategories] = useState<any[]>([
+    const [categories, setCategories] = useState<FilterCategory[]>([
         { id: 'all', name: t.products.all_products, slug: 'all' }
     ]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,10 +31,10 @@ export default function Products() {
                     categoriesAPI.getAll()
                 ]);
 
-                setProducts(productsRes.data);
+                setProducts(productsRes.data as Product[]);
 
                 // Format categories for the filter component
-                const apiCategories = categoriesRes.data.map((cat: any) => ({
+                const apiCategories: FilterCategory[] = (categoriesRes.data as Category[]).map((cat: Category) => ({
                     id: cat.id,
                     name: language === 'uz' ? cat.name_uz : (cat.name_ru || cat.name_uz),
                     slug: cat.slug
@@ -50,7 +56,7 @@ export default function Products() {
 
     const filteredProducts = selectedCategory === 'all'
         ? products
-        : products.filter((p: any) => p.category?.slug === selectedCategory || p.category_id === Number(selectedCategory));
+        : products.filter((p: Product) => p.category?.slug === selectedCategory || p.category_id === Number(selectedCategory));
 
     return (
         <div className="pt-32">

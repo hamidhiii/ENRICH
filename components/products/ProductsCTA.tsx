@@ -1,18 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function ProductsCTA() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [ctaData, setCtaData] = useState<any>(null);
+    const [ctaData, setCtaData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchCTA = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'products' });
-                const cta = response.data.find((s: any) => s.section_key === 'cta');
+                const sections = response.data as PageSection[];
+                const cta = sections.find((s: PageSection) => s.section_key === 'cta');
                 if (cta) setCtaData(cta);
             } catch (error) {
                 console.error('Error fetching CTA data:', error);
@@ -23,8 +24,8 @@ export default function ProductsCTA() {
 
     const getField = (field: string) => {
         if (!ctaData) return t.products[`cta_${field}` as keyof typeof t.products] || '';
-        const key = `${field}_${language}`;
-        return ctaData[key] || ctaData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (ctaData[key] as string) || (ctaData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const bgImage = ctaData?.background_image

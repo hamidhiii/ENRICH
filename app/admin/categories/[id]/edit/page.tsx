@@ -4,8 +4,9 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { categoriesAPI } from '@/lib/api';
+import { categoriesAPI, Category } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
@@ -14,7 +15,7 @@ export default function EditCategoryPage({ params }: { params: Params }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Category>>({
         name_ru: '',
         name_uz: '',
         name_en: '',
@@ -31,7 +32,7 @@ export default function EditCategoryPage({ params }: { params: Params }) {
         const fetchCategory = async () => {
             try {
                 const response = await categoriesAPI.getById(parseInt(id));
-                const category = response.data;
+                const category = response.data as Category;
 
                 setFormData({
                     name_ru: category.name_ru,
@@ -90,20 +91,20 @@ export default function EditCategoryPage({ params }: { params: Params }) {
         try {
             const categoryData = {
                 ...formData,
-                order: parseInt(formData.order.toString()) || 0
+                order: parseInt(formData.order?.toString() || '0') || 0
             };
 
             await categoriesAPI.update(parseInt(id), categoryData);
             router.push('/admin/categories');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error updating category:', error);
             let errorMessage = 'Failed to update category';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 
@@ -217,7 +218,7 @@ export default function EditCategoryPage({ params }: { params: Params }) {
                 <div>
                     <FileUpload
                         label="Category Icon"
-                        value={formData.icon}
+                        value={formData.icon || ''}
                         onChange={(url) => setFormData(prev => ({ ...prev, icon: url }))}
                     />
                 </div>

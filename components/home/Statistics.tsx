@@ -5,9 +5,17 @@ import { FaUsers, FaAward, FaCertificate, FaBoxes } from 'react-icons/fa';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useCountUp } from '@/hooks/useCountUp';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
-function StatItem({ icon, label, value, suffix = '', isVisible }: { icon: React.ReactNode, label: string, value: number, suffix?: string, isVisible: boolean }) {
+interface StatItemProps {
+    icon: React.ReactNode;
+    label: string;
+    value: number;
+    suffix?: string;
+    isVisible: boolean;
+}
+
+function StatItem({ icon, label, value, suffix = '', isVisible }: StatItemProps) {
     const count = useCountUp(value, 2000, isVisible);
 
     return (
@@ -29,16 +37,23 @@ function StatItem({ icon, label, value, suffix = '', isVisible }: { icon: React.
     );
 }
 
+interface DefaultStatItem {
+    icon: React.ReactNode;
+    label: string;
+    value: number;
+    suffix?: string;
+}
+
 export default function Statistics() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [stats, setStats] = useState<any[]>([]);
+    const [stats, setStats] = useState<PageSection[]>([]);
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
-                const items = response.data.filter((s: any) => s.section_key === 'stat');
+                const items = response.data.filter((s: PageSection) => s.section_key === 'stat');
                 if (items.length > 0) {
                     setStats(items);
                 }
@@ -49,12 +64,12 @@ export default function Statistics() {
         fetchStats();
     }, []);
 
-    const getField = (item: any, field: string) => {
-        const key = `${field}_${language}`;
-        return item[key] || item[`${field}_uz`] || '';
+    const getField = (item: PageSection, field: 'title' | 'subtitle' | 'button_text') => {
+        const key = `${field}_${language}` as keyof PageSection;
+        return (item[key] as string) || (item[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
-    const defaultItems = [
+    const defaultItems: DefaultStatItem[] = [
         { icon: <FaUsers />, label: t.products.satisfied_customers, value: 1963 },
         { icon: <FaAward />, label: t.products.quality_service, value: 99, suffix: '%' },
         { icon: <FaCertificate />, label: t.products.quality_certificates, value: 33 },
@@ -70,16 +85,29 @@ export default function Statistics() {
         <section ref={ref} className="py-20 bg-white min-h-[50vh] flex items-center">
             <div className="container mx-auto px-6 max-w-7xl">
                 <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                    {(stats.length > 0 ? stats : defaultItems).map((item: any, index: number) => (
-                        <StatItem
-                            key={index}
-                            icon={item.icon || getIcon(index)}
-                            label={item.label || getField(item, 'title')}
-                            value={item.value || parseInt(getField(item, 'subtitle')) || 0}
-                            suffix={item.suffix || getField(item, 'button_text')}
-                            isVisible={isVisible}
-                        />
-                    ))}
+                    {stats.length > 0 ? (
+                        stats.map((item, index) => (
+                            <StatItem
+                                key={item.id}
+                                icon={getIcon(index)}
+                                label={getField(item, 'title')}
+                                value={parseInt(getField(item, 'subtitle')) || 0}
+                                suffix={getField(item, 'button_text')}
+                                isVisible={isVisible}
+                            />
+                        ))
+                    ) : (
+                        defaultItems.map((item, index) => (
+                            <StatItem
+                                key={index}
+                                icon={item.icon}
+                                label={item.label}
+                                value={item.value}
+                                suffix={item.suffix}
+                                isVisible={isVisible}
+                            />
+                        ))
+                    )}
                 </div>
             </div>
         </section>

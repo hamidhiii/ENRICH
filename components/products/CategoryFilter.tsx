@@ -3,7 +3,7 @@
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 interface Category {
-    id: number;
+    id: string | number;
     name: string;
     slug: string;
 }

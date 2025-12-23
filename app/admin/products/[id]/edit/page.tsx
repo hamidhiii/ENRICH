@@ -4,15 +4,16 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { productsAPI, categoriesAPI } from '@/lib/api';
+import { productsAPI, categoriesAPI, Category, Product } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
 export default function EditProductPage({ params }: { params: Params }) {
     const { id } = use(params);
     const router = useRouter();
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
     const [formData, setFormData] = useState({
@@ -21,17 +22,17 @@ export default function EditProductPage({ params }: { params: Params }) {
         name_en: '',
         category_id: '',
         form: 'tablet',
-        description_ru: '',
         description_uz: '',
+        description_ru: '',
         description_en: '',
-        composition_ru: '',
         composition_uz: '',
+        composition_ru: '',
         composition_en: '',
-        storage_ru: '',
         storage_uz: '',
+        storage_ru: '',
         storage_en: '',
-        side_effects_ru: '',
         side_effects_uz: '',
+        side_effects_ru: '',
         side_effects_en: '',
         image: '',
         is_active: true
@@ -47,24 +48,24 @@ export default function EditProductPage({ params }: { params: Params }) {
 
                 setCategories(categoriesRes.data);
 
-                const product = productRes.data;
+                const product = productRes.data as Product;
                 setFormData({
                     name_ru: product.name_ru,
                     name_uz: product.name_uz,
                     name_en: product.name_en || '',
                     category_id: product.category_id.toString(),
                     form: product.form,
-                    description_ru: product.instructions_ru || '',
                     description_uz: product.instructions_uz || '',
+                    description_ru: product.instructions_ru || '',
                     description_en: product.instructions_en || '',
-                    composition_ru: product.composition_ru || '',
                     composition_uz: product.composition_uz || '',
+                    composition_ru: product.composition_ru || '',
                     composition_en: product.composition_en || '',
-                    storage_ru: product.storage_conditions_ru || '',
                     storage_uz: product.storage_conditions_uz || '',
+                    storage_ru: product.storage_conditions_ru || '',
                     storage_en: product.storage_conditions_en || '',
-                    side_effects_ru: product.side_effects_ru || '',
                     side_effects_uz: product.side_effects_uz || '',
+                    side_effects_ru: product.side_effects_ru || '',
                     side_effects_en: product.side_effects_en || '',
                     image: product.image || '',
                     is_active: product.is_active
@@ -96,39 +97,39 @@ export default function EditProductPage({ params }: { params: Params }) {
             const productData = {
                 name_uz: formData.name_uz,
                 name_ru: formData.name_ru,
-                name_en: formData.name_en || null,
+                name_en: formData.name_en || undefined,
                 category_id: parseInt(formData.category_id),
                 form: formData.form,
-                instructions_uz: formData.description_uz || null,
-                instructions_ru: formData.description_ru || null,
-                instructions_en: formData.description_en || null,
-                composition_uz: formData.composition_uz || null,
-                composition_ru: formData.composition_ru || null,
-                composition_en: formData.composition_en || null,
-                storage_conditions_uz: formData.storage_uz || null,
-                storage_conditions_ru: formData.storage_ru || null,
-                storage_conditions_en: formData.storage_en || null,
-                side_effects_uz: formData.side_effects_uz || null,
-                side_effects_ru: formData.side_effects_ru || null,
-                side_effects_en: formData.side_effects_en || null,
-                image: formData.image || null,
+                instructions_uz: formData.description_uz || undefined,
+                instructions_ru: formData.description_ru || undefined,
+                instructions_en: formData.description_en || undefined,
+                composition_uz: formData.composition_uz || undefined,
+                composition_ru: formData.composition_ru || undefined,
+                composition_en: formData.composition_en || undefined,
+                storage_conditions_uz: formData.storage_uz || undefined,
+                storage_conditions_ru: formData.storage_ru || undefined,
+                storage_conditions_en: formData.storage_en || undefined,
+                side_effects_uz: formData.side_effects_uz || undefined,
+                side_effects_ru: formData.side_effects_ru || undefined,
+                side_effects_en: formData.side_effects_en || undefined,
+                image: formData.image || undefined,
                 is_active: formData.is_active
             };
 
             await productsAPI.update(parseInt(id), productData);
             router.push('/admin/products');
-        } catch (error: any) {
+        } catch (error: unknown) {
             // Ignore 401 errors as they are handled by the interceptor
-            if (error.response?.status === 401) return;
+            if (error instanceof AxiosError && error.response?.status === 401) return;
 
             console.error('Error updating product:', error);
             let errorMessage = 'Failed to update product';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 
@@ -176,7 +177,7 @@ export default function EditProductPage({ params }: { params: Params }) {
                             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
                         >
                             <option value="">Select Category</option>
-                            {categories.map((cat: any) => (
+                            {categories.map((cat: Category) => (
                                 <option key={cat.id} value={cat.id}>
                                     {cat.name_uz} ({cat.name_ru})
                                 </option>

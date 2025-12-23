@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
-import { newsAPI } from '@/lib/api';
+import { newsAPI, News } from '@/lib/api';
 
 export default function NewsPage() {
-    const [news, setNews] = useState([]);
+    const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function NewsPage() {
             try {
                 const response = await newsAPI.getAll();
                 // Filter only published news
-                const publishedNews = response.data.filter((item: any) => item.is_published);
+                const publishedNews = response.data.filter((item: News) => item.is_published);
                 setNews(publishedNews);
             } catch (error) {
                 console.error('Error fetching news:', error);
@@ -43,7 +43,7 @@ export default function NewsPage() {
                     </div>
                 ) : news.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {news.map((item: any) => (
+                        {news.map((item: News) => (
                             <article key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
                                 <div className="relative h-64 overflow-hidden">
                                     {item.image ? (

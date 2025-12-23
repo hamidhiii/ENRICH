@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus, Mail, Phone, MapPin } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { partnersAPI } from '@/lib/api';
+import { partnersAPI, Partner } from '@/lib/api';
 
 export default function PartnersPage() {
-    const [partners, setPartners] = useState([]);
+    const [partners, setPartners] = useState<Partner[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchPartners = async () => {
@@ -44,10 +44,10 @@ export default function PartnersPage() {
         {
             key: 'email',
             label: 'Contact Info',
-            render: (value: string, item: any) => (
+            render: (value: unknown, item: Partner) => (
                 <div className="text-sm space-y-1">
                     <div className="flex items-center gap-1 text-gray-600">
-                        <Mail size={12} /> {value}
+                        <Mail size={12} /> {String(value)}
                     </div>
                     <div className="flex items-center gap-1 text-gray-600">
                         <Phone size={12} /> {item.phone}
@@ -58,25 +58,26 @@ export default function PartnersPage() {
         {
             key: 'country',
             label: 'Location',
-            render: (value: string, item: any) => (
+            render: (value: unknown, item: Partner) => (
                 <div className="flex items-center gap-1 text-gray-600 text-sm">
                     <MapPin size={12} />
-                    {value}{item.city ? `, ${item.city}` : ''}
+                    {String(value)}{item.city ? `, ${item.city}` : ''}
                 </div>
             )
         },
         {
             key: 'status',
             label: 'Status',
-            render: (value: string) => {
+            render: (value: unknown) => {
+                const statusValue = String(value);
                 const colors = {
                     pending: 'bg-yellow-100 text-yellow-800',
                     approved: 'bg-green-100 text-green-800',
                     rejected: 'bg-red-100 text-red-800'
                 };
                 return (
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[value as keyof typeof colors] || 'bg-gray-100 text-gray-800'}`}>
-                        {value.charAt(0).toUpperCase() + value.slice(1)}
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${colors[statusValue as keyof typeof colors] || 'bg-gray-100 text-gray-800'}`}>
+                        {statusValue.charAt(0).toUpperCase() + statusValue.slice(1)}
                     </span>
                 );
             }

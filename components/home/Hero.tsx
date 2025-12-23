@@ -4,24 +4,157 @@ import { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 import Link from 'next/link';
 
-const slides = [
+interface SlideContent {
+    id: number;
+    color: string;
+    imageColor: string;
+    title?: {
+        uz: string;
+        ru: string;
+    };
+    subtitle?: {
+        uz: string;
+        ru: string;
+    };
+    description?: {
+        uz: string;
+        ru: string;
+    };
+    buttonText?: {
+        uz: string;
+        ru: string;
+    };
+}
+
+const slides: SlideContent[] = [
     {
         id: 1,
         color: 'text-lime-500',
         imageColor: 'fill-lime-300 stroke-lime-600',
+        title: {
+            uz: 'Salomatlik va hayotiylik manbai',
+            ru: 'Источник здоровья и жизненной силы'
+        },
+        subtitle: {
+            uz: 'Tabiiy va sifatli farmatsevtika mahsulotlari',
+            ru: 'Натуральная и качественная фармацевтическая продукция'
+        },
+        description: {
+            uz: 'ENRICH - bu dorivor o\'tlardan vitaminlar, minerallar, tabiiy preparatlar ishlab chiqarishga ixtisoslashgan farmatsevtika kompaniyasi.',
+            ru: 'ENRICH - это фармацевтическая компания, специализирующаяся на производстве витаминов, минералов и натуральных препаратов из лекарственных трав.'
+        },
+        buttonText: {
+            uz: 'Batafsil',
+            ru: 'Подробнее'
+        }
     },
     {
         id: 2,
         color: 'text-sky-500',
         imageColor: 'fill-sky-300 stroke-sky-600',
+        title: {
+            uz: 'Yuqori sifat standartlari',
+            ru: 'Высокие стандарты качества'
+        },
+        subtitle: {
+            uz: 'Xalqaro sertifikatlarga ega',
+            ru: 'Международные сертификаты'
+        },
+        description: {
+            uz: 'Barcha mahsulotlarimiz qat\'iy sifat nazoratidan o\'tadi va xalqaro standartlarga javob beradi.',
+            ru: 'Вся наша продукция проходит строгий контроль качества и соответствует международным стандартам.'
+        },
+        buttonText: {
+            uz: 'Sertifikatlar',
+            ru: 'Сертификаты'
+        }
     },
     {
         id: 3,
         color: 'text-amber-500',
         imageColor: 'fill-amber-300 stroke-amber-600',
+        title: {
+            uz: '12 xil mahsulot turi',
+            ru: '12 видов продукции'
+        },
+        subtitle: {
+            uz: 'Keng assortiment',
+            ru: 'Широкий ассортимент'
+        },
+        description: {
+            uz: 'Turli shakllarda taqdim etiladigan 12 ta dori turi - tabletkalar, siroplar va boshqalar.',
+            ru: 'Представлены 12 видов лекарственных средств в различных формах - таблетки, сиропы и другие.'
+        },
+        buttonText: {
+            uz: 'Mahsulotlar',
+            ru: 'Продукция'
+        }
+    },
+    {
+        id: 4,
+        color: 'text-emerald-500',
+        imageColor: 'fill-emerald-300 stroke-emerald-600',
+        title: {
+            uz: 'Tabiiy xom ashyo',
+            ru: 'Натуральное сырье'
+        },
+        subtitle: {
+            uz: 'O\'simlik va mineral kelib chiqishi',
+            ru: 'Растительного и минерального происхождения'
+        },
+        description: {
+            uz: 'Barcha mahsulotlar tabiiy xom ashyo asosida ishlab chiqariladi va ekologik toza.',
+            ru: 'Вся продукция производится на основе натурального сырья и экологически чиста.'
+        },
+        buttonText: {
+            uz: 'Biz haqimizda',
+            ru: 'О нас'
+        }
+    },
+    {
+        id: 5,
+        color: 'text-violet-500',
+        imageColor: 'fill-violet-300 stroke-violet-600',
+        title: {
+            uz: 'Ishonchli hamkorlar',
+            ru: 'Надежные партнеры'
+        },
+        subtitle: {
+            uz: 'Mintaqadagi yetakchi kompaniyalar',
+            ru: 'Ведущие компании региона'
+        },
+        description: {
+            uz: 'Biz O\'zbekiston va mintaqadagi eng yaxshi kompaniyalar bilan hamkorlik qilamiz.',
+            ru: 'Мы сотрудничаем с лучшими компаниями Узбекистана и региона.'
+        },
+        buttonText: {
+            uz: 'Hamkorlar',
+            ru: 'Партнеры'
+        }
+    },
+    {
+        id: 6,
+        color: 'text-rose-500',
+        imageColor: 'fill-rose-300 stroke-rose-600',
+        title: {
+            uz: 'Sog\'lom hayot uchun',
+            ru: 'Для здоровой жизни'
+        },
+        subtitle: {
+            uz: '2017 yildan beri bozorda',
+            ru: 'На рынке с 2017 года'
+        },
+        description: {
+            uz: 'Har bir oilaga sog\'lom hayot kechirish imkoniyatini yaratish - bizning maqsadimiz.',
+            ru: 'Создать возможность для каждой семьи вести здоровый образ жизни - наша цель.'
+        },
+        buttonText: {
+            uz: 'Bog\'lanish',
+            ru: 'Связаться'
+        }
     },
 ];
 
@@ -29,13 +162,13 @@ export default function Hero() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [heroSlides, setHeroSlides] = useState<any[]>([]);
+    const [heroSlides, setHeroSlides] = useState<PageSection[]>([]);
 
     useEffect(() => {
         const fetchHero = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
-                const heroItems = response.data.filter((s: any) => s.section_key === 'hero');
+                const heroItems = response.data.filter((s: PageSection) => s.section_key === 'hero');
                 if (heroItems.length > 0) {
                     setHeroSlides(heroItems);
                 }
@@ -59,19 +192,34 @@ export default function Hero() {
     useEffect(() => {
         const interval = setInterval(nextSlide, 5000);
         return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [totalSlides]);
 
     // Helper to get localized field
-    const getField = (field: string, slideData: any) => {
+    const getField = (field: 'title' | 'subtitle' | 'content' | 'button_text', slideData: PageSection | null) => {
         if (!slideData) {
-            // Fallback to translations if API data not yet loaded or missing
+            // Use static slides content as fallback
+            const staticSlide = slides[currentSlide];
+            if (field === 'title' && staticSlide.title) {
+                return staticSlide.title[language as 'uz' | 'ru'];
+            }
+            if (field === 'subtitle' && staticSlide.subtitle) {
+                return staticSlide.subtitle[language as 'uz' | 'ru'];
+            }
+            if (field === 'content' && staticSlide.description) {
+                return staticSlide.description[language as 'uz' | 'ru'];
+            }
+            if (field === 'button_text' && staticSlide.buttonText) {
+                return staticSlide.buttonText[language as 'uz' | 'ru'];
+            }
+            // Final fallback to translations
             if (field === 'title') return t.hero.title;
             if (field === 'subtitle') return t.hero.title;
-            if (field === 'description' || field === 'content') return t.hero.description;
+            if (field === 'content') return t.hero.description;
             return '';
         }
-        const key = `${field}_${language}`;
-        return slideData[key] || slideData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (slideData[key] as string) || (slideData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const currentHeroData = heroSlides.length > 0 ? heroSlides[currentSlide] : null;

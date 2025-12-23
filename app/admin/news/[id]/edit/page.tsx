@@ -4,8 +4,9 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { newsAPI } from '@/lib/api';
+import { newsAPI, News } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
@@ -14,7 +15,7 @@ export default function EditNewsPage({ params }: { params: Params }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<News>>({
         title_ru: '',
         title_uz: '',
         title_en: '',
@@ -94,15 +95,15 @@ export default function EditNewsPage({ params }: { params: Params }) {
         try {
             await newsAPI.update(parseInt(id), formData);
             router.push('/admin/news');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error updating news:', error);
             let errorMessage = 'Failed to update news';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 

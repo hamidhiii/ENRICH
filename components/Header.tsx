@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
+import WebsiteLanguageSwitcher from './WebsiteLanguageSwitcher';
 
 export default function Header() {
     const pathname = usePathname();
@@ -88,6 +89,9 @@ export default function Header() {
                                 </Link>
                             </li>
                         ))}
+                        <li className="ml-4">
+                            <WebsiteLanguageSwitcher />
+                        </li>
                     </ul>
 
                     {/* Mobile Menu Button */}
@@ -119,6 +123,9 @@ export default function Header() {
                                     </Link>
                                 </li>
                             ))}
+                            <li className="mt-4">
+                                <WebsiteLanguageSwitcher />
+                            </li>
                         </ul>
                     </div>
                 </div>

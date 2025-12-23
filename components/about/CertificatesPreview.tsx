@@ -2,30 +2,29 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { certificatesAPI } from '@/lib/api';
+import { certificatesAPI, Certificate } from '@/lib/api';
 import { FileText, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function CertificatesPreview() {
     const { ref, isVisible } = useScrollAnimation();
-    const [certificates, setCertificates] = useState<any[]>([]);
+    const [certificates, setCertificates] = useState<Certificate[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { t } = useLanguage();
 
     // Carousel state
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
-    const carouselRef = useRef<HTMLDivElement>(null);
 
     // Lightbox state
     const [lightboxOpen, setLightboxOpen] = useState(false);
-    const [selectedCert, setSelectedCert] = useState<any>(null);
+    const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
     useEffect(() => {
         const fetchCertificates = async () => {
             try {
                 const response = await certificatesAPI.getAll();
-                const activeCerts = response.data.filter((item: any) => item.is_active);
+                const activeCerts = response.data.filter((item: Certificate) => item.is_active);
                 setCertificates(activeCerts);
             } catch (error) {
                 console.error('Error fetching certificates:', error);
@@ -47,7 +46,7 @@ export default function CertificatesPreview() {
         return () => clearInterval(interval);
     }, [isPaused, certificates.length]);
 
-    const openLightbox = (cert: any) => {
+    const openLightbox = (cert: Certificate) => {
         setSelectedCert(cert);
         setLightboxOpen(true);
     };
@@ -64,12 +63,6 @@ export default function CertificatesPreview() {
     const prevSlide = () => {
         setCurrentIndex((prev) => (prev - 1 + certificates.length) % certificates.length);
     };
-
-    // Calculate visible items based on screen width (simplified)
-    // In a real app, use a resize observer or media query hook.
-    // For now, we'll assume desktop shows 3, tablet 2, mobile 1.
-    // The CSS grid/flex will handle the layout, but the index logic needs to know.
-    // Actually, let's just slide one item at a time, but show multiple.
 
     return (
         <section ref={ref} className="py-20 bg-white min-h-screen flex items-center relative">
@@ -92,14 +85,9 @@ export default function CertificatesPreview() {
                         <div className="overflow-hidden py-10 px-4">
                             <div
                                 className="flex transition-transform duration-500 ease-in-out gap-8"
-                                style={{ transform: `translateX(-${currentIndex * (100 / (window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3))}%)` }}
+                                style={{ transform: `translateX(-${currentIndex * (100 / (typeof window !== 'undefined' ? (window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3) : 3))}%)` }}
                             >
-                                {/* We duplicate certificates to create an infinite loop effect if needed, 
-                                    but for simple auto-scroll with reset, just mapping is enough for now. 
-                                    To make it truly seamless, we'd need more complex logic. 
-                                    Let's stick to a simple slider first. 
-                                */}
-                                {certificates.map((cert: any, index: number) => (
+                                {certificates.map((cert: Certificate) => (
                                     <div
                                         key={cert.id}
                                         className="min-w-full md:min-w-[calc(50%-1rem)] lg:min-w-[calc(33.333%-1.33rem)] flex-shrink-0"

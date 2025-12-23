@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { productsAPI } from '@/lib/api';
+import { productsAPI, Product } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function ProductsPreview() {
     const { ref, isVisible } = useScrollAnimation();
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { t } = useLanguage();
 

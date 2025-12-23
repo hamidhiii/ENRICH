@@ -2,20 +2,21 @@ import { useState, useEffect } from 'react';
 import { Target, Eye } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function MissionVision() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [missionData, setMissionData] = useState<any>(null);
-    const [visionData, setVisionData] = useState<any>(null);
+    const [missionData, setMissionData] = useState<PageSection | null>(null);
+    const [visionData, setVisionData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchContent = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'about' });
-                const mission = response.data.find((s: any) => s.section_key === 'mission');
-                const vision = response.data.find((s: any) => s.section_key === 'vision');
+                const sections = response.data as PageSection[];
+                const mission = sections.find((s: PageSection) => s.section_key === 'mission');
+                const vision = sections.find((s: PageSection) => s.section_key === 'vision');
                 if (mission) setMissionData(mission);
                 if (vision) setVisionData(vision);
             } catch (error) {
@@ -25,10 +26,10 @@ export default function MissionVision() {
         fetchContent();
     }, []);
 
-    const getField = (data: any, field: string, fallback: string) => {
+    const getField = (data: PageSection | null, field: string, fallback: string) => {
         if (!data) return fallback;
-        const key = `${field}_${language}`;
-        return data[key] || data[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (data[key] as string) || (data[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     return (

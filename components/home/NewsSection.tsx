@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { newsAPI } from '@/lib/api';
+import { newsAPI, News } from '@/lib/api';
 import Link from 'next/link';
 
 export default function NewsSection() {
     const { ref, isVisible } = useScrollAnimation();
     const { language } = useLanguage();
-    const [news, setNews] = useState<any[]>([]);
+    const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -29,13 +29,13 @@ export default function NewsSection() {
         fetchNews();
     }, []);
 
-    const getField = (item: any, field: string) => {
+    const getField = (item: News, field: 'title' | 'excerpt' | 'content') => {
         if (!item) return '';
-        const key = `${field}_${language}`;
-        return item[key] || item[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof News;
+        return (item[key] as string) || (item[`${field}_uz` as keyof News] as string) || '';
     };
 
-    const formatDate = (dateString: string) => {
+    const formatDate = (dateString?: string) => {
         if (!dateString) return '';
         try {
             const date = new Date(dateString);
@@ -98,8 +98,9 @@ export default function NewsSection() {
                                         src={item.image ? (item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`) : '/images/news-placeholder.jpg'}
                                         alt={getField(item, 'title')}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                        onError={(e: any) => {
-                                            e.target.src = '/images/logo.jpg';
+                                        onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                                            const target = e.target as HTMLImageElement;
+                                            target.src = '/images/logo.jpg';
                                         }}
                                     />
                                     <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium text-slate-700">

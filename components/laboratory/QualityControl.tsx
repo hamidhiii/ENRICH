@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function QualityControl() {
     const { t, language } = useLanguage();
-    const [qualityData, setQualityData] = useState<any>(null);
+    const [qualityData, setQualityData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchQuality = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'laboratory' });
-                const quality = response.data.find((s: any) => s.section_key === 'quality_control');
+                const sections = response.data as PageSection[];
+                const quality = sections.find((s: PageSection) => s.section_key === 'quality_control');
                 if (quality) setQualityData(quality);
             } catch (error) {
                 console.error('Error fetching quality control data:', error);
@@ -21,8 +22,8 @@ export default function QualityControl() {
 
     const getField = (field: string, fallback: string) => {
         if (!qualityData) return fallback;
-        const key = `${field}_${language}`;
-        return qualityData[key] || qualityData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (qualityData[key] as string) || (qualityData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const steps = getField('content', '').split('\n').filter((s: string) => s.trim());
@@ -49,7 +50,7 @@ export default function QualityControl() {
                                 [
                                     'Xom ashyoni qabul qilish va tekshirish',
                                     'Ishlab chiqarish jarayonini monitoring qilish',
-                                    'Tayyor mahsulotni sinovdan o\'tkazish',
+                                    'Tayyor mahsulotni sinovdan o&apos;tkazish',
                                     'Saqlash sharoitlarini nazorat qilish',
                                     'Yaroqlilik muddatini kuzatish',
                                 ].map((item: string, index: number) => (

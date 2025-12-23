@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { certificatesAPI } from '@/lib/api';
+import { certificatesAPI, Certificate } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 export default function NewCertificatePage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Certificate>>({
         name_ru: '',
         name_uz: '',
         name_en: '',
@@ -41,22 +42,22 @@ export default function NewCertificatePage() {
         try {
             const dataToSend = {
                 ...formData,
-                order: parseInt(formData.order.toString()) || 0,
-                issue_date: formData.issue_date || null,
-                expiry_date: formData.expiry_date || null
+                order: parseInt(formData.order?.toString() || '0') || 0,
+                issue_date: formData.issue_date || undefined,
+                expiry_date: formData.expiry_date || undefined
             };
 
             await certificatesAPI.create(dataToSend);
             router.push('/admin/certificates');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error creating certificate:', error);
             let errorMessage = 'Failed to create certificate';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 
@@ -185,14 +186,14 @@ export default function NewCertificatePage() {
                     <div>
                         <FileUpload
                             label="Certificate Image"
-                            value={formData.image}
+                            value={formData.image || ''}
                             onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
                         />
                     </div>
                     <div>
                         <FileUpload
                             label="PDF File"
-                            value={formData.pdf_file}
+                            value={formData.pdf_file || ''}
                             onChange={(url) => setFormData(prev => ({ ...prev, pdf_file: url }))}
                             accept="application/pdf"
                             type="pdf"

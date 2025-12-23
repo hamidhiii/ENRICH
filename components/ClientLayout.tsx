@@ -22,7 +22,7 @@ export default function ClientLayout({
             ) : (
                 <>
                     <Header />
-                    <main>{children}</main>
+                    {children}
                     <Footer />
                     <ScrollToTop />
                 </>

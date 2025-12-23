@@ -1,31 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { Leaf, Pill, FlaskConical, Droplets, Package, ArrowRight } from 'lucide-react';
+import { Package, ArrowRight } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-
-interface Product {
-    id: number;
-    name_uz: string;
-    name_ru?: string;
-    category: {
-        name_uz: string;
-    };
-    description_uz?: string;
-    description_ru?: string;
-    image?: string;
-    // Fallback for static data if needed, but we aim to replace it
-    icon?: React.ReactNode;
-}
+import { Product } from '@/lib/api';
 
 interface ProductsGridProps {
-    products: any[]; // Using any[] temporarily to allow mixed types during transition, or strict Product[]
+    products: Product[];
 }
 
 export default function ProductsGrid({ products }: ProductsGridProps) {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
+
+    const getProductName = (product: Product) => {
+        return language === 'uz' ? product.name_uz : (product.name_ru || product.name_uz);
+    };
+
+    const getProductDescription = (product: Product) => {
+        // Using instructions as a fallback for description if needed, or composition
+        const desc = language === 'uz' ? product.instructions_uz : (product.instructions_ru || product.instructions_uz);
+        return desc || '';
+    };
 
     return (
         <section ref={ref} className="py-20 bg-gray-100 min-h-screen flex items-center">
@@ -44,11 +41,11 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                                     {product.image ? (
                                         <img
                                             src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
-                                            alt={language === 'uz' ? product.name_uz : (product.name_ru || product.name_uz)}
+                                            alt={getProductName(product)}
                                             className="w-full h-full object-contain"
                                         />
                                     ) : (
-                                        product.icon || <Package size={64} />
+                                        <Package size={64} />
                                     )}
                                 </div>
                             </div>
@@ -56,10 +53,10 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                             {/* Product Info */}
                             <div className="p-6 text-center">
                                 <h3 className="text-2xl font-bold mb-3 text-slate-600">
-                                    {language === 'uz' ? product.name_uz : (product.name_ru || product.name_uz)}
+                                    {getProductName(product)}
                                 </h3>
                                 <p className="text-gray-600 text-base leading-relaxed mb-6 line-clamp-3">
-                                    {language === 'uz' ? product.description_uz : (product.description_ru || product.description_uz)}
+                                    {getProductDescription(product)}
                                 </p>
 
                                 <div className="inline-flex items-center gap-2 text-lime-600 font-bold hover:text-lime-700 transition-colors group">

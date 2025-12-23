@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react';
 import { Factory } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function CompanyHistory() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [historyData, setHistoryData] = useState<any>(null);
+    const [historyData, setHistoryData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchHistory = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'about' });
-                const history = response.data.find((s: any) => s.section_key === 'history');
+                const sections = response.data as PageSection[];
+                const history = sections.find((s: PageSection) => s.section_key === 'history');
                 if (history) setHistoryData(history);
             } catch (error) {
                 console.error('Error fetching company history data:', error);
@@ -30,8 +31,8 @@ export default function CompanyHistory() {
             if (field === 'button_text') return t.about_page.founded;
             return '';
         }
-        const key = `${field}_${language}`;
-        return historyData[key] || historyData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (historyData[key] as string) || (historyData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const historyImage = historyData?.image
@@ -50,7 +51,7 @@ export default function CompanyHistory() {
                             {getField('content')}
                         </div>
                     </div>
-                    <div className={`relative rounded-3xl h-96 overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+                    <div className={`relative rounded-3xl h-96 overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         {historyImage ? (
                             <img
                                 src={historyImage}

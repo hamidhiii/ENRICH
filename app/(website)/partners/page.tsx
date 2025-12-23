@@ -3,14 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import { Handshake, Globe, Building2, Award } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { partnersAPI } from '@/lib/api';
+import { partnersAPI, Partner } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function PartnersPage() {
     const headerAnim = useScrollAnimation();
     const gridAnim = useScrollAnimation();
     const ctaAnim = useScrollAnimation();
-    const [partners, setPartners] = useState([]);
+    const [partners, setPartners] = useState<Partner[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { t } = useLanguage();
 
@@ -19,7 +19,7 @@ export default function PartnersPage() {
             try {
                 const response = await partnersAPI.getAll();
                 // Filter approved partners
-                const approvedPartners = response.data.filter((item: any) => item.status === 'approved');
+                const approvedPartners = response.data.filter((item: Partner) => item.status === 'approved');
                 setPartners(approvedPartners);
             } catch (error) {
                 console.error('Error fetching partners:', error);
@@ -32,7 +32,7 @@ export default function PartnersPage() {
 
     // Helper to get random icon for partner if no logo
     const getIcon = (index: number) => {
-        const icons = [<Building2 size={40} />, <Globe size={40} />, <Handshake size={40} />, <Award size={40} />];
+        const icons = [<Building2 key="b2" size={40} />, <Globe key="g" size={40} />, <Handshake key="h" size={40} />, <Award key="a" size={40} />];
         return icons[index % icons.length];
     };
 
@@ -58,7 +58,7 @@ export default function PartnersPage() {
                     </div>
                 ) : partners.length > 0 ? (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-20">
-                        {partners.map((partner: any, index: number) => (
+                        {partners.map((partner: Partner, index: number) => (
                             <div
                                 key={partner.id}
                                 className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-700 flex flex-col items-center text-center group border border-gray-100"

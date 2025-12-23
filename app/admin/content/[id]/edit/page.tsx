@@ -3,9 +3,10 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
-import { contentAPI } from '@/lib/api';
+import { ArrowLeft, Save } from 'lucide-react';
+import { contentAPI, PageSection } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
@@ -14,7 +15,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<PageSection>>({
         page_path: '',
         section_key: '',
         title_uz: '',
@@ -36,7 +37,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
         const fetchSection = async () => {
             try {
                 const response = await contentAPI.getSectionById(parseInt(id));
-                const section = response.data;
+                const section = response.data as PageSection;
                 setFormData({
                     page_path: section.page_path,
                     section_key: section.section_key,
@@ -80,9 +81,9 @@ export default function EditSectionPage({ params }: { params: Params }) {
         try {
             await contentAPI.updateSection(parseInt(id), formData);
             router.push('/admin/content');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error updating section:', error);
-            if (error.response?.status !== 401) {
+            if (!(error instanceof AxiosError && error.response?.status === 401)) {
                 alert('Failed to update section');
             }
         } finally {
@@ -111,7 +112,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                     <div>
                         <h1 className="text-3xl font-bold text-slate-800">Edit Section</h1>
                         <p className="text-gray-500 mt-1">
-                            {formData.page_path.charAt(0).toUpperCase() + formData.page_path.slice(1)} Page / {(() => {
+                            {(formData.page_path || '').charAt(0).toUpperCase() + (formData.page_path || '').slice(1)} Page / {(() => {
                                 const mapping: { [key: string]: string } = {
                                     'hero': 'Главный баннер (Слайдер)',
                                     'about': 'О компании (на главной)',
@@ -127,7 +128,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                                     'lab_preview': 'Превью лаборатории',
                                     'quality_control': 'Контроль качества'
                                 };
-                                return mapping[formData.section_key.toLowerCase()] || formData.section_key.replace(/_/g, ' ').toUpperCase();
+                                return mapping[(formData.section_key || '').toLowerCase()] || (formData.section_key || '').replace(/_/g, ' ').toUpperCase();
                             })()}
                         </p>
                     </div>
@@ -149,7 +150,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                                 {formData.section_key === 'stat' ? 'Label (UZ)' :
                                     formData.section_key === 'testimonial' ? 'Client Name (UZ)' :
                                         formData.section_key === 'capacity' ? 'Type (UZ)' :
-                                            ['mission', 'vision'].includes(formData.section_key) ? 'Title (UZ)' : 'Title (UZ)'}
+                                            ['mission', 'vision'].includes(formData.section_key || '') ? 'Title (UZ)' : 'Title (UZ)'}
                             </label>
                             <input
                                 type="text"
@@ -164,7 +165,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                                 {formData.section_key === 'stat' ? 'Label (RU)' :
                                     formData.section_key === 'testimonial' ? 'Client Name (RU)' :
                                         formData.section_key === 'capacity' ? 'Type (RU)' :
-                                            ['mission', 'vision'].includes(formData.section_key) ? 'Title (RU)' : 'Title (RU)'}
+                                            ['mission', 'vision'].includes(formData.section_key || '') ? 'Title (RU)' : 'Title (RU)'}
                             </label>
                             <input
                                 type="text"
@@ -210,11 +211,11 @@ export default function EditSectionPage({ params }: { params: Params }) {
                 </div>
 
                 {/* Content */}
-                {['hero', 'about', 'testimonial', 'capacity', 'trial', 'cta', 'about_hero', 'history', 'mission', 'vision', 'lab_preview', 'quality_control'].includes(formData.section_key) && (
+                {['hero', 'about', 'testimonial', 'capacity', 'trial', 'cta', 'about_hero', 'history', 'mission', 'vision', 'lab_preview', 'quality_control'].includes(formData.section_key || '') && (
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
                         <h3 className="text-xl font-bold text-gray-800 border-b pb-2">
                             {formData.section_key === 'testimonial' ? 'Review Text' :
-                                ['mission', 'vision'].includes(formData.section_key) ? 'Description' : 'Main Content'}
+                                ['mission', 'vision'].includes(formData.section_key || '') ? 'Description' : 'Main Content'}
                         </h3>
                         <div className="space-y-6">
                             <div>
@@ -242,20 +243,20 @@ export default function EditSectionPage({ params }: { params: Params }) {
                 )}
 
                 {/* Media */}
-                {['hero', 'about', 'testimonial', 'cta', 'about_hero', 'lab_preview', 'history'].includes(formData.section_key) && (
+                {['hero', 'about', 'testimonial', 'cta', 'about_hero', 'lab_preview', 'history'].includes(formData.section_key || '') && (
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
                         <h3 className="text-xl font-bold text-gray-800 border-b pb-2">Media</h3>
-                        {['hero', 'about', 'testimonial', 'lab_preview', 'history'].includes(formData.section_key) && (
+                        {['hero', 'about', 'testimonial', 'lab_preview', 'history'].includes(formData.section_key || '') && (
                             <FileUpload
                                 label={formData.section_key === 'testimonial' ? "Client Photo" : "Section Image"}
-                                value={formData.image}
+                                value={formData.image || ''}
                                 onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
                             />
                         )}
-                        {['hero', 'cta', 'about_hero'].includes(formData.section_key) && (
+                        {['hero', 'cta', 'about_hero'].includes(formData.section_key || '') && (
                             <FileUpload
                                 label="Background Image"
-                                value={formData.background_image}
+                                value={formData.background_image || ''}
                                 onChange={(url) => setFormData(prev => ({ ...prev, background_image: url }))}
                             />
                         )}
@@ -263,7 +264,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                 )}
 
                 {/* Button / Suffix */}
-                {['hero', 'about', 'stat', 'cta', 'history', 'lab_preview'].includes(formData.section_key) && (
+                {['hero', 'about', 'stat', 'cta', 'history', 'lab_preview'].includes(formData.section_key || '') && (
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
                         <h3 className="text-xl font-bold text-gray-800 border-b pb-2">
                             {formData.section_key === 'stat' ? 'Suffix (e.g., %, +)' :
@@ -296,7 +297,7 @@ export default function EditSectionPage({ params }: { params: Params }) {
                                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-lime-500 focus:border-lime-500"
                                 />
                             </div>
-                            {!['stat', 'history'].includes(formData.section_key) && (
+                            {!['stat', 'history'].includes(formData.section_key || '') && (
                                 <div className="col-span-2">
                                     <label className="block text-sm font-medium text-gray-700 mb-2">Button Link</label>
                                     <input

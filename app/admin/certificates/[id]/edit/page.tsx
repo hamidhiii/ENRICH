@@ -4,8 +4,9 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { certificatesAPI } from '@/lib/api';
+import { certificatesAPI, Certificate } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 type Params = Promise<{ id: string }>;
 
@@ -14,7 +15,7 @@ export default function EditCertificatePage({ params }: { params: Params }) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Certificate>>({
         name_ru: '',
         name_uz: '',
         name_en: '',
@@ -34,7 +35,7 @@ export default function EditCertificatePage({ params }: { params: Params }) {
         const fetchCertificate = async () => {
             try {
                 const response = await certificatesAPI.getById(parseInt(id));
-                const cert = response.data;
+                const cert = response.data as Certificate;
 
                 setFormData({
                     name_ru: cert.name_ru,
@@ -77,22 +78,22 @@ export default function EditCertificatePage({ params }: { params: Params }) {
         try {
             const dataToSend = {
                 ...formData,
-                order: parseInt(formData.order.toString()) || 0,
-                issue_date: formData.issue_date || null,
-                expiry_date: formData.expiry_date || null
+                order: parseInt(formData.order?.toString() || '0') || 0,
+                issue_date: formData.issue_date || undefined,
+                expiry_date: formData.expiry_date || undefined
             };
 
             await certificatesAPI.update(parseInt(id), dataToSend);
             router.push('/admin/certificates');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error updating certificate:', error);
             let errorMessage = 'Failed to update certificate';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 
@@ -229,14 +230,14 @@ export default function EditCertificatePage({ params }: { params: Params }) {
                     <div>
                         <FileUpload
                             label="Certificate Image"
-                            value={formData.image}
+                            value={formData.image || ''}
                             onChange={(url) => setFormData(prev => ({ ...prev, image: url }))}
                         />
                     </div>
                     <div>
                         <FileUpload
                             label="PDF File"
-                            value={formData.pdf_file}
+                            value={formData.pdf_file || ''}
                             onChange={(url) => setFormData(prev => ({ ...prev, pdf_file: url }))}
                             accept="application/pdf"
                             type="pdf"

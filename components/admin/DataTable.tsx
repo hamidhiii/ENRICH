@@ -4,36 +4,36 @@ import { useState } from 'react';
 import { Edit, Trash2, ChevronLeft, ChevronRight, Search } from 'lucide-react';
 import Link from 'next/link';
 
-interface Column {
+interface Column<T> {
     key: string;
     label: string;
-    render?: (value: any, row: any) => React.ReactNode;
+    render?: (value: unknown, row: T) => React.ReactNode;
 }
 
-interface DataTableProps {
-    columns: Column[];
-    data: any[];
+interface DataTableProps<T> {
+    columns: Column<T>[];
+    data: T[];
     isLoading?: boolean;
     onDelete?: (id: number) => void;
     editUrl?: (id: number) => string;
     searchPlaceholder?: string;
 }
 
-export default function DataTable({
+export default function DataTable<T extends { id: number }>({
     columns,
     data,
     isLoading = false,
     onDelete,
     editUrl,
     searchPlaceholder = 'Search...'
-}: DataTableProps) {
+}: DataTableProps<T>) {
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
     // Filter data
     const filteredData = data.filter((row) =>
-        Object.values(row).some((value) =>
+        Object.values(row as Record<string, unknown>).some((value) =>
             String(value).toLowerCase().includes(searchTerm.toLowerCase())
         )
     );
@@ -97,7 +97,9 @@ export default function DataTable({
                                 <tr key={index} className="hover:bg-gray-50 transition-colors">
                                     {columns.map((col) => (
                                         <td key={col.key} className="p-4 text-sm text-gray-700">
-                                            {col.render ? col.render(row[col.key], row) : row[col.key]}
+                                            {col.render
+                                                ? col.render((row as Record<string, unknown>)[col.key], row)
+                                                : String((row as Record<string, unknown>)[col.key] || '')}
                                         </td>
                                     ))}
                                     {(editUrl || onDelete) && (
@@ -153,8 +155,8 @@ export default function DataTable({
                             key={page}
                             onClick={() => setCurrentPage(page)}
                             className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${currentPage === page
-                                    ? 'bg-lime-500 text-white'
-                                    : 'border border-gray-200 hover:bg-gray-50 text-gray-600'
+                                ? 'bg-lime-500 text-white'
+                                : 'border border-gray-200 hover:bg-gray-50 text-gray-600'
                                 }`}
                         >
                             {page}

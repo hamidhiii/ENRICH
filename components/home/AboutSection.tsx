@@ -4,18 +4,18 @@ import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function AboutSection() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [aboutData, setAboutData] = useState<any>(null);
+    const [aboutData, setAboutData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchAbout = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
-                const about = response.data.find((s: any) => s.section_key === 'about');
+                const about = response.data.find((s: PageSection) => s.section_key === 'about');
                 if (about) setAboutData(about);
             } catch (error) {
                 console.error('Error fetching about data:', error);
@@ -24,10 +24,10 @@ export default function AboutSection() {
         fetchAbout();
     }, []);
 
-    const getField = (field: string) => {
+    const getField = (field: 'title' | 'content') => {
         if (!aboutData) return t.about[field as keyof typeof t.about] || '';
-        const key = `${field}_${language}`;
-        return aboutData[key] || aboutData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (aboutData[key] as string) || (aboutData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     return (

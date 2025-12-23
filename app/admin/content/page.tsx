@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Edit, Layout, Plus, Search } from 'lucide-react';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function ContentManagementPage() {
-    const [sections, setSections] = useState<any[]>([]);
+    const [sections, setSections] = useState<PageSection[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterPage, setFilterPage] = useState('all');
@@ -23,9 +23,9 @@ export default function ContentManagementPage() {
             const response = await contentAPI.getSections();
             console.log('Fetched sections:', response.data);
             setSections(response.data);
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error fetching sections:', err);
-            setError(err.message || 'Failed to fetch sections');
+            setError(err instanceof Error ? err.message : 'Failed to fetch sections');
         } finally {
             setIsLoading(false);
         }

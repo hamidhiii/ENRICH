@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { productsAPI } from '@/lib/api';
+import { productsAPI, Product, Category } from '@/lib/api';
 
 export default function ProductsPage() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchProducts = async () => {
@@ -16,11 +16,6 @@ export default function ProductsPage() {
             setProducts(response.data);
         } catch (error) {
             console.error('Error fetching products:', error);
-            // Mock data for demo if API fails or is empty
-            // setProducts([
-            //     { id: 1, name_uz: 'Parsley', category: { name_uz: 'Vitaminlar' }, form: 'tablet', is_active: true },
-            //     { id: 2, name_uz: 'Vitamin C', category: { name_uz: 'Vitaminlar' }, form: 'tablet', is_active: true },
-            // ]);
         } finally {
             setIsLoading(false);
         }
@@ -47,7 +42,7 @@ export default function ProductsPage() {
         {
             key: 'image',
             label: 'Image',
-            render: (value: string) => value ? (
+            render: (value: unknown) => typeof value === 'string' ? (
                 <img src={value.startsWith('http') ? value : `http://localhost:8001${value}`} alt="Product" className="w-10 h-10 object-cover rounded" />
             ) : (
                 <div className="w-10 h-10 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">No Img</div>
@@ -57,17 +52,17 @@ export default function ProductsPage() {
         {
             key: 'category',
             label: 'Category',
-            render: (value: any) => value?.name_uz || '-'
+            render: (value: unknown) => (value as Category)?.name_uz || '-'
         },
         {
             key: 'form',
             label: 'Form',
-            render: (value: string) => <span className="capitalize">{value}</span>
+            render: (value: unknown) => <span className="capitalize">{String(value)}</span>
         },
         {
             key: 'is_active',
             label: 'Status',
-            render: (value: boolean) => (
+            render: (value: unknown) => (
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                     {value ? 'Active' : 'Inactive'}
                 </span>

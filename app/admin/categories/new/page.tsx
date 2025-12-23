@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { categoriesAPI } from '@/lib/api';
+import { categoriesAPI, Category } from '@/lib/api';
 import FileUpload from '@/components/admin/FileUpload';
+import { AxiosError } from 'axios';
 
 export default function NewCategoryPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Category>>({
         name_ru: '',
         name_uz: '',
         name_en: '',
@@ -57,20 +58,20 @@ export default function NewCategoryPage() {
         try {
             const categoryData = {
                 ...formData,
-                order: parseInt(formData.order.toString()) || 0
+                order: parseInt(formData.order?.toString() || '0') || 0
             };
 
             await categoriesAPI.create(categoryData);
             router.push('/admin/categories');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error creating category:', error);
             let errorMessage = 'Failed to create category';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 
@@ -180,7 +181,7 @@ export default function NewCategoryPage() {
                 <div>
                     <FileUpload
                         label="Category Icon"
-                        value={formData.icon}
+                        value={formData.icon || ''}
                         onChange={(url) => setFormData(prev => ({ ...prev, icon: url }))}
                     />
                 </div>

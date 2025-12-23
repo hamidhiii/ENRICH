@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react';
 import { Microscope } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function LaboratoryPreview() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [labData, setLabData] = useState<any>(null);
+    const [labData, setLabData] = useState<PageSection | null>(null);
 
     useEffect(() => {
         const fetchLab = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'about' });
-                const lab = response.data.find((s: any) => s.section_key === 'lab_preview');
+                const sections = response.data as PageSection[];
+                const lab = sections.find((s: PageSection) => s.section_key === 'lab_preview');
                 if (lab) setLabData(lab);
             } catch (error) {
                 console.error('Error fetching lab preview data:', error);
@@ -22,10 +23,10 @@ export default function LaboratoryPreview() {
         fetchLab();
     }, []);
 
-    const getField = (field: string, fallback: any) => {
+    const getField = (field: string, fallback: string | null) => {
         if (!labData) return fallback;
-        const key = `${field}_${language}`;
-        return labData[key] || labData[`${field}_uz`] || '';
+        const key = `${field}_${language}` as keyof PageSection;
+        return (labData[key] as string) || (labData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     const labImage = labData?.image

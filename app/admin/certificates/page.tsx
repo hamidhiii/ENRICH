@@ -7,7 +7,18 @@ import DataTable from '@/components/admin/DataTable';
 import { certificatesAPI } from '@/lib/api';
 
 export default function CertificatesPage() {
-    const [certificates, setCertificates] = useState([]);
+    interface Certificate {
+        id: number;
+        name_uz: string;
+        name_ru: string;
+        certificate_type: string;
+        image: string;
+        pdf_file: string;
+        expiry_date: string;
+        is_active: boolean;
+    }
+
+    const [certificates, setCertificates] = useState<Certificate[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchCertificates = async () => {
@@ -42,7 +53,7 @@ export default function CertificatesPage() {
         {
             key: 'image',
             label: 'Image',
-            render: (value: string) => value ? (
+            render: (value: any) => value ? (
                 <img src={value.startsWith('http') ? value : `http://localhost:8001${value}`} alt="Certificate" className="w-10 h-14 object-cover border border-gray-200" />
             ) : (
                 <div className="w-10 h-14 bg-gray-100 flex items-center justify-center text-gray-400 text-xs">No Img</div>
@@ -53,12 +64,12 @@ export default function CertificatesPage() {
         {
             key: 'expiry_date',
             label: 'Expires',
-            render: (value: string) => value ? new Date(value).toLocaleDateString() : '-'
+            render: (value: any) => value ? new Date(value).toLocaleDateString() : '-'
         },
         {
             key: 'pdf_file',
             label: 'PDF',
-            render: (value: string) => value ? (
+            render: (value: any) => value ? (
                 <a href={value.startsWith('http') ? value : `http://localhost:8001${value}`} target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:underline flex items-center gap-1">
                     <FileText size={14} /> View
                 </a>
@@ -67,7 +78,7 @@ export default function CertificatesPage() {
         {
             key: 'is_active',
             label: 'Status',
-            render: (value: boolean) => (
+            render: (value: any) => (
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                     {value ? 'Active' : 'Inactive'}
                 </span>

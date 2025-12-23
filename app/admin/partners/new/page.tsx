@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save } from 'lucide-react';
-import { partnersAPI } from '@/lib/api';
+import { partnersAPI, Partner } from '@/lib/api';
+import { AxiosError } from 'axios';
 
 export default function NewPartnerPage() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<Partial<Partner>>({
         company_name: '',
         contact_person: '',
         email: '',
@@ -37,15 +38,15 @@ export default function NewPartnerPage() {
         try {
             await partnersAPI.create(formData);
             router.push('/admin/partners');
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Error creating partner:', error);
             let errorMessage = 'Failed to create partner';
 
-            if (error.response) {
+            if (error instanceof AxiosError && error.response) {
                 errorMessage = `Status: ${error.response.status}. Data: ${JSON.stringify(error.response.data)}`;
-            } else if (error.request) {
+            } else if (error instanceof AxiosError && error.request) {
                 errorMessage = 'No response received from server (Network/CORS error)';
-            } else {
+            } else if (error instanceof Error) {
                 errorMessage = error.message;
             }
 

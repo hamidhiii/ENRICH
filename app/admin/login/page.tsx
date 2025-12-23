@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { authAPI } from '@/lib/api';
 import { Lock, User } from 'lucide-react';
+import { AxiosError } from 'axios';
 
 export default function AdminLogin() {
     const router = useRouter();
@@ -25,8 +26,12 @@ export default function AdminLogin() {
 
             localStorage.setItem('token', access_token);
             router.push('/admin');
-        } catch (err: any) {
-            setError(err.response?.data?.detail || 'Login failed. Please check your credentials.');
+        } catch (err: unknown) {
+            if (err instanceof AxiosError && err.response?.data?.detail) {
+                setError(err.response.data.detail);
+            } else {
+                setError('Login failed. Please check your credentials.');
+            }
         } finally {
             setIsLoading(false);
         }

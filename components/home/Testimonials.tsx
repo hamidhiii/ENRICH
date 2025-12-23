@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react';
 import { Star, Quote } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
 
 export default function Testimonials() {
     const { ref, isVisible } = useScrollAnimation();
     const { t, language } = useLanguage();
-    const [testimonials, setTestimonials] = useState<any[]>([]);
+    const [testimonials, setTestimonials] = useState<PageSection[]>([]);
 
     useEffect(() => {
         const fetchTestimonials = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
-                const items = response.data.filter((s: any) => s.section_key === 'testimonial');
+                const sections = response.data as PageSection[];
+                const items = sections.filter((s: PageSection) => s.section_key === 'testimonial');
                 if (items.length > 0) {
                     setTestimonials(items);
                 }
@@ -24,9 +25,9 @@ export default function Testimonials() {
         fetchTestimonials();
     }, []);
 
-    const getField = (item: any, field: string) => {
-        const key = `${field}_${language}`;
-        return item[key] || item[`${field}_uz`] || '';
+    const getField = (item: PageSection, field: string) => {
+        const key = `${field}_${language}` as keyof PageSection;
+        return (item[key] as string) || (item[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
     return (
@@ -44,7 +45,7 @@ export default function Testimonials() {
                             style={{ transitionDelay: `${index * 300}ms` }}
                         >
                             <p className="text-gray-600 mb-8 italic text-lg leading-relaxed">
-                                {typeof item === 'object' ? getField(item, 'content') : 'Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry\'s standard dummy text ever since the 1500s.'}
+                                {typeof item === 'object' ? getField(item, 'content') : "Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s."}
                             </p>
                             <div className="flex items-center gap-6 relative">
                                 {/* Client Photo */}

@@ -4,7 +4,7 @@ import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Pill, FileText, AlertTriangle, Thermometer } from 'lucide-react';
-import { productsAPI } from '@/lib/api';
+import { productsAPI, Product } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
 type Params = Promise<{ id: string }>;
@@ -13,14 +13,14 @@ export default function ProductDetailPage({ params }: { params: Params }) {
     const { id } = use(params);
     const router = useRouter();
     const { language } = useLanguage();
-    const [product, setProduct] = useState<any>(null);
+    const [product, setProduct] = useState<Product | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchProduct = async () => {
             try {
                 const response = await productsAPI.getById(parseInt(id));
-                setProduct(response.data);
+                setProduct(response.data as Product);
             } catch (error) {
                 console.error('Error fetching product:', error);
                 router.push('/products');

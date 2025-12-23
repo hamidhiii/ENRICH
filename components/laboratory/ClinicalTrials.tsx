@@ -1,16 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI } from '@/lib/api';
+import { contentAPI, PageSection } from '@/lib/api';
+
+interface TrialItem {
+    icon: string;
+    title: string;
+    description: string;
+}
 
 export default function ClinicalTrials() {
     const { language } = useLanguage();
-    const [trials, setTrials] = useState<any[]>([]);
+    const [trials, setTrials] = useState<PageSection[]>([]);
 
     useEffect(() => {
         const fetchTrials = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'laboratory' });
-                const items = response.data.filter((s: any) => s.section_key === 'trial');
+                const sections = response.data as PageSection[];
+                const items = sections.filter((s: PageSection) => s.section_key === 'trial');
                 if (items.length > 0) {
                     setTrials(items);
                 }
@@ -21,12 +28,12 @@ export default function ClinicalTrials() {
         fetchTrials();
     }, []);
 
-    const getField = (item: any, field: string) => {
-        const key = `${field}_${language}`;
-        return item[key] || item[`${field}_uz`] || '';
+    const getField = (item: PageSection, field: string) => {
+        const key = `${field}_${language}` as keyof PageSection;
+        return (item[key] as string) || (item[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
-    const defaultItems = [
+    const defaultItems: TrialItem[] = [
         {
             icon: '🧪',
             title: 'Preklinik tadqiqotlar',
@@ -44,6 +51,8 @@ export default function ClinicalTrials() {
         },
     ];
 
+    const displayItems: (TrialItem | PageSection)[] = trials.length > 0 ? trials : defaultItems;
+
     return (
         <section className="py-20 bg-gray-100 min-h-screen flex items-center">
             <div className="container mx-auto px-6">
@@ -51,16 +60,16 @@ export default function ClinicalTrials() {
                     Klinik sinovlar
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {(trials.length > 0 ? trials : defaultItems).map((item, index) => (
+                    {displayItems.map((item, index) => (
                         <div key={index} className="bg-white rounded-2xl p-10 shadow-md hover:shadow-xl transition-shadow text-center">
                             <div className="text-7xl mb-6">
-                                {item.icon || '🧪'}
+                                {'icon' in item ? item.icon : '🧪'}
                             </div>
                             <h3 className="text-2xl font-bold mb-4 text-slate-600">
-                                {item.title || getField(item, 'title')}
+                                {'title' in item ? item.title : getField(item as PageSection, 'title')}
                             </h3>
                             <p className="text-gray-600 text-lg leading-relaxed">
-                                {item.description || getField(item, 'content')}
+                                {'description' in item ? item.description : getField(item as PageSection, 'content')}
                             </p>
                         </div>
                     ))}

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
@@ -14,7 +15,9 @@ export default function AboutSection() {
         const fetchAbout = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
+                console.log('AboutSection API Response:', response.data);
                 const about = response.data.find((s: PageSection) => s.section_key === 'about');
+                console.log('Found about section:', about);
                 if (about) setAboutData(about);
             } catch (error) {
                 console.error('Error fetching about data:', error);
@@ -27,6 +30,15 @@ export default function AboutSection() {
         if (!aboutData) return t.about[field as keyof typeof t.about] || '';
         const key = `${field}_${language}` as keyof PageSection;
         return (aboutData[key] as string) || (aboutData[`${field}_uz` as keyof PageSection] as string) || '';
+    };
+
+    const getImageUrl = () => {
+        if (!aboutData?.image) return '/images/about-placeholder.jpg';
+        const url = aboutData.image.startsWith('http')
+            ? aboutData.image
+            : `http://localhost:8001${aboutData.image}`;
+        console.log('AboutSection Image URL:', url);
+        return url;
     };
 
     return (
@@ -42,9 +54,16 @@ export default function AboutSection() {
                             {getField('content')}
                         </p>
                     </div>
-                    {/* Right - Image Placeholder */}
-                    <div className={`hidden md:block relative h-[400px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-                        {/* Image component was broken here, temporarily removed to fix build */}
+                    {/* Right - Image */}
+                    <div className={`relative h-auto md:h-[400px] w-full transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                        <Image
+                            src={getImageUrl()}
+                            alt={getField('title')}
+                            fill
+                            className="object-contain "
+                            onLoadingComplete={() => console.log('About image loaded')}
+                            onError={() => console.error('About image failed to load')}
+                        />
                     </div>
                 </div>
             </div>

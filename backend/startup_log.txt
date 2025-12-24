@@ -166,3 +166,205 @@ Imported app successfully
 __name__ is __main__
 Starting uvicorn...
 Uvicorn imported
+Starting script...
+Error: email-validator is not installed, run `pip install 'pydantic[email]'`
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 965, in import_email_validator
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\run.py", line 15, in <module>
+    from main import app
+  File "C:\Users\user\Desktop\ENRICH\backend\main.py", line 5, in <module>
+    from app.routers.auth import router as auth_router
+  File "C:\Users\user\Desktop\ENRICH\backend\app\routers\auth.py", line 5, in <module>
+    from app import models, schemas
+  File "C:\Users\user\Desktop\ENRICH\backend\app\schemas.py", line 8, in <module>
+    class UserBase(BaseModel):
+    ...<3 lines>...
+        role: UserRole = UserRole.VIEWER
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 255, in __new__
+    complete_model_class(
+    ~~~~~~~~~~~~~~~~~~~~^
+        cls,
+        ^^^^
+    ...<3 lines>...
+        create_model_module=_create_model_module,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 648, in complete_model_class
+    schema = gen_schema.generate_schema(cls)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 729, in generate_schema
+    schema = self._generate_schema_inner(obj)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1023, in _generate_schema_inner
+    return self._model_schema(obj)
+           ~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 856, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1228, in _generate_md_field_schema
+    schema, metadata = self._common_field_schema(name, field_info, decorators)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1282, in _common_field_schema
+    schema = self._apply_annotations(
+        source_type,
+        annotations + validators_from_decorators,
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2227, in _apply_annotations
+    schema = get_inner_schema(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_schema_generation_shared.py", line 83, in __call__
+    schema = self._handler(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2203, in inner_handler
+    schema = self._generate_schema_from_get_schema_method(obj, source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 919, in _generate_schema_from_get_schema_method
+    schema = get_schema(
+        source, CallbackGetCoreSchemaHandler(self._generate_schema_inner, self, ref_mode=ref_mode)
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 1005, in __get_pydantic_core_schema__
+    import_email_validator()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 967, in import_email_validator
+    raise ImportError("email-validator is not installed, run `pip install 'pydantic[email]'`") from e
+ImportError: email-validator is not installed, run `pip install 'pydantic[email]'`
+Starting script...
+Error: email-validator is not installed, run `pip install 'pydantic[email]'`
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 965, in import_email_validator
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\run.py", line 15, in <module>
+    from main import app
+  File "C:\Users\user\Desktop\ENRICH\backend\main.py", line 5, in <module>
+    from app.routers.auth import router as auth_router
+  File "C:\Users\user\Desktop\ENRICH\backend\app\routers\auth.py", line 5, in <module>
+    from app import models, schemas
+  File "C:\Users\user\Desktop\ENRICH\backend\app\schemas.py", line 8, in <module>
+    class UserBase(BaseModel):
+    ...<3 lines>...
+        role: UserRole = UserRole.VIEWER
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 255, in __new__
+    complete_model_class(
+    ~~~~~~~~~~~~~~~~~~~~^
+        cls,
+        ^^^^
+    ...<3 lines>...
+        create_model_module=_create_model_module,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 648, in complete_model_class
+    schema = gen_schema.generate_schema(cls)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 729, in generate_schema
+    schema = self._generate_schema_inner(obj)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1023, in _generate_schema_inner
+    return self._model_schema(obj)
+           ~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 856, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1228, in _generate_md_field_schema
+    schema, metadata = self._common_field_schema(name, field_info, decorators)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1282, in _common_field_schema
+    schema = self._apply_annotations(
+        source_type,
+        annotations + validators_from_decorators,
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2227, in _apply_annotations
+    schema = get_inner_schema(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_schema_generation_shared.py", line 83, in __call__
+    schema = self._handler(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2203, in inner_handler
+    schema = self._generate_schema_from_get_schema_method(obj, source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 919, in _generate_schema_from_get_schema_method
+    schema = get_schema(
+        source, CallbackGetCoreSchemaHandler(self._generate_schema_inner, self, ref_mode=ref_mode)
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 1005, in __get_pydantic_core_schema__
+    import_email_validator()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 967, in import_email_validator
+    raise ImportError("email-validator is not installed, run `pip install 'pydantic[email]'`") from e
+ImportError: email-validator is not installed, run `pip install 'pydantic[email]'`
+Starting script...
+Error: email-validator is not installed, run `pip install 'pydantic[email]'`
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 965, in import_email_validator
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\user\Desktop\ENRICH\backend\run.py", line 15, in <module>
+    from main import app
+  File "C:\Users\user\Desktop\ENRICH\backend\main.py", line 5, in <module>
+    from app.routers.auth import router as auth_router
+  File "C:\Users\user\Desktop\ENRICH\backend\app\routers\auth.py", line 5, in <module>
+    from app import models, schemas
+  File "C:\Users\user\Desktop\ENRICH\backend\app\schemas.py", line 8, in <module>
+    class UserBase(BaseModel):
+    ...<3 lines>...
+        role: UserRole = UserRole.VIEWER
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 255, in __new__
+    complete_model_class(
+    ~~~~~~~~~~~~~~~~~~~~^
+        cls,
+        ^^^^
+    ...<3 lines>...
+        create_model_module=_create_model_module,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_model_construction.py", line 648, in complete_model_class
+    schema = gen_schema.generate_schema(cls)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 729, in generate_schema
+    schema = self._generate_schema_inner(obj)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1023, in _generate_schema_inner
+    return self._model_schema(obj)
+           ~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 856, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1228, in _generate_md_field_schema
+    schema, metadata = self._common_field_schema(name, field_info, decorators)
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 1282, in _common_field_schema
+    schema = self._apply_annotations(
+        source_type,
+        annotations + validators_from_decorators,
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2227, in _apply_annotations
+    schema = get_inner_schema(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_schema_generation_shared.py", line 83, in __call__
+    schema = self._handler(source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 2203, in inner_handler
+    schema = self._generate_schema_from_get_schema_method(obj, source_type)
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\_internal\_generate_schema.py", line 919, in _generate_schema_from_get_schema_method
+    schema = get_schema(
+        source, CallbackGetCoreSchemaHandler(self._generate_schema_inner, self, ref_mode=ref_mode)
+    )
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 1005, in __get_pydantic_core_schema__
+    import_email_validator()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\user\Desktop\ENRICH\backend\venv\Lib\site-packages\pydantic\networks.py", line 967, in import_email_validator
+    raise ImportError("email-validator is not installed, run `pip install 'pydantic[email]'`") from e
+ImportError: email-validator is not installed, run `pip install 'pydantic[email]'`
+Starting script...
+Imported app successfully
+__name__ is __main__
+Starting uvicorn...
+Uvicorn imported
+Starting script...
+Imported app successfully
+__name__ is __main__
+Starting uvicorn...
+Uvicorn imported

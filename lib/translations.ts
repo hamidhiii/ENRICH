@@ -1,7 +1,7 @@
 export const translations = {
     uz: {
         header: {
-            address: "Toshkent, Olmazor tumani, Noraztepa 5-tor ko'cha, 5 uy",
+            address: "Toshkent shahar, Olmazor tumani, Sag'bon ko'chasi, 12-proezd, 5-tupik, 5-uy.",
             home: "Bosh sahifa",
             about: "Biz haqimizda",
             products: "Mahsulotlar",
@@ -65,7 +65,7 @@ export const translations = {
             submit: "Xabar yuborish",
             submitting: "Yuborilmoqda...",
             our_address: "Bizning manzil",
-            full_address: "Toshkent, Olmazor tumani, Noraztepa 5-tor ko'cha, 5 uy",
+            full_address: "Toshkent shahar, Olmazor tumani, Sag'bon ko'chasi, 12-proezd, 5-tupik, 5-uy.",
             full_hours: "Dushanba - Juma: 9:00 - 18:00\nShanba - Yakshanba: Dam olish",
         },
         about_page: {
@@ -104,7 +104,7 @@ export const translations = {
             company_desc: "Biz sizga yuqori terapevtik ta'sirga ega tabiiy va sintetik dori vositalari yordamida sifatli tibbiy xizmat ko'rsatishga tayyormiz",
             pages: "Sahifalar",
             contact: "Aloqa uchun",
-            address: "Toshkent, Olmazor tumani, Noraztepa 5-tor ko'cha, 5 uy",
+            address: "Toshkent shahar, Olmazor tumani, Sag'bon ko'chasi, 12-proezd, 5-tupik, 5-uy.",
             phone: "Telefon",
             rights: "© 2024 ENRICH. Barcha huquqlar himoyalangan.",
         },
@@ -134,7 +134,7 @@ export const translations = {
                 postNews: "Yangilik yozish",
                 postNewsDesc: "Maqola nashr etish",
                 settings: "Sozlamalar",
-                settingsDesc: "Sayt ma'lumotlarini o'zgartirish",
+                settingsDesc: "Sayt ma'lumotlarini o'зgartirish",
                 backup: "Zaxira nusxa",
                 backupDesc: "Bazani yuklab olish",
             },
@@ -156,7 +156,7 @@ export const translations = {
     },
     ru: {
         header: {
-            address: "Ташкент, Алмазарский район, 5-й проезд Норазтепа, дом 5",
+            address: "г. Ташкент, Алмазарский район, улица Сагбон, 12-й проезд, 5-й тупик, дом 5.",
             home: "Главная",
             about: "О нас",
             products: "Продукция",
@@ -220,7 +220,7 @@ export const translations = {
             submit: "Отправить сообщение",
             submitting: "Отправка...",
             our_address: "Наш адрес",
-            full_address: "Ташкент, Алмазарский район, 5-й проезд Норазтепа, дом 5",
+            full_address: "г. Ташкент, Алмазарский район, улица Сагбон, 12-й проезд, 5-й тупик, дом 5.",
             full_hours: "Понедельник - Пятница: 9:00 - 18:00\nСуббота - Воскресенье: Выходной",
         },
         about_page: {
@@ -259,7 +259,7 @@ export const translations = {
             company_desc: "Мы готовы предоставить вам качественное медицинское обслуживание с использованием натуральных и синтетических лекарственных средств с высоким терапевтическим эффектом",
             pages: "Страницы",
             contact: "Контакты",
-            address: "Ташкент, Алмазарский район, 5-й проезд Норазтепа, дом 5",
+            address: "г. Ташкент, Алмазарский район, улица Сагбон, 12-й проезд, 5-й тупик, дом 5.",
             phone: "Телефон",
             rights: "© 2024 ENRICH. Все права защищены.",
         },

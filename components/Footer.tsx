@@ -1,6 +1,6 @@
 'use client';
 
-import { Twitter, Facebook, Youtube, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, Send } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
@@ -78,38 +78,40 @@ export default function Footer() {
                             <p className="text-gray-300 text-sm leading-relaxed">
                                 {t.footer.address}
                             </p>
-                            <p className="text-gray-300 text-sm">
-                                E-mail: enrich@mail.com
-                            </p>
-                            <p className="text-gray-300 text-sm">
-                                {t.footer.phone}: +998 98 305-25-35
-                            </p>
+                            <div className="flex flex-wrap gap-x-6 gap-y-2">
+                                <a href="mailto:enrich@mail.com" className="text-gray-300 hover:text-white transition-colors text-sm">
+                                    E-mail: enrich@mail.com
+                                </a>
+                                <a href="tel:+998712000603" className="text-gray-300 hover:text-white transition-colors text-sm">
+                                    {t.footer.phone}: +998 71 200 06 03
+                                </a>
+                            </div>
 
                             {/* Social Media Icons */}
                             <div className="flex gap-3 pt-2">
                                 <a
-                                    href="#"
-                                    className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
-                                >
-                                    <Twitter size={18} />
-                                </a>
-                                <a
-                                    href="#"
+                                    href="https://www.facebook.com/enrichcompanyuz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
                                     <Facebook size={18} />
                                 </a>
                                 <a
-                                    href="#"
+                                    href="https://www.instagram.com/enrich_company?igsh=dG5kdGx6MGk1cHkz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <Youtube size={18} />
+                                    <Instagram size={18} />
                                 </a>
                                 <a
-                                    href="#"
+                                    href="https://t.me/enrich_company_uz"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full flex items-center justify-center hover:opacity-80 transition-opacity bg-amber-400"
                                 >
-                                    <Linkedin size={18} />
+                                    <Send size={18} />
                                 </a>
                             </div>
 

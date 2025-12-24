@@ -16,7 +16,7 @@ export default function ContactInfoCards() {
                         {
                             icon: <Phone size={48} />,
                             title: t.contact.phone,
-                            content: '+998 98 305-25-35',
+                            content: '+998 71 200 06 03',
                             color: 'text-lime-500',
                         },
                         {

@@ -1,40 +1,59 @@
 'use client';
 
 import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
+import './PhoneInput.css';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { contactAPI } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
+const contactSchema = z.object({
+    full_name: z.string().min(2, { message: 'Ism kamida 2 ta belgidan iborat bo\'lishi kerak' }),
+    email: z.string().email({ message: 'Noto\'g\'ri email formati' }),
+    phone: z.string().min(9, { message: 'Telefon raqami noto\'g\'ri yoki to\'liq emas' }),
+    subject: z.string().optional(),
+    message: z.string().min(10, { message: 'Xabar kamida 10 ta belgidan iborat bo\'lishi kerak' }),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
 export default function ContactFormSection() {
     const { ref, isVisible } = useScrollAnimation();
     const { t } = useLanguage();
-    const [formData, setFormData] = useState({
-        full_name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-    });
-
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+    } = useForm<ContactFormData>({
+        resolver: zodResolver(contactSchema),
+        defaultValues: {
+            full_name: '',
+            email: '',
+            phone: '',
+            subject: '',
+            message: '',
+        },
+    });
+
+    const onSubmit = async (data: ContactFormData) => {
         setIsSubmitting(true);
+        setSubmitStatus('idle');
 
         try {
-            await contactAPI.submit(formData);
-
+            await contactAPI.submit(data);
             setSubmitStatus('success');
-            setFormData({
-                full_name: '',
-                email: '',
-                phone: '',
-                subject: '',
-                message: '',
-            });
-        } catch {
+            reset();
+        } catch (error) {
+            console.error('Submit error:', error);
             setSubmitStatus('error');
         } finally {
             setIsSubmitting(false);
@@ -63,19 +82,17 @@ export default function ContactFormSection() {
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
                                     {t.contact.name}
                                 </label>
                                 <input
-                                    type="text"
-                                    required
-                                    value={formData.full_name}
-                                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                                    className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
+                                    {...register('full_name')}
+                                    className={`w-full px-6 py-4 rounded-lg border-2 focus:border-lime-500 focus:outline-none text-lg ${errors.full_name ? 'border-red-500' : 'border-gray-200'}`}
                                     placeholder={t.contact.name_placeholder}
                                 />
+                                {errors.full_name && <p className="mt-1 text-red-500 text-sm">{errors.full_name.message}</p>}
                             </div>
 
                             <div>
@@ -83,26 +100,33 @@ export default function ContactFormSection() {
                                     {t.contact.email_label}
                                 </label>
                                 <input
+                                    {...register('email')}
                                     type="email"
-                                    required
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
+                                    className={`w-full px-6 py-4 rounded-lg border-2 focus:border-lime-500 focus:outline-none text-lg ${errors.email ? 'border-red-500' : 'border-gray-200'}`}
                                     placeholder={t.contact.email_placeholder}
                                 />
+                                {errors.email && <p className="mt-1 text-red-500 text-sm">{errors.email.message}</p>}
                             </div>
 
                             <div>
                                 <label className="block text-lg font-semibold mb-2 text-slate-600">
                                     {t.contact.phone_label}
                                 </label>
-                                <input
-                                    type="tel"
-                                    value={formData.phone}
-                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                    className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
-                                    placeholder={t.contact.phone_placeholder}
+                                <Controller
+                                    name="phone"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <PhoneInput
+                                            defaultCountry="uz"
+                                            value={field.value}
+                                            onChange={field.onChange}
+                                            disableFormatting
+                                            charAfterDialCode=""
+                                            className={errors.phone ? 'phone-input-error' : ''}
+                                        />
+                                    )}
                                 />
+                                {errors.phone && <p className="mt-1 text-red-500 text-sm">{errors.phone.message}</p>}
                             </div>
 
                             <div>
@@ -110,9 +134,7 @@ export default function ContactFormSection() {
                                     {t.contact.subject}
                                 </label>
                                 <input
-                                    type="text"
-                                    value={formData.subject}
-                                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                                    {...register('subject')}
                                     className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg"
                                     placeholder={t.contact.subject_placeholder}
                                 />
@@ -123,13 +145,12 @@ export default function ContactFormSection() {
                                     {t.contact.message}
                                 </label>
                                 <textarea
-                                    required
-                                    value={formData.message}
-                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                    {...register('message')}
                                     rows={6}
-                                    className="w-full px-6 py-4 rounded-lg border-2 border-gray-200 focus:border-lime-500 focus:outline-none text-lg resize-none"
+                                    className={`w-full px-6 py-4 rounded-lg border-2 focus:border-lime-500 focus:outline-none text-lg resize-none ${errors.message ? 'border-red-500' : 'border-gray-200'}`}
                                     placeholder={t.contact.message_placeholder}
                                 />
+                                {errors.message && <p className="mt-1 text-red-500 text-sm">{errors.message.message}</p>}
                             </div>
 
                             <button
@@ -167,7 +188,7 @@ export default function ContactFormSection() {
                                     {t.contact.full_address}
                                 </p>
                                 <p className="text-gray-600 text-lg">
-                                    <strong>{t.contact.phone_label}:</strong> +998 98 305-25-35
+                                    <strong>{t.contact.phone_label}:</strong> +998 71 200 06 03
                                 </p>
                                 <p className="text-gray-600 text-lg">
                                     <strong>{t.contact.email_label}:</strong> enrich@mail.com

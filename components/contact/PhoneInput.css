@@ -1,0 +1,25 @@
+.react-international-phone-input-container {
+  width: 100%;
+}
+
+.react-international-phone-input {
+  width: 100% !important;
+  height: 60px !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 0.5rem !important;
+  font-size: 1.125rem !important;
+  padding-left: 1rem !important;
+}
+
+.react-international-phone-input:focus {
+  border-color: #84cc16 !important;
+  outline: none !important;
+}
+
+.react-international-phone-country-selector-button {
+  height: 60px !important;
+  border: 2px solid #e5e7eb !important;
+  border-right: none !important;
+  border-radius: 0.5rem 0 0 0.5rem !important;
+  background-color: #f9fafb !important;
+}

@@ -13,6 +13,8 @@ class Settings(BaseSettings):
     upload_dir: str = "uploads"
     max_file_size: int = 10485760
     allowed_origins: str = "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
+    telegram_bot_token: str = ""
+    telegram_chat_id: str = ""
 
     class Config:
         env_file = ".env"
@@ -20,7 +22,9 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings():
-    return Settings()
+    s = Settings()
+    print(f"DEBUG: Settings loaded. Telegram Bot Token: {s.telegram_bot_token[:5]}..., Chat ID: {s.telegram_chat_id}")
+    return s
 
 
 settings = get_settings()

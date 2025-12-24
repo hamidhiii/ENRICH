@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes, FaTelegram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import WebsiteLanguageSwitcher from './WebsiteLanguageSwitcher';
@@ -32,23 +32,23 @@ export default function Header() {
                 <div className="container mx-auto px-4 md:px-6 max-w-7xl">
                     <div className="bg-lime-500 text-white py-2 px-6 rounded-full flex justify-between items-center shadow-sm">
                         <div className="flex items-center gap-2 text-sm">
-                            <span>📍</span>
+                            <span><FaMapMarkerAlt /></span>
                             <span>{t.header.address}</span>
                         </div>
                         <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2 text-sm">
-                                <span>📞</span>
-                                <span>+998 98 305-25-35</span>
+                                <span><FaPhone /></span>
+                                <span>+998 71 200 06 03</span>
                             </div>
                             <div className="flex gap-3">
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                <a href="https://www.facebook.com/enrichcompanyuz" className="hover:opacity-80 transition-opacity">
                                     <FaFacebook size={16} />
                                 </a>
-                                <a href="#" className="hover:opacity-80 transition-opacity">
+                                <a href="https://www.instagram.com/enrich_company?igsh=dG5kdGx6MGk1cHkz" className="hover:opacity-80 transition-opacity">
                                     <FaInstagram size={16} />
                                 </a>
-                                <a href="#" className="hover:opacity-80 transition-opacity">
-                                    <FaYoutube size={16} />
+                                <a href="https://t.me/enrich_company_uz" className="hover:opacity-80 transition-opacity">
+                                    <FaTelegram size={16} />
                                 </a>
                             </div>
                         </div>

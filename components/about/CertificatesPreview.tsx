@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { certificatesAPI, Certificate } from '@/lib/api';
+import Image from 'next/image';
 import { FileText, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -102,10 +103,11 @@ export default function CertificatesPreview() {
 
                                             <div className="w-full h-64 mb-6 relative rounded-lg overflow-hidden bg-white flex items-center justify-center">
                                                 {cert.image ? (
-                                                    <img
+                                                    <Image
                                                         src={cert.image.startsWith('http') ? cert.image : `http://localhost:8001${cert.image}`}
                                                         alt={cert.name_uz}
-                                                        className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                                                        fill
+                                                        className="object-contain transition-transform duration-500 group-hover:scale-105"
                                                     />
                                                 ) : (
                                                     <div className="text-7xl">🏆</div>
@@ -179,12 +181,13 @@ export default function CertificatesPreview() {
                         className="max-w-4xl max-h-[90vh] w-full bg-white rounded-lg overflow-hidden relative"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="h-[80vh] flex items-center justify-center bg-gray-100">
+                        <div className="h-[80vh] w-full relative flex items-center justify-center bg-gray-100">
                             {selectedCert.image ? (
-                                <img
+                                <Image
                                     src={selectedCert.image.startsWith('http') ? selectedCert.image : `http://localhost:8001${selectedCert.image}`}
                                     alt={selectedCert.name_uz}
-                                    className="max-w-full max-h-full object-contain"
+                                    fill
+                                    className="object-contain"
                                 />
                             ) : (
                                 <div className="text-9xl">🏆</div>

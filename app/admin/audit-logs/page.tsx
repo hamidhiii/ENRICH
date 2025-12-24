@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { History, Search, Filter, Clock, User, Activity } from 'lucide-react';
-import { auditLogsAPI } from '@/lib/api';
+import { Search, Clock } from 'lucide-react';
+import { auditLogsAPI, AuditLog } from '@/lib/api';
 import { format } from 'date-fns';
 
 export default function AuditLogsPage() {
-    const [logs, setLogs] = useState<any[]>([]);
+    const [logs, setLogs] = useState<AuditLog[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [total, setTotal] = useState(0);
     const [params, setParams] = useState({ limit: 50, offset: 0, entity_type: '' });
 
     useEffect(() => {
@@ -17,7 +16,6 @@ export default function AuditLogsPage() {
             try {
                 const res = await auditLogsAPI.getAll(params);
                 setLogs(res.data.items);
-                setTotal(res.data.total);
             } catch (error) {
                 console.error('Error fetching audit logs:', error);
             } finally {
@@ -31,7 +29,7 @@ export default function AuditLogsPage() {
         <div className="space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-slate-800">Audit Log</h1>
-                <p className="text-gray-500 mt-1">Admin o'zgarishlari tarixi</p>
+                <p className="text-gray-500 mt-1">Admin o&apos;zgarishlari tarixi</p>
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
@@ -66,7 +64,7 @@ export default function AuditLogsPage() {
                                 <th className="px-6 py-4">Vaqt</th>
                                 <th className="px-6 py-4">Admin</th>
                                 <th className="px-6 py-4">Harakat</th>
-                                <th className="px-6 py-4">O'zgarish</th>
+                                <th className="px-6 py-4">O&apos;zgarish</th>
                                 <th className="px-6 py-4">IP Manzil</th>
                             </tr>
                         </thead>
@@ -77,7 +75,7 @@ export default function AuditLogsPage() {
                                 </tr>
                             ) : logs.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-8 text-center text-gray-500">Ma'lumot topilmadi</td>
+                                    <td colSpan={5} className="px-6 py-8 text-center text-gray-500">Ma&apos;lumot topilmadi</td>
                                 </tr>
                             ) : (
                                 logs.map((log) => (
@@ -98,8 +96,8 @@ export default function AuditLogsPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${log.action === 'create' ? 'bg-green-100 text-green-600' :
-                                                    log.action === 'update' ? 'bg-blue-100 text-blue-600' :
-                                                        'bg-red-100 text-red-600'
+                                                log.action === 'update' ? 'bg-blue-100 text-blue-600' :
+                                                    'bg-red-100 text-red-600'
                                                 }`}>
                                                 {log.action}
                                             </span>

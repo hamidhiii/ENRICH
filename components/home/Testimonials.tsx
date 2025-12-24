@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Star, Quote } from 'lucide-react';
+import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
@@ -49,12 +50,13 @@ export default function Testimonials() {
                             </p>
                             <div className="flex items-center gap-6 relative">
                                 {/* Client Photo */}
-                                <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden flex-shrink-0">
+                                <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden flex-shrink-0 relative">
                                     {typeof item === 'object' && item.image ? (
-                                        <img
+                                        <Image
                                             src={item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`}
                                             alt="Client"
-                                            className="w-full h-full object-cover"
+                                            fill
+                                            className="object-cover"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-500"></div>

@@ -34,7 +34,7 @@ export default function ContactFormSection() {
                 subject: '',
                 message: '',
             });
-        } catch (error) {
+        } catch {
             setSubmitStatus('error');
         } finally {
             setIsSubmitting(false);

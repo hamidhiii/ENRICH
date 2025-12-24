@@ -16,9 +16,9 @@ export default function LaboratoryOverview() {
                             Bizning laboratoriya
                         </h2>
                         <p className="text-gray-600 leading-relaxed mb-6 text-lg">
-                            ENRICH kompaniyasining zamonaviy laboratoriyasi eng so'nggi texnologiyalar va
+                            ENRICH kompaniyasining zamonaviy laboratoriyasi eng so&apos;nggi texnologiyalar va
                             uskunalar bilan jihozlangan. Bizning mutaxassislar jamoasi har bir mahsulotning
-                            sifati va xavfsizligini ta'minlash uchun qat'iy nazorat o'tkazadi.
+                            sifati va xavfsizligini ta&apos;minlash uchun qat&apos;iy nazorat o&apos;tkazadi.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-6 text-lg">
                             Laboratoriyamiz xalqaro standartlarga muvofiq ishlaydi va barcha zarur

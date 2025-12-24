@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Database, Download, Plus, ShieldCheck, AlertTriangle } from 'lucide-react';
+import { Download, Plus, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { backupAPI } from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
@@ -39,7 +39,7 @@ export default function BackupPage() {
         <div className="max-w-4xl mx-auto space-y-8">
             <div>
                 <h1 className="text-3xl font-bold text-slate-800">Backup</h1>
-                <p className="text-gray-500 mt-1">Ma'lumotlar bazasini zaxiralash va yuklab olish</p>
+                <p className="text-gray-500 mt-1">Ma&apos;lumotlar bazasini zaxiralash va yuklab olish</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -50,7 +50,7 @@ export default function BackupPage() {
                     </div>
                     <div>
                         <h2 className="text-xl font-bold text-slate-800">Zaxira nusxa yaratish</h2>
-                        <p className="text-gray-500 mt-2">Serverda ma'lumotlar bazasining yangi nusxasini yarating</p>
+                        <p className="text-gray-500 mt-2">Serverda ma&apos;lumotlar bazasining yangi nusxasini yarating</p>
                     </div>
                     <button
                         onClick={handleCreateBackup}
@@ -68,7 +68,7 @@ export default function BackupPage() {
                     </div>
                     <div>
                         <h2 className="text-xl font-bold text-slate-800">Bazani yuklab olish</h2>
-                        <p className="text-gray-500 mt-2">Joriy ma'lumotlar bazasini kompyuteringizga yuklab oling</p>
+                        <p className="text-gray-500 mt-2">Joriy ma&apos;lumotlar bazasini kompyuteringizga yuklab oling</p>
                     </div>
                     <button
                         onClick={handleDownloadBackup}
@@ -88,7 +88,7 @@ export default function BackupPage() {
                 <div>
                     <h3 className="text-amber-800 font-bold">Xavfsizlik eslatmasi</h3>
                     <p className="text-amber-700 text-sm mt-1">
-                        Zaxira nusxalari barcha mahsulotlar, yangiliklar va foydalanuvchi ma'lumotlarini o'z ichiga oladi.
+                        Zaxira nusxalari barcha mahsulotlar, yangiliklar va foydalanuvchi ma&apos;lumotlarini o&apos;z ichiga oladi.
                         Yuklab olingan fayllarni xavfsiz joyda saqlang.
                     </p>
                 </div>

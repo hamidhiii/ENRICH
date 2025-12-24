@@ -6,6 +6,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface SlideContent {
     id: number;
@@ -271,10 +272,11 @@ export default function Hero() {
                         <div className="relative transition-all duration-500 transform scale-75 md:scale-100">
                             {currentHeroData?.image ? (
                                 <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px]">
-                                    <img
+                                    <Image
                                         src={currentHeroData.image.startsWith('http') ? currentHeroData.image : `http://localhost:8001${currentHeroData.image}`}
                                         alt="Hero"
-                                        className="w-full h-full object-contain drop-shadow-2xl"
+                                        fill
+                                        className="object-contain drop-shadow-2xl"
                                     />
                                 </div>
                             ) : (

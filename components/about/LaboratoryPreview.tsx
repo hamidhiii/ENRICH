@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Microscope } from 'lucide-react';
+import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
@@ -39,10 +40,11 @@ export default function LaboratoryPreview() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
                     <div className={`relative rounded-3xl h-96 overflow-hidden transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
                         {labImage ? (
-                            <img
+                            <Image
                                 src={labImage}
                                 alt="Laboratory"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         ) : (
                             <div className="bg-gradient-to-br from-lime-500 to-lime-700 w-full h-full flex items-center justify-center">

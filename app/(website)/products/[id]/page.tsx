@@ -3,6 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, Pill, FileText, AlertTriangle, Thermometer } from 'lucide-react';
 import { productsAPI, Product } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
@@ -125,12 +126,13 @@ export default function ProductDetailPage({ params }: { params: Params }) {
                         <div className="space-y-8">
                             {/* Product Image Card */}
                             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                                <div className="aspect-square bg-white rounded-xl overflow-hidden flex items-center justify-center mb-6 shadow-sm">
+                                <div className="aspect-square bg-white rounded-xl overflow-hidden flex items-center justify-center mb-6 shadow-sm relative">
                                     {product.image ? (
-                                        <img
+                                        <Image
                                             src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
                                             alt={name}
-                                            className="w-full h-full object-contain p-4"
+                                            fill
+                                            className="object-contain p-4"
                                         />
                                     ) : (
                                         <Pill size={64} className="text-gray-300" />

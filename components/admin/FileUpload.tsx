@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { Upload, X, FileText, Image as ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { uploadAPI } from '@/lib/api';
 
 interface FileUploadProps {
@@ -68,10 +69,11 @@ export default function FileUpload({
                 <div className="relative border border-gray-200 rounded-lg p-2 bg-gray-50 flex items-center gap-3">
                     {type === 'image' ? (
                         <div className="w-16 h-16 relative rounded overflow-hidden bg-gray-200 flex-shrink-0">
-                            <img
+                            <Image
                                 src={value.startsWith('http') ? value : `http://localhost:8001${value}`}
                                 alt="Preview"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         </div>
                     ) : (

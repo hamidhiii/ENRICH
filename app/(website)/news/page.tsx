@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import { newsAPI, News } from '@/lib/api';
 
 export default function NewsPage() {
@@ -33,7 +34,7 @@ export default function NewsPage() {
                         Yangiliklar
                     </h1>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Kompaniyamiz va farmatsevtika sohasidagi so'nggi yangiliklar bilan tanishing
+                        Kompaniyamiz va farmatsevtika sohasidagi so&apos;nggi yangiliklar bilan tanishing
                     </p>
                 </div>
 
@@ -47,10 +48,11 @@ export default function NewsPage() {
                             <article key={item.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group">
                                 <div className="relative h-64 overflow-hidden">
                                     {item.image ? (
-                                        <img
+                                        <Image
                                             src={item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`}
                                             alt={item.title_uz}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">
@@ -73,7 +75,7 @@ export default function NewsPage() {
                                         href={`/news/${item.slug || item.id}`}
                                         className="inline-flex items-center gap-2 text-lime-600 font-bold hover:gap-3 transition-all"
                                     >
-                                        Batafsil o'qish <ArrowRight size={20} />
+                                        Batafsil o&apos;qish <ArrowRight size={20} />
                                     </Link>
                                 </div>
                             </article>
@@ -81,7 +83,7 @@ export default function NewsPage() {
                     </div>
                 ) : (
                     <div className="text-center py-20 text-gray-500">
-                        Hozircha yangiliklar yo'q
+                        Hozircha yangiliklar yo&apos;q
                     </div>
                 )}
             </div>

@@ -77,7 +77,7 @@ export default function Statistics() {
     ];
 
     const getIcon = (index: number) => {
-        const icons = [<FaUsers />, <FaAward />, <FaCertificate />, <FaBoxes />];
+        const icons = [<FaUsers key="users" />, <FaAward key="award" />, <FaCertificate key="certificate" />, <FaBoxes key="boxes" />];
         return icons[index % icons.length];
     };
 

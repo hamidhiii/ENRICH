@@ -2,6 +2,7 @@
 
 import { Twitter, Facebook, Youtube, Linkedin } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -40,12 +41,12 @@ export default function Footer() {
                         <h3 className="text-xl font-bold mb-6">{t.footer.pages}</h3>
                         <ul className="space-y-3">
                             <li>
-                                <a
+                                <Link
                                     href="/"
                                     className="hover:opacity-80 transition-opacity text-base text-lime-500"
                                 >
                                     {t.header.home}
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="/about" className="text-gray-300 hover:text-white transition-colors text-base">
@@ -53,9 +54,9 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="/products" className="text-gray-300 hover:text-white transition-colors text-base">
+                                <Link href="/products" className="text-gray-300 hover:text-white transition-colors text-base">
                                     {t.header.products}
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="/partners" className="text-gray-300 hover:text-white transition-colors text-base">
@@ -118,7 +119,7 @@ export default function Footer() {
                                     onClick={() => setLanguage('uz')}
                                     className={`text-base font-medium transition-colors ${language === 'uz' ? 'text-lime-500' : 'text-gray-300 hover:text-white'}`}
                                 >
-                                    O'zbekcha
+                                    O&apos;zbekcha
                                 </button>
                                 <button
                                     onClick={() => setLanguage('ru')}

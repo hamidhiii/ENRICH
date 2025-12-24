@@ -8,7 +8,6 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function PartnersPage() {
     const headerAnim = useScrollAnimation();
-    const gridAnim = useScrollAnimation();
     const ctaAnim = useScrollAnimation();
     const [partners, setPartners] = useState<Partner[]>([]);
     const [isLoading, setIsLoading] = useState(true);

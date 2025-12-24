@@ -2,21 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Plus, FileText } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { certificatesAPI } from '@/lib/api';
+import { certificatesAPI, Certificate } from '@/lib/api';
 
 export default function CertificatesPage() {
-    interface Certificate {
-        id: number;
-        name_uz: string;
-        name_ru: string;
-        certificate_type: string;
-        image: string;
-        pdf_file: string;
-        expiry_date: string;
-        is_active: boolean;
-    }
 
     const [certificates, setCertificates] = useState<Certificate[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -53,32 +44,38 @@ export default function CertificatesPage() {
         {
             key: 'image',
             label: 'Image',
-            render: (value: any) => value ? (
-                <img src={value.startsWith('http') ? value : `http://localhost:8001${value}`} alt="Certificate" className="w-10 h-14 object-cover border border-gray-200" />
-            ) : (
-                <div className="w-10 h-14 bg-gray-100 flex items-center justify-center text-gray-400 text-xs">No Img</div>
-            )
+            render: (value: unknown) => {
+                const src = value as string;
+                return src ? (
+                    <Image src={src.startsWith('http') ? src : `http://localhost:8001${src}`} alt="Certificate" width={40} height={56} className="object-cover border border-gray-200" />
+                ) : (
+                    <div className="w-10 h-14 bg-gray-100 flex items-center justify-center text-gray-400 text-xs">No Img</div>
+                )
+            }
         },
         { key: 'name_uz', label: 'Name (UZ)' },
         { key: 'certificate_type', label: 'Type' },
         {
             key: 'expiry_date',
             label: 'Expires',
-            render: (value: any) => value ? new Date(value).toLocaleDateString() : '-'
+            render: (value: unknown) => value ? new Date(value as string).toLocaleDateString() : '-'
         },
         {
             key: 'pdf_file',
             label: 'PDF',
-            render: (value: any) => value ? (
-                <a href={value.startsWith('http') ? value : `http://localhost:8001${value}`} target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:underline flex items-center gap-1">
-                    <FileText size={14} /> View
-                </a>
-            ) : '-'
+            render: (value: unknown) => {
+                const src = value as string;
+                return src ? (
+                    <a href={src.startsWith('http') ? src : `http://localhost:8001${src}`} target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:underline flex items-center gap-1">
+                        <FileText size={14} /> View
+                    </a>
+                ) : '-'
+            }
         },
         {
             key: 'is_active',
             label: 'Status',
-            render: (value: any) => (
+            render: (value: unknown) => (
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
                     {value ? 'Active' : 'Inactive'}
                 </span>

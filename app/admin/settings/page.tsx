@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, Globe, Mail, Phone, MapPin, Facebook, Instagram, Youtube, Linkedin, Send } from 'lucide-react';
+import { Save, Globe, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Send } from 'lucide-react';
 import { settingsAPI, SiteSettings } from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
@@ -68,7 +68,7 @@ export default function SettingsPage() {
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
                         <Globe className="text-lime-500" size={20} />
-                        Umumiy ma'lumotlar
+                        Umumiy ma&apos;lumotlar
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -98,7 +98,7 @@ export default function SettingsPage() {
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
                     <h2 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
                         <Mail className="text-lime-500" size={20} />
-                        Aloqa ma'lumotlari
+                        Aloqa ma&apos;lumotlari
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>

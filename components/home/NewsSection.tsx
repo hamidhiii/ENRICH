@@ -6,9 +6,10 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { newsAPI, News } from '@/lib/api';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NewsSection() {
-    const { ref, isVisible } = useScrollAnimation();
+    const { ref } = useScrollAnimation();
     const { language } = useLanguage();
     const [news, setNews] = useState<News[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function NewsSection() {
                 month: 'long',
                 year: 'numeric'
             });
-        } catch (e) {
+        } catch {
             return '';
         }
     };
@@ -94,10 +95,11 @@ export default function NewsSection() {
                                 style={{ transitionDelay: `${index * 200}ms` }}
                             >
                                 <div className="relative h-64 overflow-hidden group">
-                                    <img
+                                    <Image
                                         src={item.image ? (item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`) : '/images/news-placeholder.jpg'}
                                         alt={getField(item, 'title')}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                                         onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                                             const target = e.target as HTMLImageElement;
                                             target.src = '/images/logo.jpg';

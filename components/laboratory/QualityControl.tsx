@@ -3,7 +3,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
 
 export default function QualityControl() {
-    const { t, language } = useLanguage();
+    const { language } = useLanguage();
     const [qualityData, setQualityData] = useState<PageSection | null>(null);
 
     useEffect(() => {

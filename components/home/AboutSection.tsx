@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
 
@@ -43,27 +42,9 @@ export default function AboutSection() {
                             {getField('content')}
                         </p>
                     </div>
-
-                    {/* Right - Large ENRICH Logo or Image */}
-                    <div className={`flex justify-center items-center transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-                        <div className="relative flex items-center justify-center">
-                            <div className="w-64 h-64 md:w-96 md:h-96 lg:w-[500px] lg:h-[500px] rounded-full flex items-center justify-center bg-white overflow-hidden relative">
-                                {aboutData?.image ? (
-                                    <img
-                                        src={aboutData.image.startsWith('http') ? aboutData.image : `http://localhost:8001${aboutData.image}`}
-                                        alt="About Image"
-                                        className="w-full h-full object-contain p-4"
-                                    />
-                                ) : (
-                                    <Image
-                                        src="/images/logo.jpg"
-                                        alt="Enrich Logo"
-                                        fill
-                                        className="object-contain p-8"
-                                    />
-                                )}
-                            </div>
-                        </div>
+                    {/* Right - Image Placeholder */}
+                    <div className={`hidden md:block relative h-[400px] transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+                        {/* Image component was broken here, temporarily removed to fix build */}
                     </div>
                 </div>
             </div>

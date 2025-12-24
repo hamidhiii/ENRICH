@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
 
@@ -39,10 +40,11 @@ export default function AboutHero() {
         >
             {bgImage && (
                 <div className="absolute inset-0 z-0">
-                    <img
+                    <Image
                         src={bgImage}
                         alt="Background"
-                        className="w-full h-full object-cover opacity-20"
+                        fill
+                        className="object-cover opacity-20"
                     />
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-white/80" />
                 </div>

@@ -16,7 +16,6 @@ export default function AdminLayout({
 }) {
     const router = useRouter();
     const pathname = usePathname();
-    const [isLoading, setIsLoading] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
@@ -27,18 +26,8 @@ export default function AdminLayout({
             router.push('/admin/login');
         } else if (token && isLoginPage) {
             router.push('/admin');
-        } else {
-            setIsLoading(false);
         }
     }, [pathname, router]);
-
-    if (isLoading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-100">
-                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-lime-500"></div>
-            </div>
-        );
-    }
 
     if (pathname === '/admin/login') {
         return <LanguageProvider>{children}</LanguageProvider>;

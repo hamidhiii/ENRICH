@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Package, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { Product } from '@/lib/api';
@@ -37,12 +38,13 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                         >
                             {/* Product Image */}
                             <div className="h-64 bg-white flex items-center justify-center p-6 border-b-2 border-gray-100 text-lime-500 overflow-hidden">
-                                <div className="transition-transform duration-500 hover:scale-110 w-full h-full flex items-center justify-center">
+                                <div className="transition-transform duration-500 hover:scale-110 w-full h-full flex items-center justify-center relative">
                                     {product.image ? (
-                                        <img
+                                        <Image
                                             src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
                                             alt={getProductName(product)}
-                                            className="w-full h-full object-contain"
+                                            fill
+                                            className="object-contain"
                                         />
                                     ) : (
                                         <Package size={64} />

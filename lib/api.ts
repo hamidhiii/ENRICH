@@ -138,6 +138,22 @@ export interface PageSection {
   updated_at?: string;
 }
 
+export interface AuditLog {
+  id: number;
+  user_id: number;
+  action: string;
+  entity_type: string;
+  entity_id: string;
+  details?: string;
+  ip_address?: string;
+  user_agent?: string;
+  created_at: string;
+  user?: {
+    username: string;
+    full_name?: string;
+  };
+}
+
 // Create axios instance
 const api = axios.create({
   baseURL: API_URL,

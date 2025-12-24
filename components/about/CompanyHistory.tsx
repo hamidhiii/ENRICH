@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Factory } from 'lucide-react';
+import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
 import { contentAPI, PageSection } from '@/lib/api';
@@ -53,10 +54,11 @@ export default function CompanyHistory() {
                     </div>
                     <div className={`relative rounded-3xl h-96 overflow-hidden transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         {historyImage ? (
-                            <img
+                            <Image
                                 src={historyImage}
                                 alt="Company History"
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
                             />
                         ) : (
                             <div className="bg-gradient-to-br from-lime-300 to-lime-500 w-full h-full flex items-center justify-center">

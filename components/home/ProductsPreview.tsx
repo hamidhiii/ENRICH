@@ -55,7 +55,7 @@ export default function ProductsPreview() {
                         href="/products"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-lime-500 text-white rounded-full font-bold hover:bg-lime-600 transition-all hover:shadow-lg hover:-translate-y-1"
                     >
-                        Barcha mahsulotlarni ko'rish
+                        Barcha mahsulotlarni ko&apos;rish
                         <ArrowRight size={20} />
                     </Link>
                 </div>

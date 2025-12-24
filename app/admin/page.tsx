@@ -6,13 +6,12 @@ import {
     FileText,
     MessageSquare,
     Users,
-    TrendingUp,
     ArrowUpRight,
     Clock,
     Settings,
     Database
 } from 'lucide-react';
-import { productsAPI, newsAPI, contactAPI, ContactMessage, statsAPI } from '@/lib/api';
+import { contactAPI, ContactMessage, statsAPI } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
 export default function AdminDashboard() {
@@ -105,7 +104,7 @@ export default function AdminDashboard() {
                             onClick={() => window.location.href = '/admin/messages'}
                             className="text-lime-500 text-sm font-medium hover:text-lime-600 flex items-center transition-colors"
                         >
-                            Hammasini ko'rish <ArrowUpRight size={16} className="ml-1" />
+                            Hammasini ko&apos;rish <ArrowUpRight size={16} className="ml-1" />
                         </button>
                     </div>
                     <div className="divide-y divide-gray-100 flex-1">

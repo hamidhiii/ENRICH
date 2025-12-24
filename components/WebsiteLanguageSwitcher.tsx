@@ -1,7 +1,6 @@
 'use client';
 
 import { useLanguage } from '@/context/LanguageContext';
-import { Globe } from 'lucide-react';
 
 export default function WebsiteLanguageSwitcher() {
     const { language, setLanguage } = useLanguage();
@@ -12,8 +11,8 @@ export default function WebsiteLanguageSwitcher() {
                 <button
                     onClick={() => setLanguage('uz')}
                     className={`relative px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${language === 'uz'
-                            ? 'bg-lime-500 text-white shadow-md'
-                            : 'text-gray-400 hover:text-gray-600'
+                        ? 'bg-lime-500 text-white shadow-md'
+                        : 'text-gray-400 hover:text-gray-600'
                         }`}
                 >
                     UZ
@@ -21,8 +20,8 @@ export default function WebsiteLanguageSwitcher() {
                 <button
                     onClick={() => setLanguage('ru')}
                     className={`relative px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${language === 'ru'
-                            ? 'bg-lime-500 text-white shadow-md'
-                            : 'text-gray-400 hover:text-gray-600'
+                        ? 'bg-lime-500 text-white shadow-md'
+                        : 'text-gray-400 hover:text-gray-600'
                         }`}
                 >
                     RU

@@ -2,20 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { categoriesAPI } from '@/lib/api';
+import { categoriesAPI, Category } from '@/lib/api';
 
 export default function CategoriesPage() {
-    interface Category {
-        id: number;
-        name_uz: string;
-        name_ru: string;
-        slug: string;
-        order: number;
-        is_active: boolean;
-        icon: string;
-    }
 
     const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -52,11 +44,14 @@ export default function CategoriesPage() {
         {
             key: 'icon',
             label: 'Icon',
-            render: (value: any) => value ? (
-                <img src={value.startsWith('http') ? value : `http://localhost:8001${value}`} alt="Icon" className="w-8 h-8 object-contain" />
-            ) : (
-                <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">-</div>
-            )
+            render: (value: unknown) => {
+                const src = value as string;
+                return src ? (
+                    <Image src={src.startsWith('http') ? src : `http://localhost:8001${src}`} alt="Icon" width={32} height={32} className="object-contain" />
+                ) : (
+                    <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">-</div>
+                )
+            }
         },
         { key: 'name_uz', label: 'Name (UZ)' },
         { key: 'name_ru', label: 'Name (RU)' },
@@ -65,7 +60,7 @@ export default function CategoriesPage() {
         {
             key: 'is_active',
             label: 'Status',
-            render: (value: any) => (
+            render: (value: unknown) => (
                 <span className={`px-2 py-1 rounded-full text-xs font-medium ${value ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                     {value ? 'Active' : 'Inactive'}
                 </span>

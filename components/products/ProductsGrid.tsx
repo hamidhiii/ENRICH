@@ -32,7 +32,7 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                     {products.map((product, index) => (
                         <Link
                             key={product.id}
-                            href={`/products/${product.id}`}
+                            href={`/products/${product.slug || product.id}`}
                             className={`bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-700 hover:-translate-y-2 border-2 cursor-pointer ${index === 2 ? 'border-lime-500' : 'border-gray-300'} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
                             style={{ transitionDelay: `${index * 100}ms` }}
                         >

@@ -28,6 +28,7 @@ export interface Product {
   name_ru: string;
   name_uz: string;
   name_en?: string;
+  slug?: string;
   form: string;
   instructions_ru?: string;
   instructions_uz?: string;
@@ -208,6 +209,7 @@ export const authAPI = {
 export const productsAPI = {
   getAll: (params?: QueryParams) => api.get('/api/products/', { params }),
   getById: (id: number) => api.get(`/api/products/${id}`),
+  getBySlug: (slug: string) => api.get(`/api/products/slug/${slug}`),
   create: (data: Partial<Product>) => api.post('/api/products/', data),
   update: (id: number, data: Partial<Product>) => api.put(`/api/products/${id}`, data),
   delete: (id: number) => api.delete(`/api/products/${id}`),

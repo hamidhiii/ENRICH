@@ -68,6 +68,8 @@ class Product(Base):
     name_uz = Column(String(255), nullable=False)
     name_en = Column(String(255))
     
+    slug = Column(String(255), unique=True, index=True)
+    
     form = Column(SQLEnum(ProductForm), nullable=False)
     
     instructions_ru = Column(Text)

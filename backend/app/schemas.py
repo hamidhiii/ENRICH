@@ -88,6 +88,7 @@ class ProductBase(BaseModel):
     name_ru: str
     name_uz: str
     name_en: Optional[str] = None
+    slug: Optional[str] = None
     form: ProductForm
     instructions_ru: Optional[str] = None
     instructions_uz: Optional[str] = None
@@ -116,6 +117,7 @@ class ProductUpdate(BaseModel):
     name_ru: Optional[str] = None
     name_uz: Optional[str] = None
     name_en: Optional[str] = None
+    slug: Optional[str] = None
     form: Optional[ProductForm] = None
     instructions_ru: Optional[str] = None
     instructions_uz: Optional[str] = None
@@ -137,6 +139,7 @@ class ProductUpdate(BaseModel):
 
 class ProductResponse(ProductBase):
     id: int
+    slug: Optional[str] = None
     created_at: datetime
     category: CategoryResponse
 

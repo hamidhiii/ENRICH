@@ -56,6 +56,20 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     return product
 
 
+@router.get("/slug/{slug}", response_model=schemas.ProductResponse)
+def get_product_by_slug(slug: str, db: Session = Depends(get_db)):
+    """Get a single product by slug"""
+    product = db.query(models.Product).filter(models.Product.slug == slug).first()
+    
+    if not product:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product not found"
+        )
+    
+    return product
+
+
 @router.post("/", response_model=schemas.ProductResponse, status_code=status.HTTP_201_CREATED)
 def create_product(
     product_data: schemas.ProductCreate,

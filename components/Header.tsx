@@ -38,7 +38,7 @@ export default function Header() {
                         <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2 text-sm">
                                 <span><FaPhone /></span>
-                                <span>+998 71 200 06 03</span>
+                                <span>+998 71 200 06 03 6</span>
                             </div>
                             <div className="flex gap-3">
                                 <a href="https://www.facebook.com/enrichcompanyuz" className="hover:opacity-80 transition-opacity">

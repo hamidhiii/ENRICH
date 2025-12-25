@@ -63,11 +63,31 @@ jobs:
           # Run pytest if tests exist
           if [ -d "tests" ]; then pytest; else echo "No tests found"; fi
 
-  # deploy:
-  #   name: Deploy
-  #   needs: [frontend-ci, backend-ci]
-  #   if: github.ref == 'refs/heads/main'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Deploy to Production
-  #       run: echo "Add your deployment script here (e.g., Vercel CLI, SSH to VPS, etc.)"
+  deploy:
+    name: Deploy to Server
+    needs: [frontend-ci, backend-ci]
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            cd ~/ENRICH || git clone https://github.com/${{ github.repository }}.git ~/ENRICH
+            cd ~/ENRICH
+            git pull origin ${{ github.ref_name }}
+            
+            # Frontend
+            npm install
+            npm run build
+            pm2 restart enrich-frontend || pm2 start npm --name "enrich-frontend" -- start
+            
+            # Backend
+            cd backend
+            if [ ! -d "venv" ]; then python3 -m venv venv; fi
+            source venv/bin/activate
+            pip install -r requirements.txt
+            pm2 restart enrich-backend || pm2 start "python3 main.py" --name "enrich-backend"

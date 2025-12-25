@@ -1,25 +1,22 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List
-from app.database import get_db
+from app.database import get_db, get_settings
 from app import models, schemas
 from app.dependencies import require_role
-
-router = APIRouter(prefix="/api/contact", tags=["Contact"])
-
-
 import urllib.request
 import urllib.parse
 import json
-from app.database import get_db, get_settings
+import logging
 
+logger = logging.getLogger(__name__)
+router = APIRouter(prefix="/api/contact", tags=["Contact"])
 settings = get_settings()
 
 def send_telegram_notification(message_data: dict):
     """Send a notification to Telegram bot"""
-    print(f"DEBUG: Attempting to send Telegram notification. Token: {settings.telegram_bot_token[:5]}..., Chat ID: {settings.telegram_chat_id}")
     if not settings.telegram_bot_token or not settings.telegram_chat_id:
-        print("DEBUG: Telegram bot token or chat ID not set. Skipping notification.")
+        logger.warning("Telegram bot token or chat ID not set. Skipping notification.")
         return
 
     text = (
@@ -37,26 +34,29 @@ def send_telegram_notification(message_data: dict):
         "text": text,
         "parse_mode": "Markdown"
     }
-    print(f"DEBUG: Telegram Payload: {json.dumps(payload)}")
-    data = urllib.parse.urlencode(payload).encode("utf-8")
-
+    
     try:
+        data = urllib.parse.urlencode(payload).encode("utf-8")
         req = urllib.request.Request(url, data=data)
-        with urllib.request.urlopen(req) as response:
-            print(f"DEBUG: Telegram notification sent. Response: {response.status}")
+        with urllib.request.urlopen(req, timeout=10) as response:
+            logger.info(f"Telegram notification sent. Status: {response.status}")
     except Exception as e:
-        print(f"DEBUG: Failed to send Telegram notification: {e}")
+        logger.error(f"Failed to send Telegram notification: {e}")
 
 @router.post("/", response_model=schemas.ContactMessageResponse, status_code=201)
-def create_contact_message(message_data: schemas.ContactMessageCreate, db: Session = Depends(get_db)):
+def create_contact_message(
+    message_data: schemas.ContactMessageCreate, 
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
     """Submit a contact form message (public endpoint)"""
     new_message = models.ContactMessage(**message_data.model_dump())
     db.add(new_message)
     db.commit()
     db.refresh(new_message)
     
-    # Send Telegram notification
-    send_telegram_notification(message_data.model_dump())
+    # Send Telegram notification in background
+    background_tasks.add_task(send_telegram_notification, message_data.model_dump())
     
     return new_message
 

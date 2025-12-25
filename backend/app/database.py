@@ -9,15 +9,17 @@ class Settings(BaseSettings):
     database_url: str = "sqlite:///./enrich.db"
     secret_key: str = "your-secret-key-change-in-production"
     algorithm: str = "HS256"
-    access_token_expire_minutes: int = 30
+    access_token_expire_minutes: int = 60 * 24 * 7  # 7 days
     upload_dir: str = "uploads"
-    max_file_size: int = 10485760
+    max_file_size: int = 10 * 1024 * 1024  # 10MB
     allowed_origins: str = "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
     telegram_bot_token: str = ""
     telegram_chat_id: str = ""
 
     class Config:
         env_file = ".env"
+        env_file_encoding = 'utf-8'
+        case_sensitive = False
 
 
 @lru_cache()

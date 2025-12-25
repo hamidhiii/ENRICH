@@ -8,7 +8,10 @@ from pathlib import Path
 from app.database import get_db, get_settings
 from app import models
 from app.dependencies import require_role
+import secrets
+import logging
 
+logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/upload", tags=["Upload"])
 settings = get_settings()
 
@@ -18,14 +21,20 @@ def save_upload_file(upload_file: UploadFile, upload_dir: str) -> str:
     # Create upload directory if it doesn't exist
     Path(upload_dir).mkdir(parents=True, exist_ok=True)
     
-    # Generate unique filename
+    # Generate unique filename with random suffix
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"{timestamp}_{upload_file.filename}"
+    random_suffix = secrets.token_hex(4)
+    extension = Path(upload_file.filename).suffix
+    filename = f"{timestamp}_{random_suffix}{extension}"
     file_path = os.path.join(upload_dir, filename)
     
     # Save file
-    with open(file_path, "wb") as buffer:
-        shutil.copyfileobj(upload_file.file, buffer)
+    try:
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(upload_file.file, buffer)
+    except Exception as e:
+        logger.error(f"Failed to save file {file_path}: {e}")
+        raise HTTPException(status_code=500, detail="Could not save file")
     
     return file_path
 

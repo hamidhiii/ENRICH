@@ -5,6 +5,9 @@ from typing import Optional
 from .database import get_db
 from .auth import decode_access_token
 from . import models
+import logging
+
+logger = logging.getLogger(__name__)
 
 security = HTTPBearer()
 
@@ -17,34 +20,31 @@ def get_current_user(
     token = credentials.credentials
     try:
         payload = decode_access_token(token)
-        print(f"DEBUG: Token payload: {payload}")
     except Exception as e:
-        print(f"DEBUG: Token decode error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Could not validate credentials: {str(e)}",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    if payload is None:
+        logger.error(f"Token decode error: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    user_id: int = payload.get("sub")
-    if user_id is None:
-        print("DEBUG: User ID (sub) is None")
+    if not payload:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    user = db.query(models.User).filter(models.User.id == user_id).first()
-    if user is None:
-        print(f"DEBUG: User not found for id {user_id}")
+    user_id: str = payload.get("sub")
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    user = db.query(models.User).filter(models.User.id == int(user_id)).first()
+    if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found",

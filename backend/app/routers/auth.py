@@ -5,15 +5,19 @@ from app.database import get_db
 from app import models, schemas
 from app.auth import verify_password, get_password_hash, create_access_token
 from app.database import get_settings
-from app.dependencies import get_current_user
+from app.dependencies import get_current_user, require_role
 
 router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 settings = get_settings()
 
 
 @router.post("/register", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
-def register(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
-    """Register a new user (admin only in production)"""
+def register(
+    user_data: schemas.UserCreate, 
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(require_role(models.UserRole.ADMIN))
+):
+    """Register a new user (admin only)"""
     # Check if user already exists
     existing_user = db.query(models.User).filter(
         (models.User.email == user_data.email) | (models.User.username == user_data.username)
@@ -45,13 +49,15 @@ def register(user_data: schemas.UserCreate, db: Session = Depends(get_db)):
 @router.post("/login", response_model=schemas.Token)
 def login(credentials: schemas.UserLogin, db: Session = Depends(get_db)):
     """Login and get access token"""
-    # Find user by username
-    user = db.query(models.User).filter(models.User.username == credentials.username).first()
+    # Find user by username or email
+    user = db.query(models.User).filter(
+        (models.User.username == credentials.username) | (models.User.email == credentials.username)
+    ).first()
     
     if not user or not verify_password(credentials.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect username/email or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     

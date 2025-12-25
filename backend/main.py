@@ -30,33 +30,43 @@ app = FastAPI(
 settings = get_settings()
 
 # Configure CORS
-origins = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:3001",
-]
-print(f"DEBUG: Hardcoded CORS origins: {origins}")
-
-from fastapi import Request
+allowed_origins = settings.allowed_origins.split(",")
+print(f"DEBUG: Allowed CORS origins: {allowed_origins}")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+from fastapi import Request, status
+from fastapi.responses import JSONResponse
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Global error handler caught: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": "An internal server error occurred. Please try again later."},
+    )
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    print(f"DEBUG: Request: {request.method} {request.url}")
-    print(f"DEBUG: Origin: {request.headers.get('origin')}")
+    logger.info(f"Request: {request.method} {request.url}")
+    logger.debug(f"Headers: {dict(request.headers)}")
     try:
         response = await call_next(request)
+        logger.info(f"Response status: {response.status_code}")
         return response
     except Exception as e:
-        print(f"DEBUG: Request failed: {e}")
+        logger.error(f"Request failed: {e}")
         raise e
 
 # Create uploads directory

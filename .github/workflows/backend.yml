@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Backend CI/CD
 
 on:
   push:
@@ -7,29 +7,6 @@ on:
     branches: [ main, master ]
 
 jobs:
-  frontend-ci:
-    name: Frontend CI
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Build
-        run: npm run build
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-
   backend-ci:
     name: Backend CI
     runs-on: ubuntu-latest
@@ -52,20 +29,17 @@ jobs:
       - name: Lint with flake8
         run: |
           cd backend
-          # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run tests
         run: |
           cd backend
-          # Run pytest if tests exist
           if [ -d "tests" ]; then pytest; else echo "No tests found"; fi
 
   deploy:
-    name: Deploy to Server
-    needs: [frontend-ci, backend-ci]
+    name: Deploy Backend
+    needs: backend-ci
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
@@ -80,10 +54,7 @@ jobs:
             cd ~/ENRICH
             git pull origin ${{ github.ref_name }}
             
-            # Frontend
-            npm install
-            npm run build
-            pm2 restart enrich-frontend || pm2 start npm --name "enrich-frontend" -- start
+            pm2 restart all
             
             # Backend
             cd backend

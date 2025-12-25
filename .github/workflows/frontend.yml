@@ -20,5 +20,11 @@ jobs:
           git stash
           git pull origin main
           npm run build
+
+          cd ./backend  
+          python -m venv venv 
+          source venv/bin/activate
+          pip install -r requirements.txt
+          deactivate
           pm2 restart all
           echo "✅ Deployment tugadi!"

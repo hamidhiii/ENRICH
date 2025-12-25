@@ -30,7 +30,9 @@ app = FastAPI(
 settings = get_settings()
 
 # Configure CORS
-allowed_origins = settings.allowed_origins.split(",")
+allowed_origins = [
+    "http://enrich.uz"
+]
 print(f"DEBUG: Allowed CORS origins: {allowed_origins}")
 
 app.add_middleware(

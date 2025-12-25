@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { FaFacebook, FaInstagram, FaYoutube, FaBars, FaTimes, FaTelegram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaBars, FaTimes, FaTelegram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import WebsiteLanguageSwitcher from './WebsiteLanguageSwitcher';

@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+if (API_URL && !API_URL.startsWith('http')) {
+  API_URL = `http://${API_URL}`;
+}
 
 // Types and Interfaces
 export interface QueryParams {

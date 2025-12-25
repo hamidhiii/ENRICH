@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { certificatesAPI, Certificate } from '@/lib/api';
+import { certificatesAPI, Certificate, getImageUrl } from '@/lib/api';
 import Image from 'next/image';
 import { FileText, X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
@@ -104,7 +104,7 @@ export default function CertificatesPreview() {
                                             <div className="w-full h-64 mb-6 relative rounded-lg overflow-hidden bg-white flex items-center justify-center">
                                                 {cert.image ? (
                                                     <Image
-                                                        src={cert.image.startsWith('http') ? cert.image : `http://localhost:8001${cert.image}`}
+                                                        src={getImageUrl(cert.image)}
                                                         alt={cert.name_uz}
                                                         fill
                                                         className="object-contain transition-transform duration-500 group-hover:scale-105"
@@ -119,7 +119,7 @@ export default function CertificatesPreview() {
                                             <p className="text-gray-500 mb-4">{cert.certificate_type}</p>
                                             {cert.pdf_file && (
                                                 <a
-                                                    href={cert.pdf_file.startsWith('http') ? cert.pdf_file : `http://localhost:8001${cert.pdf_file}`}
+                                                    href={getImageUrl(cert.pdf_file)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="mt-auto inline-flex items-center gap-2 text-lime-600 font-medium hover:underline z-20"
@@ -184,7 +184,7 @@ export default function CertificatesPreview() {
                         <div className="h-[80vh] w-full relative flex items-center justify-center bg-gray-100">
                             {selectedCert.image ? (
                                 <Image
-                                    src={selectedCert.image.startsWith('http') ? selectedCert.image : `http://localhost:8001${selectedCert.image}`}
+                                    src={getImageUrl(selectedCert.image)}
                                     alt={selectedCert.name_uz}
                                     fill
                                     className="object-contain"
@@ -200,7 +200,7 @@ export default function CertificatesPreview() {
                             </div>
                             {selectedCert.pdf_file && (
                                 <a
-                                    href={selectedCert.pdf_file.startsWith('http') ? selectedCert.pdf_file : `http://localhost:8001${selectedCert.pdf_file}`}
+                                    href={getImageUrl(selectedCert.pdf_file)}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="bg-lime-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-lime-600 transition-colors flex items-center gap-2"

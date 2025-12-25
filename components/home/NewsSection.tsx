@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { newsAPI, News } from '@/lib/api';
+import { newsAPI, News, getImageUrl } from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -96,7 +96,7 @@ export default function NewsSection() {
                             >
                                 <div className="relative h-64 overflow-hidden group">
                                     <Image
-                                        src={item.image ? (item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`) : '/images/news-placeholder.jpg'}
+                                        src={item.image ? getImageUrl(item.image) : '/images/news-placeholder.jpg'}
                                         alt={getField(item, 'title')}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function AboutSection() {
     const { ref, isVisible } = useScrollAnimation();
@@ -15,9 +15,7 @@ export default function AboutSection() {
         const fetchAbout = async () => {
             try {
                 const response = await contentAPI.getSections({ page_path: 'home' });
-                console.log('AboutSection API Response:', response.data);
                 const about = response.data.find((s: PageSection) => s.section_key === 'about');
-                console.log('Found about section:', about);
                 if (about) setAboutData(about);
             } catch (error) {
                 console.error('Error fetching about data:', error);
@@ -32,13 +30,9 @@ export default function AboutSection() {
         return (aboutData[key] as string) || (aboutData[`${field}_uz` as keyof PageSection] as string) || '';
     };
 
-    const getImageUrl = () => {
+    const getAboutImageUrl = () => {
         if (!aboutData?.image) return '/images/about-placeholder.jpg';
-        const url = aboutData.image.startsWith('http')
-            ? aboutData.image
-            : `http://localhost:8001${aboutData.image}`;
-        console.log('AboutSection Image URL:', url);
-        return url;
+        return getImageUrl(aboutData.image);
     };
 
     return (
@@ -57,7 +51,7 @@ export default function AboutSection() {
                     {/* Right - Image */}
                     <div className={`relative h-auto md:h-[400px] w-full transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                         <Image
-                            src={getImageUrl()}
+                            src={getAboutImageUrl()}
                             alt={getField('title')}
                             fill
                             className="object-contain "

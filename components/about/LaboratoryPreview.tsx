@@ -3,7 +3,7 @@ import { Microscope } from 'lucide-react';
 import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function LaboratoryPreview() {
     const { ref, isVisible } = useScrollAnimation();
@@ -31,7 +31,7 @@ export default function LaboratoryPreview() {
     };
 
     const labImage = labData?.image
-        ? (labData.image.startsWith('http') ? labData.image : `http://localhost:8001${labData.image}`)
+        ? getImageUrl(labData.image)
         : null;
 
     return (

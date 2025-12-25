@@ -5,7 +5,7 @@ import { Package, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { Product } from '@/lib/api';
+import { Product, getImageUrl } from '@/lib/api';
 
 interface ProductsGridProps {
     products: Product[];
@@ -41,7 +41,7 @@ export default function ProductsGrid({ products }: ProductsGridProps) {
                                 <div className="transition-transform duration-500 hover:scale-110 w-full h-full flex items-center justify-center relative">
                                     {product.image ? (
                                         <Image
-                                            src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
+                                            src={getImageUrl(product.image)}
                                             alt={getProductName(product)}
                                             fill
                                             className="object-contain"

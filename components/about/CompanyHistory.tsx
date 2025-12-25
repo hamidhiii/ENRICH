@@ -3,7 +3,7 @@ import { Factory } from 'lucide-react';
 import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function CompanyHistory() {
     const { ref, isVisible } = useScrollAnimation();
@@ -37,7 +37,7 @@ export default function CompanyHistory() {
     };
 
     const historyImage = historyData?.image
-        ? (historyData.image.startsWith('http') ? historyData.image : `http://localhost:8001${historyData.image}`)
+        ? getImageUrl(historyData.image)
         : null;
 
     return (

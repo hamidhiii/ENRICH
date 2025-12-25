@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -227,7 +227,7 @@ export default function Hero() {
     const currentStaticSlide = slides[currentSlide % slides.length];
 
     const bgImage = currentHeroData?.background_image
-        ? (currentHeroData.background_image.startsWith('http') ? currentHeroData.background_image : `http://localhost:8001${currentHeroData.background_image}`)
+        ? getImageUrl(currentHeroData.background_image)
         : null;
 
     return (
@@ -273,7 +273,7 @@ export default function Hero() {
                             {currentHeroData?.image ? (
                                 <div className="relative w-[300px] h-[400px] md:w-[400px] md:h-[500px]">
                                     <Image
-                                        src={currentHeroData.image.startsWith('http') ? currentHeroData.image : `http://localhost:8001${currentHeroData.image}`}
+                                        src={getImageUrl(currentHeroData.image)}
                                         alt="Hero"
                                         fill
                                         className="object-contain drop-shadow-2xl"

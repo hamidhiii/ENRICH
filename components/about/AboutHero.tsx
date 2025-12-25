@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function AboutHero() {
     const { ref, isVisible } = useScrollAnimation();
@@ -30,7 +30,7 @@ export default function AboutHero() {
     };
 
     const bgImage = heroData?.background_image
-        ? (heroData.background_image.startsWith('http') ? heroData.background_image : `http://localhost:8001${heroData.background_image}`)
+        ? getImageUrl(heroData.background_image)
         : null;
 
     return (

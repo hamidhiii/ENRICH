@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { Upload, X, FileText, Image as ImageIcon } from 'lucide-react';
 import Image from 'next/image';
-import { uploadAPI } from '@/lib/api';
+import { uploadAPI, getImageUrl } from '@/lib/api';
 
 interface FileUploadProps {
     label: string;
@@ -70,7 +70,7 @@ export default function FileUpload({
                     {type === 'image' ? (
                         <div className="w-16 h-16 relative rounded overflow-hidden bg-gray-200 flex-shrink-0">
                             <Image
-                                src={value.startsWith('http') ? value : `http://localhost:8001${value}`}
+                                src={getImageUrl(value)}
                                 alt="Preview"
                                 fill
                                 className="object-cover"

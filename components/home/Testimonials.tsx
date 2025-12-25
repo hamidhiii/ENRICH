@@ -3,7 +3,7 @@ import { Star, Quote } from 'lucide-react';
 import Image from 'next/image';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function Testimonials() {
     const { ref, isVisible } = useScrollAnimation();
@@ -53,7 +53,7 @@ export default function Testimonials() {
                                 <div className="w-20 h-20 rounded-full bg-gray-300 overflow-hidden flex-shrink-0 relative">
                                     {typeof item === 'object' && item.image ? (
                                         <Image
-                                            src={item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`}
+                                            src={getImageUrl(item.image)}
                                             alt="Client"
                                             fill
                                             className="object-cover"

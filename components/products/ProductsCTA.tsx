@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useLanguage } from '@/context/LanguageContext';
-import { contentAPI, PageSection } from '@/lib/api';
+import { contentAPI, PageSection, getImageUrl } from '@/lib/api';
 
 export default function ProductsCTA() {
     const { ref, isVisible } = useScrollAnimation();
@@ -29,7 +29,7 @@ export default function ProductsCTA() {
     };
 
     const bgImage = ctaData?.background_image
-        ? (ctaData.background_image.startsWith('http') ? ctaData.background_image : `http://localhost:8001${ctaData.background_image}`)
+        ? getImageUrl(ctaData.background_image)
         : null;
 
     return (

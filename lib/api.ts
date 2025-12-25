@@ -1,9 +1,15 @@
 import axios from 'axios';
 
-let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+export let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 if (API_URL && !API_URL.startsWith('http')) {
   API_URL = `http://${API_URL}`;
 }
+
+export const getImageUrl = (path: string | null | undefined) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  return `${API_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+};
 
 // Types and Interfaces
 export interface QueryParams {

@@ -19,10 +19,10 @@ jobs:
           curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
           sudo apt install -y nodejs
           
-          cd /home/fintechadmin/platform/frontend-test
+          
           git stash
           git pull origin main
           # npm install
           npm run build
-          pm2 restart all
+          npm2 restart all
           echo "✅ Deployment tugadi!"

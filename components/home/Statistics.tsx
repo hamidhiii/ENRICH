@@ -30,7 +30,7 @@ function StatItem({ icon, label, value, suffix = '', isVisible }: StatItemProps)
             <div className="text-xs md:text-sm font-bold mb-2 md:mb-3 text-lime-500 tracking-wider">
                 {label}
             </div>
-            <div className="text-4xl md:text-5xl font-bold text-slate-600">
+            <div className="text-3xl md:text-5xl font-bold text-slate-600">
                 {count}{suffix}
             </div>
         </div>

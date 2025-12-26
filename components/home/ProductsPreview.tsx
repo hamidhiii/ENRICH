@@ -34,10 +34,10 @@ export default function ProductsPreview() {
         <section className="py-20 bg-gray-50">
             <div className="container mx-auto px-6 max-w-7xl">
                 <div ref={ref} className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <h2 className="text-4xl font-bold mb-4 text-slate-800">
+                    <h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-800">
                         {t.products.title}
                     </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-base md:text-xl text-gray-600 max-w-2xl mx-auto">
                         Yuqori sifatli va samarali dori vositalari
                     </p>
                 </div>

@@ -41,7 +41,7 @@ export default function AboutSection() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
                     {/* Left - Text */}
                     <div className={`max-w-2xl text-center md:text-left transition-all duration-1000 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6 md:mb-8 text-slate-600">
+                        <h2 className="text-2xl md:text-5xl font-bold mb-6 md:mb-8 text-slate-600">
                             {getField('title')}
                         </h2>
                         <p className="text-gray-600 leading-relaxed mb-4 md:mb-6 text-base md:text-lg whitespace-pre-line">

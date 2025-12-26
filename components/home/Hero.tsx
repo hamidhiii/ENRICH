@@ -243,13 +243,13 @@ export default function Hero() {
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                     <div className={`z-10 transition-all duration-1000 transform md:pl-12 lg:pl-24 text-center md:text-left order-2 md:order-1 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                        <h2 className={`text-xl md:text-2xl font-bold mb-2 ${currentStaticSlide.color}`}>
+                        <h2 className={`text-lg md:text-2xl font-bold mb-2 ${currentStaticSlide.color}`}>
                             {getField('subtitle', currentHeroData)}
                         </h2>
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-slate-800 leading-tight">
+                        <h1 className="text-2xl md:text-6xl font-bold mb-4 md:mb-6 text-slate-800 leading-tight">
                             {getField('title', currentHeroData)}
                         </h1>
-                        <p className="text-lg md:text-xl text-gray-600 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 whitespace-pre-line">
+                        <p className="text-base md:text-xl text-gray-600 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0 whitespace-pre-line">
                             {getField('content', currentHeroData)}
                         </p>
 

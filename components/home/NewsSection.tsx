@@ -62,10 +62,10 @@ export default function NewsSection() {
             <div className="container mx-auto px-6 max-w-7xl">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div className="transition-all duration-1000 opacity-100 translate-x-0">
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+                        <h2 className="text-2xl md:text-5xl font-bold text-slate-800 mb-4">
                             {language === 'uz' ? 'Yangiliklar' : 'Новости'}
                         </h2>
-                        <p className="text-gray-600 text-lg max-w-2xl">
+                        <p className="text-gray-600 text-base md:text-lg max-w-2xl">
                             {language === 'uz'
                                 ? 'Kompaniyamiz hayotidagi so\'nggi o\'zgarishlar va muhim voqealar'
                                 : 'Последние изменения и важные события в жизни нашей компании'}
@@ -111,10 +111,10 @@ export default function NewsSection() {
                                     </div>
                                 </div>
                                 <div className="p-8">
-                                    <h3 className="text-2xl font-bold text-slate-800 mb-4 line-clamp-2 hover:text-lime-600 transition-colors">
+                                    <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-4 line-clamp-2 hover:text-lime-600 transition-colors">
                                         {getField(item, 'title')}
                                     </h3>
-                                    <p className="text-gray-600 mb-8 line-clamp-3 text-lg leading-relaxed">
+                                    <p className="text-gray-600 mb-8 line-clamp-3 text-base md:text-lg leading-relaxed">
                                         {getField(item, 'excerpt')}
                                     </p>
                                     <Link

@@ -9,7 +9,7 @@ import CertificatesPreview from '@/components/about/CertificatesPreview';
 
 export default function About() {
     return (
-        <div className="pt-32">
+        <div className="">
             <AboutHero />
             <CompanyHistory />
             <MissionVision />

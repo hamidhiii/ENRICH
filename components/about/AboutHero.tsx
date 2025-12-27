@@ -40,7 +40,7 @@ export default function AboutHero() {
         >
             {bgImage && (
                 <div className="absolute inset-0 z-0">
-                    <Image
+                    <Image  
                         src={bgImage}
                         alt="Background"
                         fill

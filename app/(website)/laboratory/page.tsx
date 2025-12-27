@@ -9,7 +9,7 @@ import Equipment from '@/components/laboratory/Equipment';
 
 export default function Laboratory() {
     return (
-        <div className="pt-32">
+        <div className="">
             <LaboratoryHero />
             <LaboratoryOverview />
             <ClinicalTrials />

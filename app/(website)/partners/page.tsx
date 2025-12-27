@@ -36,7 +36,7 @@ export default function PartnersPage() {
     };
 
     return (
-        <div className="min-h-screen pt-24 pb-12 bg-gray-50">
+        <div className="min-h-screen  pb-12 bg-gray-50">
             {/* Header Section */}
             <div ref={headerAnim.ref} className={`bg-lime-500 py-16 mb-12 transition-all duration-1000 ${headerAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <div className="container mx-auto px-6 text-center">

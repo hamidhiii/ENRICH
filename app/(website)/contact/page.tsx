@@ -6,7 +6,7 @@ import ContactFormSection from '@/components/contact/ContactFormSection';
 
 export default function Contact() {
     return (
-        <div className="pt-32">
+        <div className="">
             <ContactHero />
             <ContactInfoCards />
             <ContactFormSection />

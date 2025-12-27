@@ -59,7 +59,7 @@ export default function Products() {
         : products.filter((p: Product) => p.category?.slug === selectedCategory || p.category_id === Number(selectedCategory));
 
     return (
-        <div className="pt-32">
+        <div className="">
             <ProductsHero />
             <CategoryFilter
                 categories={categories}

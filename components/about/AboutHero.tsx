@@ -40,13 +40,13 @@ export default function AboutHero() {
         >
             {bgImage && (
                 <div className="absolute inset-0 z-0">
-                    <Image  
+                    <Image
                         src={bgImage}
                         alt="Background"
                         fill
-                        className="object-cover opacity-20"
+                        className="object-cover opacity-40"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-50/80 to-white/80" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-gray-50/60" />
                 </div>
             )}
             <div className="container mx-auto px-6 relative z-10">

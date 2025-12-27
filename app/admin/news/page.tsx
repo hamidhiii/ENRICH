@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Plus, Eye } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { newsAPI, News } from '@/lib/api';
+import { newsAPI, News, getImageUrl } from '@/lib/api';
 
 export default function NewsPage() {
     const [news, setNews] = useState<News[]>([]);
@@ -46,7 +46,7 @@ export default function NewsPage() {
             render: (value: unknown) => {
                 const src = value as string;
                 return src ? (
-                    <Image src={src.startsWith('http') ? src : `http://localhost:8001${src}`} alt="News" width={64} height={40} className="object-cover rounded" />
+                    <Image src={getImageUrl(src)} alt="News" width={64} height={40} className="object-cover rounded" />
                 ) : (
                     <div className="w-16 h-10 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">No Img</div>
                 );

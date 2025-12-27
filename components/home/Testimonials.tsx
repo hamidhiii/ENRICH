@@ -46,7 +46,7 @@ export default function Testimonials() {
                             style={{ transitionDelay: `${index * 300}ms` }}
                         >
                             <p className="text-gray-600 mb-8 italic text-lg leading-relaxed">
-                                {typeof item === 'object' ? getField(item, 'content') : "Lorem Ipsum is simply dummy text of the printing Ipsum has been the industry's standard dummy text ever since the 1500s."}
+                                {typeof item === 'object' ? getField(item, 'content') : (language === 'uz' ? "Mijozlarimiz biz haqimizda" : "Отзывы наших клиентов")}
                             </p>
                             <div className="flex items-center gap-6 relative">
                                 {/* Client Photo */}

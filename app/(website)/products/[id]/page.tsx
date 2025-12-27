@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
 import { ArrowLeft, Pill, FileText, AlertTriangle, Thermometer } from 'lucide-react';
-import { productsAPI, Product } from '@/lib/api';
+import { productsAPI, Product, getImageUrl } from '@/lib/api';
 import { useLanguage } from '@/context/LanguageContext';
 
 type Params = Promise<{ id: string }>;
@@ -58,9 +58,7 @@ export default function ProductDetailPage({ params }: { params: Params }) {
     const sideEffects = language === 'uz' ? product.side_effects_uz : (product.side_effects_ru || product.side_effects_uz);
 
     // Use product image for header background or fallback
-    const headerImage = product.image
-        ? (product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`)
-        : '/images/hero-bg.jpg';
+    const headerImage = getImageUrl(product.image) || '/images/hero-bg.jpg';
 
     return (
         <>
@@ -148,7 +146,7 @@ export default function ProductDetailPage({ params }: { params: Params }) {
                                     <div className="aspect-square bg-white rounded-xl overflow-hidden flex items-center justify-center mb-6 shadow-sm relative">
                                         {product.image ? (
                                             <Image
-                                                src={product.image.startsWith('http') ? product.image : `http://localhost:8001${product.image}`}
+                                                src={getImageUrl(product.image)}
                                                 alt={name}
                                                 fill
                                                 className="object-contain p-4"

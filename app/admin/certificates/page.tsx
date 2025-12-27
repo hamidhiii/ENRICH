@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Plus, FileText } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { certificatesAPI, Certificate } from '@/lib/api';
+import { certificatesAPI, Certificate, getImageUrl } from '@/lib/api';
 
 export default function CertificatesPage() {
 
@@ -47,7 +47,7 @@ export default function CertificatesPage() {
             render: (value: unknown) => {
                 const src = value as string;
                 return src ? (
-                    <Image src={src.startsWith('http') ? src : `http://localhost:8001${src}`} alt="Certificate" width={40} height={56} className="object-cover border border-gray-200" />
+                    <Image src={getImageUrl(src)} alt="Certificate" width={40} height={56} className="object-cover border border-gray-200" />
                 ) : (
                     <div className="w-10 h-14 bg-gray-100 flex items-center justify-center text-gray-400 text-xs">No Img</div>
                 )
@@ -66,7 +66,7 @@ export default function CertificatesPage() {
             render: (value: unknown) => {
                 const src = value as string;
                 return src ? (
-                    <a href={src.startsWith('http') ? src : `http://localhost:8001${src}`} target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:underline flex items-center gap-1">
+                    <a href={getImageUrl(src)} target="_blank" rel="noopener noreferrer" className="text-lime-600 hover:underline flex items-center gap-1">
                         <FileText size={14} /> View
                     </a>
                 ) : '-'

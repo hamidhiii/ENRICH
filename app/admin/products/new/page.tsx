@@ -195,6 +195,7 @@ export default function NewProductPage() {
                             <option value="capsule">Capsule</option>
                             <option value="injection">Injection</option>
                             <option value="ointment">Ointment</option>
+                            <option value="spray">Spray</option>
                             <option value="other">Other</option>
                         </select>
                     </div>

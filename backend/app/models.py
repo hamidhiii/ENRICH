@@ -18,6 +18,7 @@ class ProductForm(str, enum.Enum):
     CAPSULE = "capsule"
     INJECTION = "injection"
     OINTMENT = "ointment"
+    SPRAY = "spray"
     OTHER = "other"
 
 

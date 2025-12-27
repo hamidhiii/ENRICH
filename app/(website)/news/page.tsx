@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Calendar, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import { newsAPI, News } from '@/lib/api';
+import { newsAPI, News, getImageUrl } from '@/lib/api';
 
 export default function NewsPage() {
     const [news, setNews] = useState<News[]>([]);
@@ -49,7 +49,7 @@ export default function NewsPage() {
                                 <div className="relative h-64 overflow-hidden">
                                     {item.image ? (
                                         <Image
-                                            src={item.image.startsWith('http') ? item.image : `http://localhost:8001${item.image}`}
+                                            src={getImageUrl(item.image)}
                                             alt={item.title_uz}
                                             fill
                                             className="object-cover transition-transform duration-500 group-hover:scale-110"

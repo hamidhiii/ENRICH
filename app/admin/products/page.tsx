@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { productsAPI, Product, Category } from '@/lib/api';
+import { productsAPI, Product, Category, getImageUrl } from '@/lib/api';
 
 export default function ProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -44,7 +44,7 @@ export default function ProductsPage() {
             key: 'image',
             label: 'Image',
             render: (value: unknown) => typeof value === 'string' ? (
-                <Image src={value.startsWith('http') ? value : `http://localhost:8001${value}`} alt="Product" width={40} height={40} className="object-cover rounded" />
+                <Image src={getImageUrl(value)} alt="Product" width={40} height={40} className="object-cover rounded" />
             ) : (
                 <div className="w-10 h-10 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">No Img</div>
             )

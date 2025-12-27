@@ -164,6 +164,34 @@ export interface AuditLog {
   };
 }
 
+export interface SiteSettings {
+  id: number;
+  site_name_ru?: string;
+  site_name_uz?: string;
+  site_name_en?: string;
+  logo?: string;
+  favicon?: string;
+  email?: string;
+  phone?: string;
+  address_ru?: string;
+  address_uz?: string;
+  address_en?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  youtube_url?: string;
+  linkedin_url?: string;
+  telegram_url?: string;
+  meta_title_ru?: string;
+  meta_title_uz?: string;
+  meta_title_en?: string;
+  meta_description_ru?: string;
+  meta_description_uz?: string;
+  meta_description_en?: string;
+  google_maps_embed?: string;
+  google_analytics_id?: string;
+  updated_at?: string;
+}
+
 // Create axios instance
 const api = axios.create({
   baseURL: API_URL,

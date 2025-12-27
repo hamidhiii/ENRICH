@@ -2,16 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFacebook, FaInstagram, FaBars, FaTimes, FaTelegram, FaMapMarkerAlt, FaPhone } from 'react-icons/fa';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import WebsiteLanguageSwitcher from './WebsiteLanguageSwitcher';
+import { settingsAPI, SiteSettings } from '@/lib/api';
 
 export default function Header() {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const [settings, setSettings] = useState<SiteSettings | null>(null);
 
     const isActive = (path: string) => pathname === path;
 
@@ -23,6 +25,18 @@ export default function Header() {
         { href: '/contact', label: t.header.contact },
     ];
 
+    useEffect(() => {
+        const fetchSettings = async () => {
+            try {
+                const response = await settingsAPI.get();
+                setSettings(response.data);
+            } catch (error) {
+                console.error('Error fetching settings:', error);
+            }
+        };
+        fetchSettings();
+    }, []);
+
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
@@ -33,23 +47,29 @@ export default function Header() {
                     <div className="bg-lime-500 text-white py-2 px-6 rounded-full flex justify-between items-center shadow-sm">
                         <div className="flex items-center gap-2 text-sm">
                             <span><FaMapMarkerAlt /></span>
-                            <span>{t.header.address}</span>
+                            <span>{settings ? (language === 'uz' ? settings.address_uz : settings.address_ru) || t.header.address : t.header.address}</span>
                         </div>
                         <div className="flex items-center gap-6">
                             <div className="flex items-center gap-2 text-sm">
                                 <span><FaPhone /></span>
-                                <span>+998 71 200 06 03</span>
+                                <span>{settings?.phone || '+998 71 200 06 03'}</span>
                             </div>
                             <div className="flex gap-3">
-                                <a href="https://www.facebook.com/enrichcompanyuz" className="hover:opacity-80 transition-opacity">
-                                    <FaFacebook size={16} />
-                                </a>
-                                <a href="https://www.instagram.com/enrich_company?igsh=dG5kdGx6MGk1cHkz" className="hover:opacity-80 transition-opacity">
-                                    <FaInstagram size={16} />
-                                </a>
-                                <a href="https://t.me/enrich_company_uz" className="hover:opacity-80 transition-opacity">
-                                    <FaTelegram size={16} />
-                                </a>
+                                {settings?.facebook_url && (
+                                    <a href={settings.facebook_url} className="hover:opacity-80 transition-opacity" target="_blank" rel="noopener noreferrer">
+                                        <FaFacebook size={16} />
+                                    </a>
+                                )}
+                                {settings?.instagram_url && (
+                                    <a href={settings.instagram_url} className="hover:opacity-80 transition-opacity" target="_blank" rel="noopener noreferrer">
+                                        <FaInstagram size={16} />
+                                    </a>
+                                )}
+                                {settings?.telegram_url && (
+                                    <a href={settings.telegram_url} className="hover:opacity-80 transition-opacity" target="_blank" rel="noopener noreferrer">
+                                        <FaTelegram size={16} />
+                                    </a>
+                                )}
                             </div>
                         </div>
                     </div>

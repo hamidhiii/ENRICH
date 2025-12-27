@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Plus } from 'lucide-react';
 import DataTable from '@/components/admin/DataTable';
-import { categoriesAPI, Category } from '@/lib/api';
+import { categoriesAPI, Category, getImageUrl } from '@/lib/api';
 
 export default function CategoriesPage() {
 
@@ -47,7 +47,7 @@ export default function CategoriesPage() {
             render: (value: unknown) => {
                 const src = value as string;
                 return src ? (
-                    <Image src={src.startsWith('http') ? src : `http://localhost:8001${src}`} alt="Icon" width={32} height={32} className="object-contain" />
+                    <Image src={getImageUrl(src)} alt="Icon" width={32} height={32} className="object-contain" />
                 ) : (
                     <div className="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-xs">-</div>
                 )

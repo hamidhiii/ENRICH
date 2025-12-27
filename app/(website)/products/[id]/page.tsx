@@ -23,13 +23,23 @@ export default function ProductDetailPage({ params }: { params: Params }) {
             try {
                 // Try to fetch by slug first, if it fails try by ID
                 let response;
-                if (isNaN(parseInt(id))) {
+                const isNumericId = !isNaN(parseInt(id));
+
+                if (isNumericId) {
+                    // It's an ID - fetch the product and redirect to slug
+                    response = await productsAPI.getById(parseInt(id));
+                    const productData = response.data as Product;
+
+                    // Redirect to slug-based URL
+                    if (productData.slug) {
+                        router.replace(`/products/${productData.slug}`);
+                        return;
+                    }
+                } else {
                     // It's a slug
                     response = await productsAPI.getBySlug(id);
-                } else {
-                    // It's an ID
-                    response = await productsAPI.getById(parseInt(id));
                 }
+
                 setProduct(response.data as Product);
             } catch (error) {
                 console.error('Error fetching product:', error);

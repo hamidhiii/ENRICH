@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60 * 24 * 7  # 7 days
     upload_dir: str = "uploads"
     max_file_size: int = 10 * 1024 * 1024  # 10MB
-    allowed_origins: str = "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001"
+    allowed_origins: str = "http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000,http://127.0.0.1:3001,http://enrich.uz,https://enrich.uz,http://www.enrich.uz,https://www.enrich.uz"
     telegram_bot_token: str = ""
     telegram_chat_id: str = ""
 

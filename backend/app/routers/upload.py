@@ -91,7 +91,8 @@ async def upload_pdf(
 ):
     """Upload a PDF file"""
     # Validate file type
-    if file.content_type != "application/pdf":
+    is_pdf = file.content_type == "application/pdf" or file.filename.lower().endswith(".pdf")
+    if not is_pdf:
         raise HTTPException(status_code=400, detail="Invalid file type. Only PDF allowed.")
     
     # Check file size

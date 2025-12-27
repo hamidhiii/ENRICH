@@ -31,7 +31,7 @@ settings = get_settings()
 
 # Configure CORS
 allowed_origins = [
-    "http://enrich.uz"
+    "https://enrich.uz"
 ]
 print(f"DEBUG: Allowed CORS origins: {allowed_origins}")
 

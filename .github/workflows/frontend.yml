@@ -40,12 +40,22 @@ jobs:
               mv backend/uploads_bak backend/uploads
           fi
 
+          # Clean build
+          echo "🧹 Cleaning and building..."
+          rm -rf .next
+          npm install
           npm run build
 
+          # Backend setup
+          echo "⚙️ Setting up backend..."
           cd ./backend  
           python -m venv venv 
           source venv/bin/activate
           pip install -r requirements.txt
           deactivate
-          pm2 restart all
+          
+          # Restart application
+          echo "🚀 Restarting application..."
+          pm2 restart all || pm2 start npm --name "client" -- start
+          
           echo "✅ Deployment tugadi!"

@@ -17,8 +17,29 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |           
           cd /home/ENRICH/
+          
+          # Backup database and uploads
+          echo "📦 Backing up data..."
+          if [ -f backend/enrich.db ]; then
+              cp backend/enrich.db backend/enrich.db.bak
+          fi
+          if [ -d backend/uploads ]; then
+              cp -r backend/uploads backend/uploads_bak
+          fi
+
           git stash
           git pull origin main
+          
+          # Restore data
+          echo "♻️ Restoring data..."
+          if [ -f backend/enrich.db.bak ]; then
+              mv backend/enrich.db.bak backend/enrich.db
+          fi
+          if [ -d backend/uploads_bak ]; then
+              rm -rf backend/uploads
+              mv backend/uploads_bak backend/uploads
+          fi
+
           npm run build
 
           cd ./backend  

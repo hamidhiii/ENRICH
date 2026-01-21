@@ -28,12 +28,16 @@ def send_telegram_notification(message_data: dict):
         f"💬 *Xabar:* {message_data.get('message')}"
     )
 
+    logger.info(f"Attempting to send Telegram notification to Chat ID: {settings.telegram_chat_id}")
+    logger.info(f"Bot Token present: {bool(settings.telegram_bot_token)}")
+    
     url = f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage"
     payload = {
         "chat_id": settings.telegram_chat_id,
         "text": text,
         "parse_mode": "Markdown"
     }
+    logger.info(f"Payload: {payload}")
     
     try:
         data = urllib.parse.urlencode(payload).encode("utf-8")

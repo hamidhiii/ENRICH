@@ -7,7 +7,7 @@ if (API_URL && !API_URL.startsWith('http')) {
 
 export const getImageUrl = (path: string | null | undefined) => {
   if (!path) return '';
-  if (path.startsWith('http')) return path;
+  if (path.startsWith('http') || path.startsWith('/images/')) return path;
   return `${API_URL}${path.startsWith('/') ? '' : '/'}${path}`;
 };
 
